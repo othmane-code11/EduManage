@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Register — EduLearn</title>
+    <title>Register — EduManage</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;500;600;700;800&family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;1,9..40,300&display=swap" rel="stylesheet">
@@ -99,7 +99,7 @@
             <div class="brand">
                 <div class="brand-icon">🎓</div>
                 <div class="brand-text">
-                    <div class="brand-name">EduLearn</div>
+                    <div class="brand-name">EduManage</div>
                     <div class="brand-tag">Learning Reimagined</div>
                 </div>
             </div>
@@ -216,7 +216,7 @@
                 <div class="terms-wrap">
                     <input type="checkbox" name="terms" id="terms" {{ old('terms') ? 'checked' : '' }} required>
                     <span>
-                        I agree to EduLearn's <a href="#">Terms of Service</a> and <a href="#">Privacy Policy</a>. I understand my data will be used to personalize my learning experience.
+                        I agree to EduManage's <a href="#">Terms of Service</a> and <a href="#">Privacy Policy</a>. I understand my data will be used to personalize my learning experience.
                     </span>
                 </div>
                 @error('terms')
@@ -224,7 +224,7 @@
                 @enderror
 
                 <button type="submit" class="btn-submit">
-                    Create My EduLearn Account <span class="btn-arrow">→</span>
+                    Create My EduManage Account <span class="btn-arrow">→</span>
                 </button>
 
             </form>
