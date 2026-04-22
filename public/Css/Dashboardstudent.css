@@ -1,0 +1,503 @@
+/* ══════════════════════════════════════
+   ROLE SELECT — styled to match EduLearn dark theme
+══════════════════════════════════════ */
+.hero {
+    position: relative;
+    background: linear-gradient(135deg, rgba(74,17,150,0.5) 0%, rgba(42,8,90,0.6) 60%, rgba(15,5,32,0.5) 100%);
+    border: 1px solid rgba(168,85,247,0.2);
+    border-radius: 24px;
+    padding: 2.25rem 2.5rem;
+    overflow: hidden;
+    margin-bottom: 2rem;
+}
+
+.hero-bg-orb {
+    position: absolute;
+    border-radius: 50%;
+    pointer-events: none;
+}
+.hero-bg-orb-1 {
+    top: -60px; right: -60px;
+    width: 280px; height: 280px;
+    background: radial-gradient(circle, rgba(232,121,249,0.2) 0%, transparent 70%);
+}
+.hero-bg-orb-2 {
+    bottom: -40px; left: -40px;
+    width: 200px; height: 200px;
+    background: radial-gradient(circle, rgba(139,60,247,0.15) 0%, transparent 70%);
+}
+
+.hero-grid {
+    display: grid;
+    grid-template-columns: 1fr auto;
+    align-items: center;
+    gap: 1.5rem;
+    position: relative;
+    z-index: 1;
+}
+
+.hero-greeting {
+    font-size: 0.8rem;
+    font-weight: 600;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--purple-400);
+    margin-bottom: 0.4rem;
+}
+
+.hero-title {
+    font-family: 'Syne', sans-serif;
+    font-size: clamp(1.6rem, 3vw, 2.2rem);
+    font-weight: 800;
+    letter-spacing: -0.03em;
+    color: var(--white);
+    margin: 0 0 0.5rem 0;
+}
+.hero-title span {
+     color: white;
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+}
+
+.hero-sub {
+    font-size: 0.92rem;
+    color: var(--muted);
+    line-height: 1.6;
+    max-width: 480px;
+}
+.hero-sub strong {
+    color: var(--white);
+    font-weight: 600;
+}
+
+.hero-actions {
+    display: flex;
+    gap: 0.75rem;
+    margin-top: 1.5rem;
+    flex-wrap: wrap;
+}
+
+.btn-primary {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.4rem;
+    padding: 0.6rem 1.4rem;
+    background: linear-gradient(135deg, var(--purple-600), var(--purple-800));
+    border: none;
+    border-radius: 10px;
+    color: white;
+    font-family: 'DM Sans', sans-serif;
+    font-size: 0.88rem;
+    font-weight: 600;
+    cursor: pointer;
+    text-decoration: none;
+    transition: transform 0.2s, box-shadow 0.2s;
+    box-shadow: 0 6px 20px rgba(107,33,200,0.35);
+}
+.btn-primary:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 10px 28px rgba(107,33,200,0.5);
+}
+
+.btn-ghost {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.4rem;
+    padding: 0.6rem 1.4rem;
+    background: rgba(255,255,255,0.05);
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    color: var(--muted);
+    font-family: 'DM Sans', sans-serif;
+    font-size: 0.88rem;
+    font-weight: 500;
+    cursor: pointer;
+    text-decoration: none;
+    transition: background 0.2s, color 0.2s, border-color 0.2s;
+}
+.btn-ghost:hover {
+    background: rgba(168,85,247,0.1);
+    color: var(--purple-300);
+    border-color: rgba(168,85,247,0.3);
+}
+
+/* Hero Visual / Progress */
+.hero-visual {
+    background: linear-gradient(135deg, rgba(139,60,247,0.2), rgba(232,121,249,0.1));
+    border: 1px solid rgba(168,85,247,0.2);
+    border-radius: 18px;
+    padding: 1.25rem 1.5rem;
+    min-width: 200px;
+}
+
+.progress-card-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 0.75rem;
+}
+.progress-label {
+    font-size: 0.75rem;
+    font-weight: 500;
+    color: var(--muted);
+}
+.progress-value {
+    font-family: 'Syne', sans-serif;
+    font-size: 0.95rem;
+    font-weight: 700;
+    color: var(--white);
+}
+.progress-track {
+    height: 8px;
+    border-radius: 99px;
+    background: rgba(168,85,247,0.15);
+    overflow: hidden;
+}
+.progress-fill {
+    height: 100%;
+    border-radius: 99px;
+    background: linear-gradient(90deg, var(--purple-500), var(--accent));
+    box-shadow: 0 0 8px rgba(232,121,249,0.4);
+}
+.progress-days {
+    display: flex;
+    justify-content: space-between;
+    margin-top: 0.5rem;
+}
+.progress-days span {
+    font-size: 0.65rem;
+    color: var(--muted);
+}
+.hero-milestone {
+    margin-top: 0.75rem;
+    text-align: center;
+    font-size: 0.7rem;
+    color: var(--muted);
+}
+
+/* ══════════════════════════════════════
+   STATS ROW
+══════════════════════════════════════ */
+.stats-row {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 1rem;
+    margin-bottom: 2rem;
+}
+.stat-card {
+    padding: 1.25rem 1.4rem;
+    border-radius: 16px;
+}
+.stat-card-icon {
+    width: 38px; height: 38px;
+    border-radius: 10px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 17px;
+    margin-bottom: 0.8rem;
+}
+.stat-card-num {
+    font-family: 'Syne', sans-serif;
+    font-size: 1.5rem;
+    font-weight: 700;
+    color: var(--white);
+}
+.stat-card-label {
+    font-size: 0.78rem;
+    color: var(--muted);
+    margin-top: 2px;
+}
+.stat-card-change {
+    font-size: 0.72rem;
+    margin-top: 0.5rem;
+    display: flex;
+    align-items: center;
+    gap: 0.25rem;
+}
+.up   { color: #4ade80; }
+.down { color: #f87171; }
+
+/* ══════════════════════════════════════
+   SECTION HEADERS
+══════════════════════════════════════ */
+.section-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 1.1rem;
+}
+.section-header h2 {
+    font-family: 'Syne', sans-serif;
+    font-size: 1.05rem;
+    font-weight: 700;
+    color: var(--white);
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+}
+.h-dot {
+    width: 8px; height: 8px;
+    border-radius: 50%;
+    background: linear-gradient(135deg, var(--purple-500), var(--accent));
+    display: inline-block;
+}
+.see-all {
+    font-size: 0.8rem;
+    color: var(--purple-400);
+    text-decoration: none;
+    font-weight: 500;
+    transition: color 0.2s;
+}
+.see-all:hover { color: var(--purple-300); }
+/* Wrapper: make it position:relative so the arrow pseudo-element
+   and the focus-ring can live inside it */
+.input-wrap.select-wrap {
+    position: relative;
+    cursor: pointer;
+}
+
+/* Hide the browser's native arrow */
+.input-wrap.select-wrap select {
+    width: 100%;
+    appearance: none;
+    -webkit-appearance: none;
+    -moz-appearance: none;
+
+    /* Inherit the card's font & color system */
+    font-family: 'DM Sans', sans-serif;
+    font-size: 0.9rem;
+    font-weight: 500;
+    color: var(--white, #f3e8ff);
+
+    /* Transparent so the .input-wrap background shows through */
+    background: transparent;
+    border: none;
+    outline: none;
+
+    /* Leave room on the right for the custom arrow */
+    padding-right: 2.4rem;
+    padding-left: 0.25rem;
+
+    /* Full-height clickable area */
+    height: 100%;
+    cursor: pointer;
+}
+
+/* Placeholder / unselected state */
+.input-wrap.select-wrap select:invalid,
+.input-wrap.select-wrap select option[value=""] {
+    color: var(--muted, rgba(200,180,255,0.45));
+}
+
+/* ── Custom chevron arrow ── */
+.input-wrap.select-wrap::after {
+    content: '';
+    position: absolute;
+    right: 1rem;
+    top: 50%;
+    transform: translateY(-50%) rotate(0deg);
+    width: 0;
+    height: 0;
+    border-left: 5px solid transparent;
+    border-right: 5px solid transparent;
+    border-top: 6px solid rgba(168,85,247,0.6);
+    pointer-events: none;
+    transition: transform 0.2s ease, border-top-color 0.2s ease;
+}
+
+/* Rotate arrow while the select is focused/open */
+.input-wrap.select-wrap:focus-within::after {
+    transform: translateY(-50%) rotate(180deg);
+    border-top-color: rgba(232,121,249,0.9);
+}
+
+/* ── Focus glow on the wrapper ── */
+.input-wrap.select-wrap:focus-within {
+    border-color: rgba(168,85,247,0.55);
+    box-shadow:
+        0 0 0 3px rgba(168,85,247,0.18),
+        inset 0 0 12px rgba(139,60,247,0.08);
+    background: rgba(139,60,247,0.12);
+}
+
+/* ── Dropdown <option> elements ──
+   Native <option> styling is limited to background + color,
+   but we can at least make it legible in every OS */
+.input-wrap.select-wrap select option {
+    background: #1a0a2e;           /* deep dark purple — avoids white OS default */
+    color: #e9d5ff;
+    font-family: 'DM Sans', sans-serif;
+    font-size: 0.9rem;
+    padding: 0.5rem 0.75rem;
+}
+
+.input-wrap.select-wrap select option:checked,
+.input-wrap.select-wrap select option:hover {
+    background: rgba(139,60,247,0.35);
+    color: #f3e8ff;
+}
+
+/* Disabled placeholder option */
+.input-wrap.select-wrap select option[disabled] {
+    color: rgba(200,180,255,0.35);
+}
+
+/* ══════════════════════════════════════
+   ROLE BADGE PILLS
+══════════════════════════════════════ */
+.role-badges {
+    display: flex;
+    gap: 0.45rem;
+    margin-top: 0.6rem;
+    flex-wrap: wrap;
+}
+
+.role-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.3rem;
+    padding: 0.24rem 0.7rem;
+    border-radius: 999px;
+    font-size: 0.7rem;
+    font-weight: 700;
+    letter-spacing: 0.04em;
+    text-transform: uppercase;
+
+    /* Dim by default */
+    opacity: 0.28;
+    filter: grayscale(40%);
+    transform: scale(0.96);
+    transition:
+        opacity 0.22s ease,
+        transform 0.22s ease,
+        filter 0.22s ease,
+        box-shadow 0.22s ease;
+
+    border: 1px solid transparent;
+    cursor: default;
+    user-select: none;
+}
+
+/* Active (selected) state — JS adds this class */
+.role-badge.active {
+    opacity: 1;
+    filter: grayscale(0%);
+    transform: scale(1.07);
+}
+
+/* ── Admin — purple ── */
+.role-badge.badge-admin {
+    background: rgba(139,60,247,0.12);
+    border-color: rgba(139,60,247,0.35);
+    color: #c084fc;
+}
+.role-badge.badge-admin.active {
+    background: rgba(139,60,247,0.22);
+    border-color: rgba(168,85,247,0.6);
+    box-shadow: 0 0 10px rgba(139,60,247,0.35);
+}
+
+/* ── Student — emerald ── */
+.role-badge.badge-student {
+    background: rgba(34,197,94,0.08);
+    border-color: rgba(34,197,94,0.3);
+    color: #4ade80;
+}
+.role-badge.badge-student.active {
+    background: rgba(34,197,94,0.16);
+    border-color: rgba(34,197,94,0.55);
+    box-shadow: 0 0 10px rgba(34,197,94,0.28);
+}
+
+/* ── Formateur — sky blue ── */
+.role-badge.badge-formateur {
+    background: rgba(59,130,246,0.08);
+    border-color: rgba(59,130,246,0.3);
+    color: #60a5fa;
+}
+.role-badge.badge-formateur.active {
+    background: rgba(59,130,246,0.16);
+    border-color: rgba(59,130,246,0.55);
+    box-shadow: 0 0 10px rgba(59,130,246,0.28);
+}
+
+
+
+
+
+/* ══════════════════════════════════════
+   DELETE BUTTON — users table
+══════════════════════════════════════ */
+.ut-btn-delete {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.35rem;
+    padding: 0.4rem 0.85rem;
+    background: rgba(239, 68, 68, 0.08);
+    border: 1px solid rgba(239, 68, 68, 0.25);
+    border-radius: 8px;
+    color: #f87171;
+    font-family: 'DM Sans', sans-serif;
+    font-size: 0.78rem;
+    font-weight: 600;
+    letter-spacing: 0.02em;
+    cursor: pointer;
+    transition:
+        background 0.2s ease,
+        border-color 0.2s ease,
+        color 0.2s ease,
+        transform 0.15s ease,
+        box-shadow 0.2s ease;
+    white-space: nowrap;
+}
+
+.ut-btn-delete:hover {
+    background: rgba(239, 68, 68, 0.18);
+    border-color: rgba(239, 68, 68, 0.5);
+    color: #fca5a5;
+    transform: translateY(-1px);
+    box-shadow: 0 4px 14px rgba(239, 68, 68, 0.2);
+}
+
+.ut-btn-delete:active {
+    transform: translateY(0);
+    box-shadow: none;
+    background: rgba(239, 68, 68, 0.25);
+}
+
+.ut-btn-delete svg {
+    flex-shrink: 0;
+    width: 14px;
+    height: 14px;
+    transition: transform 0.2s ease;
+}
+
+.ut-btn-delete:hover svg {
+    transform: scale(1.15);
+}
+
+/* ── Responsive: icon-only on small screens ── */
+.ut-btn-delete-label {
+    display: inline;
+}
+
+@media (max-width: 768px) {
+    .ut-btn-delete {
+        padding: 0.4rem;
+        border-radius: 8px;
+    }
+
+    .ut-btn-delete-label {
+        display: none;
+    }
+}
+
+@media (max-width: 480px) {
+    .ut-btn-delete {
+        padding: 0.35rem;
+        border-radius: 6px;
+    }
+}
