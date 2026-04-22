@@ -80,7 +80,7 @@
         }
         .brand-name {
             font-family: 'Syne', sans-serif;
-            font-size: 1.25rem; font-weight: 800; letter-spacing: -0.03em;
+            font-size: 1.25rem; font-weight: 700; letter-spacing: -0.03em;
             background: linear-gradient(135deg, #fff 30%, var(--blue-300));
             -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text;
         }

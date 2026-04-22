@@ -364,7 +364,7 @@
             <div class="register-brand">
                 <div class="register-brand-icon">🎓</div>
                 <div>
-                    <div class="register-brand-name">EduLearn</div>
+                    <div class="register-brand-name">EduManage</div>
                     <div class="register-brand-tag">Learning Reimagined</div>
                 </div>
             </div>
@@ -507,7 +507,7 @@
                 <div class="reg-terms-wrap">
                     <input type="checkbox" name="terms" id="terms" {{ old('terms') ? 'checked' : '' }} required>
                     <span>
-                        I agree to EduLearn's <a href="#">Terms of Service</a> and
+                        I agree to EduManage's <a href="#">Terms of Service</a> and
                         <a href="#">Privacy Policy</a>. I understand my data will be
                         used to personalize my learning experience.
                     </span>
@@ -517,7 +517,7 @@
                 @enderror
 
                 <button type="submit" class="reg-submit-btn">
-                    Create My EduLearn Account <span class="reg-btn-arrow">→</span>
+                    Create My EduManage Account <span class="reg-btn-arrow">→</span>
                 </button>
 
             </form>
