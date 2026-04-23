@@ -8,7 +8,9 @@ use App\Http\Middleware\RoleMiddleware;
 
 
 use App\Http\Controllers\ScheduleController;
-
+Route::get('/', function () {
+    return to_route('login');
+});
 // Login
 Route::get('/login', [AuthController::class, 'login'])->name('login');
 Route::get('/register', [AuthController::class, 'register'])->middleware('role')->name('register');
