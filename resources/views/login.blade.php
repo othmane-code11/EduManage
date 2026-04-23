@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Login — EduLearn</title>
+    <title>Login — EduManage</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;500;600;700;800&family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;1,9..40,300&display=swap" rel="stylesheet">
@@ -24,7 +24,7 @@
         <div class="panel-left">
             <div class="brand">
                 <div class="brand-icon">🎓</div>
-                <div class="brand-name">EduLearn</div>
+                <div class="brand-name">EduManage</div>
                 <div class="brand-tag">Learning Reimagined</div>
             </div>
 
@@ -112,7 +112,7 @@
                 </div>
 
                 <!-- Submit -->
-               <button type="submit" class="btn-submit">Sign In to EduLearn</button>
+               <button type="submit" class="btn-submit">Sign In to EduManage</button>
 
 <div class="auth-links">
     <a class="btn-create-account" href="{{ route('register') }}">Create an account</a>

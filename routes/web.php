@@ -9,12 +9,14 @@ use App\Http\Middleware\RoleMiddleware;
 
 use App\Http\Controllers\ScheduleController;
 Route::get('/', function () {
+
     return redirect()->route('landing');
 });
 
 Route::get('/landing', function () {
     return view('landing');
 })->name('landing');
+
 
 // Login
 Route::get('/login', [AuthController::class, 'login'])->middleware('guest')->name('login');

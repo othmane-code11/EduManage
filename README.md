@@ -1,9 +1,9 @@
 ## 🏫 Project Summary: EduManage
 
-**EduManage** is a comprehensive, web-based School Management System built on **Laravel 11**. It centralizes administrative tasks, academic tracking, and student monitoring within a secure, modern, and responsive environment.
+**EduManage** is a comprehensive, web-based School Management System built on **Laravel 10**. It centralizes administrative tasks, academic tracking, and student monitoring within a secure, modern, and responsive environment.
 
 ### 🛠 Technical Architecture
-* **Framework:** Laravel 11 (utilizing MVC and Service Layer patterns).
+* **Framework:** Laravel 10 (utilizing MVC and Service Layer patterns).
 * **Authentication:** Laravel Breeze with a customized **Multi-Role** system.
 * **Database:** MySQL (Structured with One-to-Many and Many-to-Many Eloquent relationships).
 * **Frontend:** Tailwind CSS for a mobile-first UI and Blade Components for reusability.
