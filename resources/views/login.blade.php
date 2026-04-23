@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="{{ app()->getLocale() }}" {{ app()->getLocale() === 'ar' ? 'dir="rtl"' : '' }}>
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -52,8 +52,8 @@
         <!-- RIGHT PANEL -->
         <div class="panel-right">
             <div class="form-header">
-                <h1>Welcome back 👋</h1>
-                <p>Don't have an account? <a href="{{ route('register') }}">Sign up for free</a></p>
+                <h1>{{ __('auth.welcome_back') }}</h1>
+                <p>{{ __('auth.dont_have_account') }} <a href="{{ route('register') }}">{{ __('auth.sign_up') }}</a></p>
             </div>
 
             <form method="POST" action="{{ route('login.post') }}" novalidate>
@@ -61,7 +61,7 @@
 
                 <!-- Email -->
                 <div class="field">
-                    <label for="email">Email Address</label>
+                    <label for="email">{{ __('auth.email') }}</label>
                     <div class="input-wrap">
                         <span class="icon">
                             <svg width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>
@@ -83,7 +83,7 @@
 
                 <!-- Password -->
                 <div class="field">
-                    <label for="password">Password</label>
+                    <label for="password">{{ __('auth.password') }}</label>
                     <div class="input-wrap">
                         <span class="icon">
                             <svg width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>
@@ -106,17 +106,17 @@
                 <div class="field-row">
                     <label class="checkbox-wrap">
                         <input type="checkbox" name="remember" id="remember" {{ old('remember') ? 'checked' : '' }}>
-                        <span>Remember me</span>
+                        <span>{{ __('auth.remember_me') }}</span>
                     </label>
-                        <a class="forgot-link" >Forgot password?</a>
+                        <a class="forgot-link">{{ __('auth.forgot_password') }}</a>
                 </div>
 
                 <!-- Submit -->
-               <button type="submit" class="btn-submit">Sign In to EduManage</button>
+               <button type="submit" class="btn-submit">{{ __('auth.sign_in') }}</button>
 
 <div class="auth-links">
-    <a class="btn-create-account" href="{{ route('register') }}">Create an account</a>
-    <a class="btn-back-home" href="{{ route('landing') }}">Back to landing page</a>
+    <a class="btn-create-account" href="{{ route('register') }}">{{ __('auth.create_account') }}</a>
+    <a class="btn-back-home" href="{{ route('landing') }}">{{ __('messages.back') }}</a>
 </div>
             </form>
 

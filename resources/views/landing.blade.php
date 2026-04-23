@@ -61,6 +61,11 @@
             color: var(--text-primary); text-decoration: none;
         }
 
+        body.light-mode .nav-logo {
+            color: #003d7a;
+            font-weight: 800;
+        }
+
         .nav-logo svg { width: 32px; height: 32px; }
 
         .nav-links {
@@ -382,22 +387,21 @@
     </a>
 
     <ul class="nav-links">
-        <li><a href="{{ route('landing') }}" class="active">Home</a></li>
-        <li><a href="#">Courses</a></li>
-        <li><a href="#">Features</a></li>
-        <li><a href="#">Pricing</a></li>
-        <li><a href="#">About</a></li>
-        <li><a href="#">Blog</a></li>
-        <li><a href="#">Contact</a></li>
+        <li><a href="{{ route('landing') }}" class="active">{{ __('messages.home') }}</a></li>
+        <li><a href="{{ route('features') }}">{{ __('messages.features') }}</a></li>
+        <li><a href="{{ route('pricing') }}">{{ __('messages.pricing') }}</a></li>
+        <li><a href="{{ route('about') }}">{{ __('messages.about') }}</a></li>
+        <li><a href="{{ route('blog') }}">{{ __('messages.blog') }}</a></li>
+        <li><a href="{{ route('contact') }}">{{ __('messages.contact') }}</a></li>
     </ul>
 
     <div class="nav-actions">
         @auth
-            <a href="{{ route('dashboard') }}" class="btn-ghost">Dashboard</a>
+            <a href="{{ route('dashboard') }}" class="btn-ghost">{{ __('messages.dashboard') }}</a>
         @else
-            <a href="{{ route('login') }}" class="btn-ghost">Log in</a>
+            <a href="{{ route('login') }}" class="btn-ghost">{{ __('messages.log_in') }}</a>
             <a href="{{ route('register') }}" class="btn-primary">
-                Get Started
+                {{ __('messages.get_started') }}
                 <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
             </a>
         @endauth
@@ -411,26 +415,26 @@
     <div class="hero-left">
         <div class="hero-badge">
             <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 10v6M2 10l10-5 10 5-10 5z"/><path d="M6 12v5c3 3 9 3 12 0v-5"/></svg>
-            Learn Smarter, Achieve More
+            {{ __('messages.learn_smarter') }}
         </div>
 
         <h1 class="hero-title">
-            Upgrade Your Skills.<br>
-            Advance Your <span class="highlight">Future.</span>
+            {{ __('messages.upgrade_skills') }}<br>
+            {{ __('messages.advance_future') }} <span class="highlight"></span>
         </h1>
 
         <p class="hero-desc">
-            EduLearn is your all-in-one learning platform with expert-led courses, real-world projects, and personalized learning paths to help you master in-demand skills.
+            {{ __('messages.edulearn_description') }}
         </p>
 
         <div class="hero-cta">
             <a href="{{ route('register') }}" class="btn-primary">
-                Start Learning Now
+                {{ __('messages.start_learning') }}
                 <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
             </a>
             <a href="#" class="btn-secondary">
                 <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="M5 3l14 9-14 9V3z"/></svg>
-                Watch Demo
+                {{ __('messages.watch_demo') }}
             </a>
         </div>
 
@@ -443,7 +447,7 @@
             </div>
             <div class="trust-text">
                 <div class="stars">★★★★★</div>
-                Trusted by 50,000+ learners worldwide
+                {{ __('messages.trusted_learners') }}
             </div>
         </div>
     </div>
@@ -451,12 +455,12 @@
     {{-- Right column – Screenshot preview image --}}
     <div class="hero-right">
         <img
-            src="{{ asset('images/Screenshot 2026-04-23 155703.png') }}"
+            src="{{ asset('images/Screenshot 2026-04-23 203012.png') }}"
             alt="EduLearn landing page screenshot preview"
             class="hero-right-image"
             loading="eager"
             decoding="async"
-            onerror="this.onerror=null;this.src='{{ asset('images/Screenshot 2026-04-23 153705.png') }}';"
+            onerror="this.onerror=null;this.src='{{ asset('images/Screenshot 2026-04-23 203012.png') }}';"
         >
     </div>
 
@@ -470,8 +474,8 @@
             <div class="strip-icon">👥</div>
             <div>
                 <div class="strip-val">50,000+</div>
-                <div class="strip-label">Active Students</div>
-                <div class="strip-desc">Growing community of learners</div>
+                <div class="strip-label">{{ __('messages.active_students') }}</div>
+                <div class="strip-desc">{{ __('messages.growing_community') }}</div>
             </div>
         </div>
 
@@ -479,8 +483,8 @@
             <div class="strip-icon">📚</div>
             <div>
                 <div class="strip-val">1,200+</div>
-                <div class="strip-label">Expert Courses</div>
-                <div class="strip-desc">High-quality courses across domains</div>
+                <div class="strip-label">{{ __('messages.expert_courses') }}</div>
+                <div class="strip-desc">{{ __('messages.high_quality_courses') }}</div>
             </div>
         </div>
 
@@ -488,8 +492,8 @@
             <div class="strip-icon">📈</div>
             <div>
                 <div class="strip-val">92%</div>
-                <div class="strip-label">Completion Rate</div>
-                <div class="strip-desc">Students achieve their goals</div>
+                <div class="strip-label">{{ __('messages.completion_rate') }}</div>
+                <div class="strip-desc">{{ __('messages.achieve_goals') }}</div>
             </div>
         </div>
 

@@ -1,0 +1,27 @@
+<?php
+
+return [
+    'schedule' => 'الجدول الزمني',
+    'absence' => 'الغياب',
+    'mark_present' => 'ضع علامة حاضر',
+    'mark_absent' => 'ضع علامة غائب',
+    'status' => 'الحالة',
+    'present' => 'حاضر',
+    'absent' => 'غائب',
+    'date' => 'التاريخ',
+    'time' => 'الوقت',
+    'course' => 'الدورة',
+    'student' => 'الطالب',
+    'teacher' => 'المعلم',
+    'class' => 'الفصل',
+    'upload_schedule' => 'رفع الجدول الزمني',
+    'select_file' => 'اختر ملف',
+    'upload' => 'رفع',
+    'download_pdf' => 'تحميل PDF',
+    'view_schedule' => 'عرض الجدول الزمني',
+    'edit_schedule' => 'تعديل الجدول الزمني',
+    'delete_schedule' => 'حذف الجدول الزمني',
+    'total_students' => 'إجمالي الطلاب',
+    'total_sessions' => 'إجمالي الجلسات',
+    'attendance_rate' => 'نسبة الحضور',
+];

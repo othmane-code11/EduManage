@@ -1,0 +1,26 @@
+<?php
+
+return [
+    'main' => 'الرئيسي',
+    'account' => 'الحساب',
+    'dashboard' => 'لوحة التحكم',
+    'schedule' => 'الجدول الزمني',
+    'absence' => 'الغياب',
+    'blog' => 'المدونة',
+    'my_profile' => 'ملفي الشخصي',
+    'settings' => 'الإعدادات',
+    'logout' => 'تسجيل الخروج',
+    'notifications' => 'الإخطارات',
+    'search' => 'بحث',
+    'trainings' => 'التدريبات',
+    'sessions' => 'الجلسات',
+    'courses' => 'الدورات',
+    'students' => 'الطلاب',
+    'teachers' => 'المعلمون',
+    'admins' => 'المسؤولون',
+    'active' => 'نشط',
+    'inactive' => 'غير نشط',
+    'pending' => 'قيد الانتظار',
+    'completed' => 'مكتمل',
+    'in_progress' => 'جاري',
+];

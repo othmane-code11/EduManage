@@ -1,0 +1,25 @@
+<?php
+
+return [
+    'login' => 'تسجيل الدخول',
+    'register' => 'إنشاء حساب',
+    'logout' => 'تسجيل الخروج',
+    'email' => 'البريد الإلكتروني',
+    'password' => 'كلمة المرور',
+    'password_confirm' => 'تأكيد كلمة المرور',
+    'first_name' => 'الاسم الأول',
+    'last_name' => 'اسم العائلة',
+    'remember_me' => 'تذكرني',
+    'forgot_password' => 'هل نسيت كلمة المرور؟',
+    'dont_have_account' => 'ليس لديك حساب؟',
+    'already_have_account' => 'هل لديك حساب بالفعل؟',
+    'sign_in' => 'تسجيل الدخول',
+    'sign_up' => 'إنشاء حساب',
+    'create_account' => 'إنشاء حساب جديد',
+    'invalid_credentials' => 'بيانات دخول غير صحيحة',
+    'user_created' => 'تم إنشاء المستخدم بنجاح!',
+    'terms' => 'أوافق على الشروط والأحكام',
+    'accept_terms' => 'يجب أن تقبل الشروط والأحكام',
+    'welcome_back' => 'مرحبا بعودتك 👋',
+    'welcome' => 'مرحبا بك في EduLearn',
+];

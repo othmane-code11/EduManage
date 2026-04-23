@@ -1,0 +1,25 @@
+<?php
+
+return [
+    'login' => 'Connexion',
+    'register' => 'S\'inscrire',
+    'logout' => 'Déconnexion',
+    'email' => 'E-mail',
+    'password' => 'Mot de passe',
+    'password_confirm' => 'Confirmer le mot de passe',
+    'first_name' => 'Prénom',
+    'last_name' => 'Nom de famille',
+    'remember_me' => 'Se souvenir de moi',
+    'forgot_password' => 'Mot de passe oublié?',
+    'dont_have_account' => "Vous n'avez pas de compte?",
+    'already_have_account' => 'Vous avez déjà un compte?',
+    'sign_in' => 'Se connecter',
+    'sign_up' => 'S\'inscrire',
+    'create_account' => 'Créer un compte',
+    'invalid_credentials' => 'Identifiants invalides',
+    'user_created' => 'Utilisateur créé avec succès!',
+    'terms' => 'J\'accepte les conditions générales',
+    'accept_terms' => 'Vous devez accepter les conditions générales',
+    'welcome_back' => 'Bienvenue 👋',
+    'welcome' => 'Bienvenue sur EduLearn',
+];

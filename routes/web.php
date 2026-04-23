@@ -17,6 +17,26 @@ Route::get('/landing', function () {
     return view('landing');
 })->name('landing');
 
+Route::get('/features', function () {
+    return view('features');
+})->name('features');
+
+Route::get('/pricing', function () {
+    return view('pricing');
+})->name('pricing');
+
+Route::get('/about', function () {
+    return view('about');
+})->name('about');
+
+Route::get('/blog', function () {
+    return view('blog');
+})->name('blog');
+
+Route::get('/contact', function () {
+    return view('contact');
+})->name('contact');
+
 
 // Login
 Route::get('/login', [AuthController::class, 'login'])->middleware('guest')->name('login');
@@ -24,6 +44,14 @@ Route::get('/register', [AuthController::class, 'register'])->middleware('guest'
 Route::get('/dash', [AuthController::class, 'dash'])
     ->middleware('role:admin,student')
     ->name('dashboard');
+
+Route::get('/profile', function () {
+    return view('profile');
+})->middleware('auth')->name('profile');
+
+Route::get('/settings', function () {
+    return view('settings');
+})->middleware('auth')->name('settings');
 
 Route::get('/absence', [AccController::class, 'absc'])->name('absence');
 Route::get('/schedule', [AccController::class, 'schedule'])->name('schedule');
@@ -58,6 +86,14 @@ Route::group(['prefix' => 'dashboard', 'as' => 'dashboard.'], function () {
 
 
 Route::post('/logout', [AuthController::class, 'logout'])->middleware('auth')->name('logout');
+
+// Locale Switching Route
+Route::get('/change-locale/{locale}', function ($locale) {
+    if (in_array($locale, config('app.supported_locales'))) {
+        session()->put('locale', $locale);
+    }
+    return redirect()->back();
+})->name('change-locale');
 
 
 /*

@@ -1,6 +1,6 @@
 {{-- resources/views/layouts/app.blade.php --}}
 <!DOCTYPE html>
-<html lang="en">
+<html lang="{{ app()->getLocale() }}" {{ app()->getLocale() === 'ar' ? 'dir="rtl"' : '' }}>
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -29,6 +29,81 @@
             --muted:      #9ca3af;
             --sidebar-w:  260px;
         }
+
+        /* ── Light Mode CSS Variables ── */
+        :root.light-mode {
+            --blue-950: #f8fafc;
+            --blue-900: #f1f5f9;
+            --blue-800: #e2e8f0;
+            --blue-700: #cbd5e1;
+            --blue-600: #94a3b8;
+            --blue-500: #64748b;
+            --blue-400: #475569;
+            --blue-300: #1e293b;
+            --blue-100: #0f172a;
+            --blue-50:  #1e293b;
+            --accent:   #0284c7;
+            --gold:     #f59e0b;
+            --surface:    rgba(0,0,0,0.04);
+            --border:     rgba(2,132,199,0.14);
+            --white:      #1e293b;
+            --muted:      #64748b;
+        }
+
+        body.light-mode {
+            background: #f8fafc;
+            color: #1e293b;
+        }
+
+        body.light-mode .bg-fixed {
+            background:
+                radial-gradient(ellipse 55% 40% at 0% 0%, rgba(2,132,199,0.1) 0%, transparent 60%),
+                radial-gradient(ellipse 45% 35% at 100% 100%, rgba(15,23,42,0.1) 0%, transparent 60%),
+                #f8fafc;
+        }
+
+        body.light-mode .sidebar {
+            background: rgba(248,250,252,0.95);
+            border-right: 1px solid rgba(2,132,199,0.14);
+        }
+
+        body.light-mode .topbar {
+            background: rgba(248,250,252,0.8);
+            border-bottom: 1px solid rgba(2,132,199,0.14);
+        }
+
+        body.light-mode .card {
+            background: rgba(0,0,0,0.02);
+            border: 1px solid rgba(2,132,199,0.14);
+        }
+
+        body.light-mode .nav-item {
+            color: #64748b;
+        }
+
+        body.light-mode .nav-item:hover {
+            background: rgba(2,132,199,0.08);
+            color: #0284c7;
+        }
+
+        body.light-mode .nav-item.active {
+            background: rgba(2,132,199,0.15);
+            color: #0c4a6e;
+            border: 1px solid rgba(2,132,199,0.2);
+        }
+
+        body.light-mode .topbar-btn {
+            background: rgba(0,0,0,0.03);
+            border: 1px solid rgba(2,132,199,0.14);
+            color: #64748b;
+        }
+
+        body.light-mode .topbar-btn:hover {
+            background: rgba(2,132,199,0.1);
+            color: #0284c7;
+            border-color: rgba(2,132,199,0.3);
+        }
+
         html { scroll-behavior: smooth; }
         body {
             font-family: 'DM Sans', sans-serif;
@@ -71,6 +146,10 @@
             border-bottom: 1px solid var(--border);
             display: flex; align-items: center; gap: 0.75rem;
         }
+
+        body.light-mode .sidebar-brand {
+            border-bottom: 1px solid rgba(2,132,199,0.14);
+        }
         .brand-icon {
             width: 40px; height: 40px; border-radius: 11px;
             background: linear-gradient(135deg, var(--blue-600), var(--accent));
@@ -78,11 +157,24 @@
             font-size: 18px; flex-shrink: 0;
             box-shadow: 0 6px 18px rgba(55,138,221,0.35);
         }
+
+        body.light-mode .brand-icon {
+            box-shadow: 0 6px 18px rgba(2,132,199,0.2);
+        }
         .brand-name {
             font-family: 'Syne', sans-serif;
             font-size: 1.25rem; font-weight: 700; letter-spacing: -0.03em;
             background: linear-gradient(135deg, #fff 30%, var(--blue-300));
             -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text;
+        }
+
+        body.light-mode .brand-name {
+            background: none;
+            -webkit-background-clip: unset;
+            -webkit-text-fill-color: unset;
+            background-clip: unset;
+            color: #003d7a;
+            font-weight: 800;
         }
 
         .sidebar-nav { flex: 1; padding: 1.25rem 0.75rem; overflow-y: auto; }
@@ -237,6 +329,54 @@
         .anim-d4 { animation-delay: 0.20s; }
         .anim-d5 { animation-delay: 0.25s; }
         .anim-d6 { animation-delay: 0.30s; }
+
+        /* Language Menu Styles */
+        .language-menu {
+            position: absolute;
+            top: 100%;
+            right: 0;
+            margin-top: 0.5rem;
+            background: var(--bg-card);
+            border: 1px solid var(--border);
+            border-radius: 10px;
+            min-width: 140px;
+            z-index: 1000;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.3);
+        }
+
+        body.light-mode .language-menu {
+            background: rgba(248,250,252,0.95);
+            border: 1px solid rgba(2,132,199,0.14);
+        }
+
+        .lang-option {
+            display: block;
+            padding: 0.75rem 1rem;
+            color: var(--text-primary);
+            text-decoration: none;
+            transition: background 0.2s;
+            font-size: 0.9rem;
+        }
+
+        .lang-option:hover {
+            background: var(--surface);
+        }
+
+        .lang-option:first-child {
+            border-radius: 10px 10px 0 0;
+        }
+
+        .lang-option:last-child {
+            border-radius: 0 0 10px 10px;
+        }
+
+        body.light-mode .lang-option {
+            color: #1e293b;
+        }
+
+        body.light-mode .lang-option:hover {
+            background: rgba(2,132,199,0.08);
+        }
     </style>
     @stack('styles')
 </head>
@@ -254,10 +394,10 @@
     </div>
 
     <nav class="sidebar-nav">
-        <div class="nav-section-label">Main</div>
+        <div class="nav-section-label">{{ __('navigation.main') }}</div>
         <a href="dash" class="nav-item active">
             <svg width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><rect x="3" y="3" width="7" height="7" rx="1"/><rect x="14" y="3" width="7" height="7" rx="1"/><rect x="3" y="14" width="7" height="7" rx="1"/><rect x="14" y="14" width="7" height="7" rx="1"/></svg>
-            Dashboard
+            {{ __('navigation.dashboard') }}
         </a>
 
         <!-- "Trainings" → "Emploi" with a briefcase/job icon -->
@@ -268,7 +408,7 @@
                 <line x1="12" y1="12" x2="12" y2="12"/>
                 <path d="M2 13h20"/>
             </svg>
-            Schedule
+            {{ __('navigation.schedule') }}
             <span class="nav-badge">24</span>
         </a>
 
@@ -280,23 +420,23 @@
                 <line x1="17" y1="8" x2="23" y2="14"/>
                 <line x1="23" y1="8" x2="17" y2="14"/>
             </svg>
-            Absence
-            <span class="nav-badge">{{ $students->count() }}</span>
+            {{ __('navigation.absence') }}
+            @if(isset($students))<span class="nav-badge">{{ $students->count() }}</span>@endif
         </a>
 
         <a href="#" class="nav-item">
             <svg width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/></svg>
-            Blog
+            {{ __('navigation.blog') }}
         </a>
 
-        <div class="nav-section-label" style="margin-top:0.5rem;">Account</div>
-        <a href="#" class="nav-item">
+        <div class="nav-section-label" style="margin-top:0.5rem;">{{ __('navigation.account') }}</div>
+        <a href="{{ route('profile') }}" class="nav-item">
             <svg width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
-            My Profile
+            {{ __('navigation.my_profile') }}
         </a>
-        <a href="#" class="nav-item">
+        <a href="{{ route('settings') }}" class="nav-item">
             <svg width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><circle cx="12" cy="12" r="3"/><path d="M19.07 4.93a10 10 0 0 1 0 14.14M4.93 4.93a10 10 0 0 0 0 14.14"/></svg>
-            Settings
+            {{ __('navigation.settings') }}
         </a>
     </nav>
 
@@ -324,6 +464,42 @@
         <span class="topbar-title">@yield('page-title', 'Dashboard')</span>
     </div>
     <div class="topbar-right">
+        <!-- Language Switcher -->
+        <div class="topbar-dropdown" style="position: relative;">
+            <button class="topbar-btn" title="Language" onclick="toggleLanguageMenu()" style="font-weight: 600;">
+                @if(app()->getLocale() === 'fr')
+                    FR
+                @elseif(app()->getLocale() === 'ar')
+                    AR
+                @else
+                    EN
+                @endif
+            </button>
+            <div id="languageMenu" class="language-menu" style="display: none;">
+                <a href="{{ route('change-locale', ['locale' => 'en']) }}" class="lang-option">English</a>
+                <a href="{{ route('change-locale', ['locale' => 'fr']) }}" class="lang-option">Français</a>
+                <a href="{{ route('change-locale', ['locale' => 'ar']) }}" class="lang-option">العربية</a>
+            </div>
+        </div>
+
+        <!-- Theme Switcher -->
+        <button class="topbar-btn" id="themeToggle" title="Toggle Theme" onclick="toggleTheme()">
+            <svg id="sunIcon" width="16" height="16" fill="currentColor" viewBox="0 0 24 24" style="display: none;">
+                <circle cx="12" cy="12" r="5"/>
+                <line x1="12" y1="1" x2="12" y2="3"/>
+                <line x1="12" y1="21" x2="12" y2="23"/>
+                <line x1="4.22" y1="4.22" x2="5.64" y2="5.64"/>
+                <line x1="18.36" y1="18.36" x2="19.78" y2="19.78"/>
+                <line x1="1" y1="12" x2="3" y2="12"/>
+                <line x1="21" y1="12" x2="23" y2="12"/>
+                <line x1="4.22" y1="19.78" x2="5.64" y2="18.36"/>
+                <line x1="18.36" y1="5.64" x2="19.78" y2="4.22"/>
+            </svg>
+            <svg id="moonIcon" width="16" height="16" fill="currentColor" viewBox="0 0 24 24">
+                <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/>
+            </svg>
+        </button>
+
         <button class="topbar-btn notif-dot" title="Notifications">
             <svg width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9"/><path d="M13.73 21a2 2 0 0 1-3.46 0"/></svg>
         </button>
@@ -349,6 +525,68 @@ function closeSidebar() {
     document.getElementById('sidebar').classList.remove('open');
     document.getElementById('overlay').classList.remove('open');
 }
+
+// Theme Switching
+function toggleTheme() {
+    const html = document.documentElement;
+    const body = document.body;
+    const sunIcon = document.getElementById('sunIcon');
+    const moonIcon = document.getElementById('moonIcon');
+
+    if (html.classList.contains('light-mode')) {
+        html.classList.remove('light-mode');
+        body.classList.remove('light-mode');
+        localStorage.setItem('theme', 'dark');
+        sunIcon.style.display = 'none';
+        moonIcon.style.display = 'block';
+    } else {
+        html.classList.add('light-mode');
+        body.classList.add('light-mode');
+        localStorage.setItem('theme', 'light');
+        sunIcon.style.display = 'block';
+        moonIcon.style.display = 'none';
+    }
+}
+
+// Initialize theme on page load
+document.addEventListener('DOMContentLoaded', function() {
+    const savedTheme = localStorage.getItem('theme') || 'dark';
+    const html = document.documentElement;
+    const body = document.body;
+    const sunIcon = document.getElementById('sunIcon');
+    const moonIcon = document.getElementById('moonIcon');
+
+    if (savedTheme === 'light') {
+        html.classList.add('light-mode');
+        body.classList.add('light-mode');
+        sunIcon.style.display = 'block';
+        moonIcon.style.display = 'none';
+    } else {
+        html.classList.remove('light-mode');
+        body.classList.remove('light-mode');
+        sunIcon.style.display = 'none';
+        moonIcon.style.display = 'block';
+    }
+});
+
+// Language Menu Toggle
+function toggleLanguageMenu() {
+    const menu = document.getElementById('languageMenu');
+    if (menu.style.display === 'none') {
+        menu.style.display = 'block';
+    } else {
+        menu.style.display = 'none';
+    }
+}
+
+// Close language menu when clicking outside
+document.addEventListener('click', function(event) {
+    const menu = document.getElementById('languageMenu');
+    const btn = event.target.closest('.topbar-dropdown');
+    if (!btn && menu) {
+        menu.style.display = 'none';
+    }
+});
 </script>
 @stack('scripts')
 </body>

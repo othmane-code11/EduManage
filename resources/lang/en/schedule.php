@@ -1,0 +1,27 @@
+<?php
+
+return [
+    'schedule' => 'Schedule',
+    'absence' => 'Absence',
+    'mark_present' => 'Mark Present',
+    'mark_absent' => 'Mark Absent',
+    'status' => 'Status',
+    'present' => 'Present',
+    'absent' => 'Absent',
+    'date' => 'Date',
+    'time' => 'Time',
+    'course' => 'Course',
+    'student' => 'Student',
+    'teacher' => 'Teacher',
+    'class' => 'Class',
+    'upload_schedule' => 'Upload Schedule',
+    'select_file' => 'Select File',
+    'upload' => 'Upload',
+    'download_pdf' => 'Download PDF',
+    'view_schedule' => 'View Schedule',
+    'edit_schedule' => 'Edit Schedule',
+    'delete_schedule' => 'Delete Schedule',
+    'total_students' => 'Total Students',
+    'total_sessions' => 'Total Sessions',
+    'attendance_rate' => 'Attendance Rate',
+];

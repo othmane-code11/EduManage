@@ -1,0 +1,25 @@
+<?php
+
+return [
+    'login' => 'Login',
+    'register' => 'Register',
+    'logout' => 'Logout',
+    'email' => 'Email',
+    'password' => 'Password',
+    'password_confirm' => 'Confirm Password',
+    'first_name' => 'First Name',
+    'last_name' => 'Last Name',
+    'remember_me' => 'Remember me',
+    'forgot_password' => 'Forgot your password?',
+    'dont_have_account' => "Don't have an account?",
+    'already_have_account' => 'Already have an account?',
+    'sign_in' => 'Sign In',
+    'sign_up' => 'Sign Up',
+    'create_account' => 'Create Account',
+    'invalid_credentials' => 'Invalid credentials',
+    'user_created' => 'User created successfully!',
+    'terms' => 'I agree to the terms and conditions',
+    'accept_terms' => 'You must accept the terms and conditions',
+    'welcome_back' => 'Welcome back 👋',
+    'welcome' => 'Welcome to EduLearn',
+];

@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="{{ app()->getLocale() }}" {{ app()->getLocale() === 'ar' ? 'dir="rtl"' : '' }}>
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -35,17 +35,17 @@
         <div class="steps">
             <div class="step">
                 <div class="step-circle active">1</div>
-                <span class="step-label active">Account</span>
+                <span class="step-label active">{{ __('auth.first_name') }}</span>
             </div>
             <div class="step-line"></div>
             <div class="step">
                 <div class="step-circle active">2</div>
-                <span class="step-label active">Details</span>
+                <span class="step-label active">{{ __('auth.last_name') }}</span>
             </div>
             <div class="step-line"></div>
             <div class="step">
                 <div class="step-circle">3</div>
-                <span class="step-label">Done</span>
+                <span class="step-label">{{ __('messages.finish') }}</span>
             </div>
         </div>
 
@@ -55,14 +55,14 @@
                 @csrf
 
                 <div class="section-title">
-                    <span class="dot"></span> Account Information
+                    <span class="dot"></span> {{ __('auth.first_name') }}
                 </div>
 
                 <div class="grid-2">
 
                     <!-- First Name -->
                     <div class="field">
-                        <label for="first_name">First Name</label>
+                        <label for="first_name">{{ __('auth.first_name') }}</label>
                         <div class="input-wrap">
                             <span class="icon"><svg width="15" height="15" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg></span>
                             <input type="text" id="first_name" name="first_name" value="{{ old('first_name') }}" placeholder="John" autocomplete="given-name" required>
@@ -72,7 +72,7 @@
 
                     <!-- Last Name -->
                     <div class="field">
-                        <label for="last_name">Last Name</label>
+                        <label for="last_name">{{ __('auth.last_name') }}</label>
                         <div class="input-wrap">
                             <span class="icon"><svg width="15" height="15" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg></span>
                             <input type="text" id="last_name" name="last_name" value="{{ old('last_name') }}" placeholder="Doe" autocomplete="family-name" required>
@@ -82,7 +82,7 @@
 
                     <!-- Email -->
                     <div class="field">
-                        <label for="email">Email Address</label>
+                        <label for="email">{{ __('auth.email') }}</label>
                         <div class="input-wrap">
                             <span class="icon"><svg width="15" height="15" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg></span>
                             <input type="email" id="email" name="email" value="{{ old('email') }}" placeholder="you@example.com" autocomplete="email" required>
@@ -92,7 +92,7 @@
 
                     <!-- Password -->
                     <div class="field">
-                        <label for="password">Password</label>
+                        <label for="password">{{ __('auth.password') }}</label>
                         <div class="input-wrap">
                             <span class="icon"><svg width="15" height="15" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><rect x="3" y="11" width="18" height="11" rx="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg></span>
                             <input type="password" id="password" name="password" placeholder="Min. 8 characters" autocomplete="new-password" required oninput="checkStrength(this.value)">
@@ -104,7 +104,7 @@
 
                     <!-- Confirm Password -->
                     <div class="field">
-                        <label for="password_confirmation">Confirm Password</label>
+                        <label for="password_confirmation">{{ __('auth.password_confirm') }}</label>
                         <div class="input-wrap">
                             <span class="icon"><svg width="15" height="15" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg></span>
                             <input type="password" id="password_confirmation" name="password_confirmation" placeholder="Repeat your password" autocomplete="new-password" required>
@@ -117,7 +117,7 @@
                 <div class="terms-wrap">
                     <input type="checkbox" name="terms" id="terms" {{ old('terms') ? 'checked' : '' }} required>
                     <span>
-                        I agree to EduManage's <a href="#">Terms of Service</a> and <a href="#">Privacy Policy</a>. I understand my data will be used to personalize my learning experience.
+                        {{ __('auth.terms') }}
                     </span>
                 </div>
                 @error('terms')
@@ -125,12 +125,12 @@
                 @enderror
 
                 <button type="submit" class="btn-submit">
-                    Create My EduManage Account <span class="btn-arrow">→</span>
+                    {{ __('auth.create_account') }} <span class="btn-arrow">→</span>
                 </button>
 
                 <div class="auth-links">
-                    <a class="btn-back-home" href="{{ route('landing') }}">Back to landing page</a>
-                    <a class="btn-sign-in" href="{{ route('login') }}">Already have an account? Sign in</a>
+                    <a class="btn-back-home" href="{{ route('landing') }}">{{ __('messages.back') }}</a>
+                    <a class="btn-sign-in" href="{{ route('login') }}">{{ __('auth.already_have_account') }}? {{ __('auth.sign_in') }}</a>
                 </div>
 
             </form>

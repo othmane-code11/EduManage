@@ -1,0 +1,27 @@
+<?php
+
+return [
+    'schedule' => 'Horaire',
+    'absence' => 'Absence',
+    'mark_present' => 'Marquer présent',
+    'mark_absent' => 'Marquer absent',
+    'status' => 'Statut',
+    'present' => 'Présent',
+    'absent' => 'Absent',
+    'date' => 'Date',
+    'time' => 'Heure',
+    'course' => 'Cours',
+    'student' => 'Étudiant',
+    'teacher' => 'Enseignant',
+    'class' => 'Classe',
+    'upload_schedule' => 'Téléverser l\'horaire',
+    'select_file' => 'Sélectionner un fichier',
+    'upload' => 'Téléverser',
+    'download_pdf' => 'Télécharger PDF',
+    'view_schedule' => 'Voir l\'horaire',
+    'edit_schedule' => 'Modifier l\'horaire',
+    'delete_schedule' => 'Supprimer l\'horaire',
+    'total_students' => 'Nombre total d\'étudiants',
+    'total_sessions' => 'Nombre total de sessions',
+    'attendance_rate' => 'Taux de présence',
+];

@@ -1,0 +1,26 @@
+<?php
+
+return [
+    'main' => 'Principal',
+    'account' => 'Compte',
+    'dashboard' => 'Tableau de bord',
+    'schedule' => 'Horaire',
+    'absence' => 'Absence',
+    'blog' => 'Blog',
+    'my_profile' => 'Mon profil',
+    'settings' => 'Paramètres',
+    'logout' => 'Déconnexion',
+    'notifications' => 'Notifications',
+    'search' => 'Rechercher',
+    'trainings' => 'Formations',
+    'sessions' => 'Sessions',
+    'courses' => 'Cours',
+    'students' => 'Étudiants',
+    'teachers' => 'Enseignants',
+    'admins' => 'Administrateurs',
+    'active' => 'Actif',
+    'inactive' => 'Inactif',
+    'pending' => 'En attente',
+    'completed' => 'Terminé',
+    'in_progress' => 'En cours',
+];
