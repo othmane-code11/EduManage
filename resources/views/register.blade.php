@@ -8,80 +8,6 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;500;600;700;800&family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;1,9..40,300&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="{{ url('CSS/register.css') }}">
-
-  <style>
-    /* ── Role Select Styling ── */
-    .input-wrap select {
-      width: 100%;
-      background: transparent;
-      border: none;
-      outline: none;
-      color: inherit;
-      font-family: inherit;
-      font-size: 0.9rem;
-      padding-left: 0.25rem;
-      cursor: pointer;
-      appearance: none;
-      -webkit-appearance: none;
-    }
-
-    .input-wrap select option {
-      background: #1a1a2e;
-      color: #e2e8f0;
-    }
-
-    /* Dropdown arrow */
-    .input-wrap.select-wrap {
-      position: relative;
-    }
-
-    .input-wrap.select-wrap::after {
-      content: '';
-      position: absolute;
-      right: 1rem;
-      top: 50%;
-      transform: translateY(-50%);
-      width: 0;
-      height: 0;
-      border-left: 5px solid transparent;
-      border-right: 5px solid transparent;
-      border-top: 6px solid currentColor;
-      opacity: 0.5;
-      pointer-events: none;
-    }
-
-    /* Role badge pills */
-    .role-badges {
-      display: flex;
-      gap: 0.45rem;
-      margin-top: 0.55rem;
-      flex-wrap: wrap;
-    }
-
-    .role-badge {
-      display: inline-flex;
-      align-items: center;
-      gap: 0.3rem;
-      padding: 0.22rem 0.65rem;
-      border-radius: 999px;
-      font-size: 0.72rem;
-      font-weight: 600;
-      letter-spacing: 0.03em;
-      opacity: 0.35;
-      transition: opacity 0.2s, transform 0.2s;
-      cursor: default;
-      border: 1px solid transparent;
-    }
-
-    .role-badge.active {
-      opacity: 1;
-      transform: scale(1.05);
-    }
-
-    .role-badge.badge-admin     { background: rgba(139,60,247,0.15); border-color: rgba(139,60,247,0.4); color: #c084fc; }
-    .role-badge.badge-student   { background: rgba(34,197,94,0.12);  border-color: rgba(34,197,94,0.4);  color: #4ade80; }
-    .role-badge.badge-formateur { background: rgba(59,130,246,0.12); border-color: rgba(59,130,246,0.4); color: #60a5fa; }
-  </style>
 </head>
 <body>
 <div class="bg-scene">
@@ -154,31 +80,6 @@
                         @error('last_name')<span style="color:#f87171;font-size:0.78rem;margin-top:0.3rem;display:block;">{{ $message }}</span>@enderror
                     </div>
 
-                    <!-- Role Select -->
-                    <div class="field">
-                        <label for="role">Role</label>
-                        <div class="input-wrap select-wrap">
-                            <span class="icon">
-                               
-                            </span>
-                            <select id="role" name="role" required onchange="updateBadge(this.value)">
-                                <option value="" disabled {{ old('role') ? '' : 'selected' }}>Select a role…</option>
-                                <option value="admin"      {{ old('role') == 'admin'      ? 'selected' : '' }}>Admin</option>
-                                <option value="student"    {{ old('role') == 'student'    ? 'selected' : '' }}>Student</option>
-                                <option value="formateur"  {{ old('role') == 'formateur'  ? 'selected' : '' }}>Formateur</option>
-                            </select>
-                        </div>
-
-                        <!-- Visual role badges -->
-                        <div class="role-badges">
-                            <span class="role-badge badge-admin"      id="badge-admin">🛡 Admin</span>
-                            <span class="role-badge badge-student"    id="badge-student">🎓 Student</span>
-                            <span class="role-badge badge-formateur"  id="badge-formateur">📚 Formateur</span>
-                        </div>
-
-                        @error('role')<span style="color:#f87171;font-size:0.78rem;margin-top:0.3rem;display:block;">{{ $message }}</span>@enderror
-                    </div>
-
                     <!-- Email -->
                     <div class="field">
                         <label for="email">Email Address</label>
@@ -227,6 +128,11 @@
                     Create My EduLearn Account <span class="btn-arrow">→</span>
                 </button>
 
+                <div class="auth-links">
+                    <a class="btn-back-home" href="{{ route('landing') }}">Back to landing page</a>
+                    <a class="btn-sign-in" href="{{ route('login') }}">Already have an account? Sign in</a>
+                </div>
+
             </form>
         </div>
 
@@ -254,19 +160,6 @@
 
 
 <script>
-/* ── Role badge highlight ── */
-function updateBadge(val) {
-    ['admin','student','formateur'].forEach(function(r) {
-        document.getElementById('badge-' + r).classList.toggle('active', r === val);
-    });
-}
-
-/* Pre-select badge on page load (for old() values after validation fail) */
-(function() {
-    const sel = document.getElementById('role');
-    if (sel && sel.value) updateBadge(sel.value);
-})();
-
 /* ── Password strength ── */
 function checkStrength(val) {
     const fill = document.getElementById('strength-fill');

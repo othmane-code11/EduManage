@@ -319,3 +319,55 @@ html, body {
     align-items: center;
     gap: 0.4rem;
 }
+
+.btn-create-account {
+    width: 100%;
+    text-align: center;
+    padding: 0.8rem;
+    border-radius: 12px;
+    border: 1.5px solid rgba(55,138,221,0.35);
+    background: rgba(55,138,221,0.08);
+    color: var(--blue-100);
+    text-decoration: none;
+    font-family: 'Syne', sans-serif;
+    font-size: 0.95rem;
+    font-weight: 600;
+    letter-spacing: 0.01em;
+    transition: transform 0.2s, border-color 0.2s, background 0.2s, box-shadow 0.2s;
+}
+
+.btn-create-account:hover {
+    transform: translateY(-2px);
+    border-color: rgba(106,174,232,0.7);
+    background: rgba(55,138,221,0.16);
+    box-shadow: 0 10px 24px rgba(1,26,56,0.45);
+}
+
+.btn-create-account:active {
+    transform: translateY(0);
+}
+
+.btn-back-home {
+    width: 100%;
+    text-align: center;
+    padding: 0.75rem;
+    border-radius: 12px;
+    border: 1px solid rgba(106,174,232,0.35);
+    background: rgba(1,26,56,0.55);
+    color: var(--blue-300);
+    text-decoration: none;
+    font-family: 'DM Sans', sans-serif;
+    font-size: 0.9rem;
+    font-weight: 600;
+    transition: transform 0.2s, border-color 0.2s, background 0.2s;
+}
+
+.btn-back-home:hover {
+    transform: translateY(-2px);
+    border-color: rgba(106,174,232,0.7);
+    background: rgba(12,68,124,0.35);
+}
+
+.btn-back-home:active {
+    transform: translateY(0);
+}

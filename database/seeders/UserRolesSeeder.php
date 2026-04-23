@@ -13,48 +13,62 @@ class UserRolesSeeder extends Seeder
      */
     public function run()
     {
-        // Admins
-        User::create([
-            'name' => 'Admin One',
-            'email' => 'admin1@example.com',
-            'password' => Hash::make('password123'),
-            'role' => 'admin',
-        ]);
+        User::whereIn('email', ['admin1@example.com', 'admin2@example.com'])->delete();
 
-        User::create([
-            'name' => 'Admin Two',
-            'email' => 'admin2@example.com',
-            'password' => Hash::make('password123'),
-            'role' => 'admin',
-        ]);
+        // Admins
+        User::updateOrCreate(
+            ['email' => 'yahya@gmail.com'],
+            [
+                'name' => 'Yahya Admin',
+                'password' => Hash::make('12345678'),
+                'role' => 'admin',
+            ]
+        );
+
+        User::updateOrCreate(
+            ['email' => 'othmane@gmail.com'],
+            [
+                'name' => 'Othmane Admin',
+                'password' => Hash::make('12345678'),
+                'role' => 'admin',
+            ]
+        );
 
         // Formateurs
-        User::create([
-            'name' => 'Formateur One',
-            'email' => 'formateur1@example.com',
-            'password' => Hash::make('password123'),
-            'role' => 'formateur',
-        ]);
+        User::updateOrCreate(
+            ['email' => 'formateur1@example.com'],
+            [
+                'name' => 'Formateur One',
+                'password' => Hash::make('password123'),
+                'role' => 'formateur',
+            ]
+        );
 
-        User::create([
-            'name' => 'Formateur Two',
-            'email' => 'formateur2@example.com',
-            'password' => Hash::make('password123'),
-            'role' => 'formateur',
-        ]);
+        User::updateOrCreate(
+            ['email' => 'formateur2@example.com'],
+            [
+                'name' => 'Formateur Two',
+                'password' => Hash::make('password123'),
+                'role' => 'formateur',
+            ]
+        );
 
-        User::create([
-            'name' => 'Formateur Three',
-            'email' => 'formateur3@example.com',
-            'password' => Hash::make('password123'),
-            'role' => 'formateur',
-        ]);
+        User::updateOrCreate(
+            ['email' => 'formateur3@example.com'],
+            [
+                'name' => 'Formateur Three',
+                'password' => Hash::make('password123'),
+                'role' => 'formateur',
+            ]
+        );
 
-        User::create([
-            'name' => 'Formateur Four',
-            'email' => 'formateur4@example.com',
-            'password' => Hash::make('password123'),
-            'role' => 'formateur',
-        ]);
+        User::updateOrCreate(
+            ['email' => 'formateur4@example.com'],
+            [
+                'name' => 'Formateur Four',
+                'password' => Hash::make('password123'),
+                'role' => 'formateur',
+            ]
+        );
     }
 }

@@ -115,8 +115,8 @@
                <button type="submit" class="btn-submit">Sign In to EduLearn</button>
 
 <div class="auth-links">
-    <a href="{{ route('register') }}">Create an account</a>
-   
+    <a class="btn-create-account" href="{{ route('register') }}">Create an account</a>
+    <a class="btn-back-home" href="{{ route('landing') }}">Back to landing page</a>
 </div>
             </form>
 

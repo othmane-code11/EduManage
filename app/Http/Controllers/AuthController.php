@@ -46,6 +46,11 @@ class AuthController extends Controller
         
         if ($user && Hash::check($req->password, $user->password)) {
             Auth::login($user);
+
+            if ($user->role === 'formateur') {
+                return redirect()->route('schedules.index');
+            }
+
             return redirect()->route('dashboard');
         }
 
@@ -59,21 +64,26 @@ class AuthController extends Controller
     // registerpostt
 public function registerPost(Request $req)
 {
+    $isAdminCreator = Auth::check() && Auth::user()->role === 'admin';
+
     $req->validate([
         'first_name' => 'required|string|max:255',
         'last_name'  => 'required|string|max:255',
         'email'      => 'required|email|unique:users,email',
         'password'   => 'required|min:6|confirmed',
-        'role'       => 'required|in:admin,student,formateur',
+        'role'       => $isAdminCreator ? 'required|in:admin,student,formateur' : 'nullable',
         'terms'      => 'accepted',
     ]);
+
+    // Guests can only self-register as students. Admins can choose the role.
+    $role = $isAdminCreator ? $req->role : 'student';
 
     // ✅ Create the user
     $user = User::create([
         'name'     => $req->first_name . ' ' . $req->last_name,
         'email'    => $req->email,
         'password' => Hash::make($req->password),
-        'role'     => $req->role,
+        'role'     => $role,
     ]);
 
     

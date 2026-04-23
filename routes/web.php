@@ -8,12 +8,19 @@ use App\Http\Middleware\RoleMiddleware;
 
 
 use App\Http\Controllers\ScheduleController;
+Route::get('/', function () {
+    return redirect()->route('landing');
+});
+
+Route::get('/landing', function () {
+    return view('landing');
+})->name('landing');
 
 // Login
-Route::get('/login', [AuthController::class, 'login'])->name('login');
-Route::get('/register', [AuthController::class, 'register'])->middleware('role')->name('register');
+Route::get('/login', [AuthController::class, 'login'])->middleware('guest')->name('login');
+Route::get('/register', [AuthController::class, 'register'])->middleware('guest')->name('register');
 Route::get('/dash', [AuthController::class, 'dash'])
-    ->middleware('role')  
+    ->middleware('role:admin,student')
     ->name('dashboard');
 
 Route::get('/absence', [AccController::class, 'absc'])->name('absence');
@@ -45,14 +52,10 @@ Route::group(['prefix' => 'dashboard', 'as' => 'dashboard.'], function () {
         ->name('student')
         ->middleware('role:student');
 
-    // Formateur 
-    Route::get('/formateur', [AccController::class, 'prof'])
-        ->name('formateur')
-        ->middleware('role:formateur');
 });
 
 
-Route::POST('/logout', [AuthController::class, 'login'])->name('logout');
+Route::post('/logout', [AuthController::class, 'logout'])->middleware('auth')->name('logout');
 
 
 /*
@@ -63,7 +66,7 @@ Route::POST('/logout', [AuthController::class, 'login'])->name('logout');
 | Both are wrapped in auth middleware so only logged-in users can access them.
 */
 
-Route::middleware(['auth'])->group(function () {
+Route::middleware(['auth', 'role:formateur'])->group(function () {
 
     // Show the upload form
     Route::get('/schedules', [ScheduleController::class, 'index'])
