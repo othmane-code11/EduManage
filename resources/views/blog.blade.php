@@ -59,7 +59,16 @@
             color: var(--text-primary); text-decoration: none;
         }
 
-        .nav-logo svg { width: 32px; height: 32px; }
+        body.light-mode .nav-logo {
+            color: #003d7a;
+            font-weight: 800;
+        }
+
+        .nav-logo svg {
+            width: 32px;
+            height: 32px;
+            flex-shrink: 0;
+        }
 
         .nav-links {
             display: flex; gap: 2rem; list-style: none;

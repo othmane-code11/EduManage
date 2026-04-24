@@ -174,7 +174,7 @@
             -webkit-text-fill-color: unset;
             background-clip: unset;
             color: #003d7a;
-            font-weight: 800;
+            font-weight: 700;
         }
 
         .sidebar-nav { flex: 1; padding: 1.25rem 0.75rem; overflow-y: auto; }
