@@ -1,7 +1,7 @@
 @extends('layouts.app')
 
-@section('title', 'Settings')
-@section('page-title', 'Settings')
+@section('title', __('sidebar.settings'))
+@section('page-title', __('sidebar.settings'))
 
 @section('content')
 <style>
@@ -283,19 +283,19 @@
 <div class="settings-container">
     <!-- Settings Header -->
     <div class="settings-header anim">
-        <h1>Settings</h1>
-        <p>Manage your account preferences and application settings</p>
+        <h1>{{ __('sidebar.settings') }}</h1>
+        <p>{{ __('forms.manage_settings_desc') }}</p>
     </div>
 
     <!-- Settings Layout -->
     <div class="settings-grid">
         <!-- Sidebar Navigation -->
         <div class="settings-sidebar anim anim-d1">
-            <button class="settings-nav-item active" onclick="switchTab('general')">⚙️ General</button>
-            <button class="settings-nav-item" onclick="switchTab('account')">👤 Account</button>
-            <button class="settings-nav-item" onclick="switchTab('notifications')">🔔 Notifications</button>
-            <button class="settings-nav-item" onclick="switchTab('privacy')">🔒 Privacy</button>
-            <button class="settings-nav-item" onclick="switchTab('security')">🛡️ Security</button>
+            <button class="settings-nav-item active" onclick="switchTab('general')">⚙️ {{ __('forms.general') }}</button>
+            <button class="settings-nav-item" onclick="switchTab('account')">👤 {{ __('sidebar.account') }}</button>
+            <button class="settings-nav-item" onclick="switchTab('notifications')">🔔 {{ __('sidebar.notifications') }}</button>
+            <button class="settings-nav-item" onclick="switchTab('privacy')">🔒 {{ __('forms.privacy') }}</button>
+            <button class="settings-nav-item" onclick="switchTab('security')">🛡️ {{ __('forms.security') }}</button>
         </div>
 
         <!-- Content Area -->
@@ -303,29 +303,29 @@
             <!-- General Settings -->
             <div id="general" class="settings-content active anim anim-d2">
                 <div class="settings-section">
-                    <div class="settings-section-title">Display Preferences</div>
+                    <div class="settings-section-title">{{ __('forms.display_preferences') }}</div>
 
                     <div class="form-group">
-                        <label class="form-label">Theme</label>
+                        <label class="form-label">{{ __('forms.theme') }}</label>
                         <select class="form-select">
-                            <option>Dark Mode (Current)</option>
-                            <option>Light Mode</option>
-                            <option>System Default</option>
+                            <option>{{ __('forms.dark_mode_current') }}</option>
+                            <option>{{ __('forms.light_mode') }}</option>
+                            <option>{{ __('forms.system_default') }}</option>
                         </select>
-                        <div class="form-desc">Choose your preferred appearance</div>
+                        <div class="form-desc">{{ __('forms.choose_appearance') }}</div>
                     </div>
 
                     <div class="form-group">
-                        <label class="form-label">Language</label>
+                        <label class="form-label">{{ __('forms.language') }}</label>
                         <select class="form-select">
-                            <option>English (US)</option>
-                            <option>French (FR)</option>
-                            <option>Spanish (ES)</option>
+                            <option>{{ __('forms.lang_en') }}</option>
+                            <option>{{ __('forms.lang_fr') }}</option>
+                            <option>{{ __('forms.lang_ar') }}</option>
                         </select>
                     </div>
 
                     <div class="form-group">
-                        <label class="form-label">Timezone</label>
+                        <label class="form-label">{{ __('forms.timezone') }}</label>
                         <select class="form-select">
                             <option>UTC-8 (Pacific Time)</option>
                             <option>UTC-5 (Eastern Time)</option>
@@ -335,7 +335,7 @@
                 </div>
 
                 <div class="settings-section">
-                    <div class="settings-section-title">Sidebar Behavior</div>
+                    <div class="settings-section-title">{{ __('forms.sidebar_behavior') }}</div>
 
                     <div class="form-group">
                         <div class="toggle-switch">
@@ -343,45 +343,45 @@
                                 <input type="checkbox" checked>
                                 <span class="slider"></span>
                             </label>
-                            <span>Auto-collapse sidebar on smaller screens</span>
+                            <span>{{ __('forms.auto_collapse_sidebar') }}</span>
                         </div>
-                        <div class="form-desc" style="margin-top: 0.75rem;">Automatically collapse the sidebar on mobile devices</div>
+                        <div class="form-desc" style="margin-top: 0.75rem;">{{ __('forms.auto_collapse_sidebar_desc') }}</div>
                     </div>
 
                     <div class="divider"></div>
 
-                    <button class="btn btn-primary">Save Changes</button>
+                    <button class="btn btn-primary">{{ __('messages.save_changes') }}</button>
                 </div>
             </div>
 
             <!-- Account Settings -->
             <div id="account" class="settings-content anim anim-d2">
                 <div class="settings-section">
-                    <div class="settings-section-title">Profile Information</div>
-                    <div class="settings-section-desc">Update your personal details</div>
+                    <div class="settings-section-title">{{ __('dashboard.personal_information') }}</div>
+                    <div class="settings-section-desc">{{ __('forms.update_personal_details') }}</div>
 
                     <div class="form-row">
                         <div class="form-group">
-                            <label class="form-label">First Name</label>
+                            <label class="form-label">{{ __('forms.first_name') }}</label>
                             <input type="text" class="form-input" value="{{ auth()->user()->first_name ?? '' }}" placeholder="First name">
                         </div>
                         <div class="form-group">
-                            <label class="form-label">Last Name</label>
+                            <label class="form-label">{{ __('forms.last_name') }}</label>
                             <input type="text" class="form-input" value="{{ explode(' ', auth()->user()->name)[1] ?? '' }}" placeholder="Last name">
                         </div>
                     </div>
 
                     <div class="form-group">
-                        <label class="form-label">Email Address</label>
+                            <label class="form-label">{{ __('forms.email') }}</label>
                         <input type="email" class="form-input" value="{{ auth()->user()->email }}" placeholder="your@email.com">
                     </div>
 
                     <div class="divider"></div>
-                    <button class="btn btn-primary">Update Profile</button>
+                    <button class="btn btn-primary">{{ __('messages.update_profile') }}</button>
                 </div>
 
                 <div class="settings-section">
-                    <div class="settings-section-title">Email Preferences</div>
+                    <div class="settings-section-title">{{ __('dashboard.email_notifications') }}</div>
 
                     <div class="form-group">
                         <div class="toggle-switch">
@@ -389,7 +389,7 @@
                                 <input type="checkbox" checked>
                                 <span class="slider"></span>
                             </label>
-                            <span>Receive course updates</span>
+                            <span>{{ __('forms.receive_course_updates') }}</span>
                         </div>
                     </div>
 
@@ -399,19 +399,19 @@
                                 <input type="checkbox" checked>
                                 <span class="slider"></span>
                             </label>
-                            <span>Receive weekly digest</span>
+                            <span>{{ __('forms.receive_weekly_digest') }}</span>
                         </div>
                     </div>
 
                     <div class="divider"></div>
-                    <button class="btn btn-primary">Save Preferences</button>
+                    <button class="btn btn-primary">{{ __('messages.save_changes') }}</button>
                 </div>
             </div>
 
             <!-- Notifications -->
             <div id="notifications" class="settings-content anim anim-d2">
                 <div class="settings-section">
-                    <div class="settings-section-title">Notification Channels</div>
+                    <div class="settings-section-title">{{ __('forms.notification_channels') }}</div>
 
                     <div class="form-group">
                         <div class="toggle-switch">
@@ -419,9 +419,9 @@
                                 <input type="checkbox" checked>
                                 <span class="slider"></span>
                             </label>
-                            <span>Email Notifications</span>
+                            <span>{{ __('dashboard.email_notifications') }}</span>
                         </div>
-                        <div class="form-desc" style="margin-top: 0.75rem;">Receive important updates via email</div>
+                        <div class="form-desc" style="margin-top: 0.75rem;">{{ __('forms.receive_updates_email') }}</div>
                     </div>
 
                     <div class="form-group">
@@ -430,7 +430,7 @@
                                 <input type="checkbox" checked>
                                 <span class="slider"></span>
                             </label>
-                            <span>In-app Notifications</span>
+                            <span>{{ __('forms.in_app_notifications') }}</span>
                         </div>
                     </div>
 
@@ -440,13 +440,13 @@
                                 <input type="checkbox">
                                 <span class="slider"></span>
                             </label>
-                            <span>Push Notifications</span>
+                            <span>{{ __('forms.push_notifications') }}</span>
                         </div>
                     </div>
                 </div>
 
                 <div class="settings-section">
-                    <div class="settings-section-title">Notification Types</div>
+                    <div class="settings-section-title">{{ __('forms.notification_types') }}</div>
 
                     <div class="form-group">
                         <div class="toggle-switch">
@@ -454,7 +454,7 @@
                                 <input type="checkbox" checked>
                                 <span class="slider"></span>
                             </label>
-                            <span>Course Reminders</span>
+                            <span>{{ __('forms.course_reminders') }}</span>
                         </div>
                     </div>
 
@@ -464,7 +464,7 @@
                                 <input type="checkbox" checked>
                                 <span class="slider"></span>
                             </label>
-                            <span>New Messages</span>
+                            <span>{{ __('forms.new_messages') }}</span>
                         </div>
                     </div>
 
@@ -474,36 +474,36 @@
                                 <input type="checkbox">
                                 <span class="slider"></span>
                             </label>
-                            <span>Marketing Updates</span>
+                            <span>{{ __('forms.marketing_updates') }}</span>
                         </div>
                     </div>
 
                     <div class="divider"></div>
-                    <button class="btn btn-primary">Save Notification Settings</button>
+                    <button class="btn btn-primary">{{ __('forms.save_notification_settings') }}</button>
                 </div>
             </div>
 
             <!-- Privacy Settings -->
             <div id="privacy" class="settings-content anim anim-d2">
                 <div class="settings-section">
-                    <div class="settings-section-title">Profile Privacy</div>
+                    <div class="settings-section-title">{{ __('forms.profile_privacy') }}</div>
 
                     <div class="form-group">
-                        <label class="form-label">Profile Visibility</label>
+                        <label class="form-label">{{ __('forms.profile_visibility') }}</label>
                         <select class="form-select">
-                            <option>Public</option>
-                            <option>Private</option>
-                            <option>Friends Only</option>
+                            <option>{{ __('forms.public') }}</option>
+                            <option>{{ __('forms.private') }}</option>
+                            <option>{{ __('forms.friends_only') }}</option>
                         </select>
-                        <div class="form-desc">Control who can see your profile</div>
+                        <div class="form-desc">{{ __('forms.profile_visibility_desc') }}</div>
                     </div>
 
                     <div class="form-group">
-                        <label class="form-label">Show My Courses</label>
+                        <label class="form-label">{{ __('forms.show_my_courses') }}</label>
                         <select class="form-select">
-                            <option>Everyone</option>
-                            <option>Logged in users</option>
-                            <option>Nobody</option>
+                            <option>{{ __('forms.everyone') }}</option>
+                            <option>{{ __('forms.logged_users') }}</option>
+                            <option>{{ __('forms.nobody') }}</option>
                         </select>
                     </div>
 
@@ -513,16 +513,16 @@
                                 <input type="checkbox" checked>
                                 <span class="slider"></span>
                             </label>
-                            <span>Allow others to message me</span>
+                            <span>{{ __('forms.allow_messages') }}</span>
                         </div>
                     </div>
 
                     <div class="divider"></div>
-                    <button class="btn btn-primary">Update Privacy Settings</button>
+                    <button class="btn btn-primary">{{ __('forms.update_privacy_settings') }}</button>
                 </div>
 
                 <div class="settings-section">
-                    <div class="settings-section-title">Data & Cookies</div>
+                    <div class="settings-section-title">{{ __('forms.data_cookies') }}</div>
 
                     <div class="form-group">
                         <div class="toggle-switch">
@@ -530,43 +530,43 @@
                                 <input type="checkbox">
                                 <span class="slider"></span>
                             </label>
-                            <span>Allow analytics tracking</span>
+                            <span>{{ __('forms.allow_analytics') }}</span>
                         </div>
-                        <div class="form-desc" style="margin-top: 0.75rem;">Help us improve by sharing anonymous usage data</div>
+                        <div class="form-desc" style="margin-top: 0.75rem;">{{ __('forms.analytics_desc') }}</div>
                     </div>
 
                     <div class="divider"></div>
-                    <button class="btn btn-secondary">Download My Data</button>
+                    <button class="btn btn-secondary">{{ __('forms.download_my_data') }}</button>
                 </div>
             </div>
 
             <!-- Security Settings -->
             <div id="security" class="settings-content anim anim-d2">
                 <div class="settings-section">
-                    <div class="settings-section-title">Password & Security</div>
+                    <div class="settings-section-title">{{ __('forms.password_security') }}</div>
 
                     <div class="form-group">
-                        <label class="form-label">Current Password</label>
+                        <label class="form-label">{{ __('forms.current_password') }}</label>
                         <input type="password" class="form-input" placeholder="Enter current password">
                     </div>
 
                     <div class="form-group">
-                        <label class="form-label">New Password</label>
+                        <label class="form-label">{{ __('forms.new_password') }}</label>
                         <input type="password" class="form-input" placeholder="Enter new password">
                     </div>
 
                     <div class="form-group">
-                        <label class="form-label">Confirm Password</label>
+                        <label class="form-label">{{ __('forms.confirm_password') }}</label>
                         <input type="password" class="form-input" placeholder="Confirm new password">
                     </div>
 
                     <div class="divider"></div>
-                    <button class="btn btn-primary">Change Password</button>
+                    <button class="btn btn-primary">{{ __('messages.change_password') }}</button>
                 </div>
 
                 <div class="settings-section">
-                    <div class="settings-section-title">Two-Factor Authentication</div>
-                    <div class="settings-section-desc">Add an extra layer of security to your account</div>
+                    <div class="settings-section-title">{{ __('dashboard.two_factor_auth') }}</div>
+                    <div class="settings-section-desc">{{ __('forms.two_factor_desc') }}</div>
 
                     <div class="form-group">
                         <div class="toggle-switch">
@@ -574,28 +574,28 @@
                                 <input type="checkbox">
                                 <span class="slider"></span>
                             </label>
-                            <span>Enable 2FA</span>
+                            <span>{{ __('forms.enable_2fa') }}</span>
                         </div>
-                        <div class="form-desc" style="margin-top: 0.75rem;">Requires authentication via authenticator app</div>
+                        <div class="form-desc" style="margin-top: 0.75rem;">{{ __('forms.enable_2fa_desc') }}</div>
                     </div>
 
                     <div class="divider"></div>
-                    <button class="btn btn-secondary">Setup 2FA</button>
+                    <button class="btn btn-secondary">{{ __('forms.setup_2fa') }}</button>
                 </div>
 
                 <div class="settings-section">
-                    <div class="settings-section-title">Active Sessions</div>
+                    <div class="settings-section-title">{{ __('forms.active_sessions') }}</div>
 
                     <div class="form-group">
-                        <p style="color: #9ca3af; margin-bottom: 1rem;">You are currently logged in on 1 device</p>
-                        <button class="btn btn-secondary">Logout from other devices</button>
+                        <p style="color: #9ca3af; margin-bottom: 1rem;">{{ __('forms.logged_in_devices') }}</p>
+                        <button class="btn btn-secondary">{{ __('forms.logout_other_devices') }}</button>
                     </div>
                 </div>
 
                 <div class="danger-zone">
-                    <div class="danger-zone-title">Danger Zone</div>
-                    <div class="danger-zone-desc">These actions cannot be undone. Please proceed with caution.</div>
-                    <button class="btn btn-danger">Delete My Account</button>
+                    <div class="danger-zone-title">{{ __('forms.danger_zone') }}</div>
+                    <div class="danger-zone-desc">{{ __('forms.danger_zone_desc') }}</div>
+                    <button class="btn btn-danger">{{ __('forms.delete_my_account') }}</button>
                 </div>
             </div>
         </div>

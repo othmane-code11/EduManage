@@ -1,9 +1,9 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="{{ app()->getLocale() }}" {{ app()->getLocale() === 'ar' ? 'dir="rtl"' : '' }}>
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Contact – EduLearn</title>
+    <title>{{ __('messages.contact_meta_title') }}</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
     <style>
@@ -259,44 +259,16 @@
 </head>
 <body>
 
-{{-- ═══════════════ NAVBAR ═══════════════ --}}
-<nav>
-    <a href="{{ route('landing') }}" class="nav-logo">
-        <svg viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg">
-            <rect width="32" height="32" rx="8" fill="#3b82f6"/>
-            <path d="M7 12l9-5 9 5-9 5-9-5z" fill="#fff" opacity=".9"/>
-            <path d="M7 18l9 5 9-5" stroke="#fff" stroke-width="2" stroke-linecap="round" fill="none" opacity=".7"/>
-        </svg>
-        EduLearn
-    </a>
-
-    <ul class="nav-links">
-        <li><a href="{{ route('landing') }}">Home</a></li>
-        <li><a href="{{ route('features') }}">Features</a></li>
-        <li><a href="{{ route('pricing') }}">Pricing</a></li>
-        <li><a href="{{ route('about') }}">About</a></li>
-        <li><a href="{{ route('blog') }}">Blog</a></li>
-        <li><a href="{{ route('contact') }}" class="active">Contact</a></li>
-    </ul>
-
-    <div class="nav-actions">
-        @auth
-            <a href="{{ route('dashboard') }}" class="btn-ghost">Dashboard</a>
-        @else
-            <a href="{{ route('login') }}" class="btn-ghost">Log in</a>
-            <a href="{{ route('register') }}" class="btn-primary">Get Started</a>
-        @endauth
-    </div>
-</nav>
+@include('partials.public-navbar', ['active' => 'contact'])
 
 <div class="main-content">
     {{-- ═══════════════ CONTACT HEADER ═══════════════ --}}
     <section class="section">
         <div class="section-header">
-            <div class="section-badge">💬 Get In Touch</div>
-            <h1 class="section-title">Contact Us</h1>
+            <div class="section-badge">💬 {{ __('messages.contact_badge') }}</div>
+            <h1 class="section-title">{{ __('messages.contact_title') }}</h1>
             <p class="section-desc">
-                We'd love to hear from you. Reach out to us with any questions or feedback.
+                {{ __('messages.contact_description') }}
             </p>
         </div>
     </section>
@@ -308,7 +280,7 @@
             <div class="contact-info">
                 <div class="info-card">
                     <div class="info-icon">📧</div>
-                    <div class="info-title">Email</div>
+                    <div class="info-title">{{ __('messages.contact_info_email') }}</div>
                     <div class="info-details">
                         <p>support@edulearn.com</p>
                         <p>business@edulearn.com</p>
@@ -317,32 +289,32 @@
 
                 <div class="info-card">
                     <div class="info-icon">📞</div>
-                    <div class="info-title">Phone</div>
+                    <div class="info-title">{{ __('messages.contact_info_phone') }}</div>
                     <div class="info-details">
                         <p>+1 (555) 123-4567</p>
-                        <p>Mon-Fri: 9AM - 6PM EST</p>
+                        <p>{{ __('messages.contact_hours') }}</p>
                     </div>
                 </div>
 
                 <div class="info-card">
                     <div class="info-icon">📍</div>
-                    <div class="info-title">Office</div>
+                    <div class="info-title">{{ __('messages.contact_info_office') }}</div>
                     <div class="info-details">
                         <p>123 Education Street</p>
                         <p>San Francisco, CA 94105</p>
-                        <p>United States</p>
+                        <p>{{ __('messages.contact_country') }}</p>
                     </div>
                 </div>
 
                 <div class="info-card">
                     <div class="info-icon">🔗</div>
-                    <div class="info-title">Follow Us</div>
+                    <div class="info-title">{{ __('messages.contact_follow') }}</div>
                     <div class="info-details">
                         <p>
-                            <a href="#">Twitter</a> •
+                            <a href="#">{{ __('messages.contact_social_twitter') }}</a> •
                             <a href="#">LinkedIn</a> •
-                            <a href="#">Facebook</a> •
-                            <a href="#">Instagram</a>
+                            <a href="#">{{ __('messages.contact_social_facebook') }}</a> •
+                            <a href="#">{{ __('messages.contact_social_instagram') }}</a>
                         </p>
                     </div>
                 </div>
@@ -355,36 +327,36 @@
 
                     <div class="form-row">
                         <div class="form-group">
-                            <label for="name">First Name</label>
-                            <input type="text" id="name" name="name" placeholder="John" required>
+                            <label for="name">{{ __('messages.contact_first_name') }}</label>
+                            <input type="text" id="name" name="name" placeholder="{{ __('messages.contact_first_name_placeholder') }}" required>
                         </div>
                         <div class="form-group">
-                            <label for="last_name">Last Name</label>
-                            <input type="text" id="last_name" name="last_name" placeholder="Doe" required>
+                            <label for="last_name">{{ __('messages.contact_last_name') }}</label>
+                            <input type="text" id="last_name" name="last_name" placeholder="{{ __('messages.contact_last_name_placeholder') }}" required>
                         </div>
                     </div>
 
                     <div class="form-group">
-                        <label for="email">Email</label>
-                        <input type="email" id="email" name="email" placeholder="your@email.com" required>
+                        <label for="email">{{ __('messages.contact_email') }}</label>
+                        <input type="email" id="email" name="email" placeholder="{{ __('messages.contact_email_placeholder') }}" required>
                     </div>
 
                     <div class="form-group">
-                        <label for="phone">Phone (Optional)</label>
-                        <input type="tel" id="phone" name="phone" placeholder="+1 (555) 000-0000">
+                        <label for="phone">{{ __('messages.contact_phone_optional') }}</label>
+                        <input type="tel" id="phone" name="phone" placeholder="{{ __('messages.contact_phone_placeholder') }}">
                     </div>
 
                     <div class="form-group">
-                        <label for="subject">Subject</label>
-                        <input type="text" id="subject" name="subject" placeholder="How can we help?" required>
+                        <label for="subject">{{ __('messages.contact_subject') }}</label>
+                        <input type="text" id="subject" name="subject" placeholder="{{ __('messages.contact_subject_placeholder') }}" required>
                     </div>
 
                     <div class="form-group">
-                        <label for="message">Message</label>
-                        <textarea id="message" name="message" placeholder="Tell us more about your inquiry..." required></textarea>
+                        <label for="message">{{ __('messages.contact_message') }}</label>
+                        <textarea id="message" name="message" placeholder="{{ __('messages.contact_message_placeholder') }}" required></textarea>
                     </div>
 
-                    <button type="submit" class="submit-btn">Send Message</button>
+                    <button type="submit" class="submit-btn">{{ __('messages.send_message') }}</button>
                 </form>
             </div>
         </div>
@@ -393,9 +365,9 @@
     {{-- ═══════════════ FAQ SECTION ═══════════════ --}}
     <section class="section" style="text-align: center;">
         <div class="section-header">
-            <h2 class="section-title">Frequently Asked Questions</h2>
+            <h2 class="section-title">{{ __('messages.contact_faq_title') }}</h2>
             <p class="section-desc">
-                Can't find the answer you're looking for? Check our FAQ or reach out directly.
+                {{ __('messages.contact_faq_desc') }}
             </p>
         </div>
     </section>

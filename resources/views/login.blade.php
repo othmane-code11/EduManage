@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Login — EduManage</title>
+    <title>{{ __('auth.login') }} — EduManage</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;500;600;700;800&family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;1,9..40,300&display=swap" rel="stylesheet">
@@ -25,22 +25,22 @@
             <div class="brand">
                 <div class="brand-icon">🎓</div>
                 <div class="brand-name">EduManage</div>
-                <div class="brand-tag">Learning Reimagined</div>
+                <div class="brand-tag">{{ __('dashboard.learning_reimagined') }}</div>
             </div>
 
             <div class="panel-copy">
-                <h2>Unlock your full learning potential</h2>
-                <p>Access thousands of expert-led courses, track your progress, and earn certificates that matter.</p>
+                <h2>{{ __('auth.unlock_potential_title') }}</h2>
+                <p>{{ __('auth.unlock_potential_desc') }}</p>
             </div>
 
             <div class="stats">
                 <div class="stat-item">
                     <div class="stat-num"></div>
-                    <div class="stat-label">Courses</div>
+                    <div class="stat-label">{{ __('sidebar.courses') }}</div>
                 </div>
                 <div class="stat-item">
                     <div class="stat-num"></div>
-                    <div class="stat-label">Students</div>
+                    <div class="stat-label">{{ __('sidebar.students') }}</div>
                 </div>
                 <div class="stat-item">
                     <div class="stat-num"></div>
@@ -71,7 +71,7 @@
                             id="email"
                             name="email"
                             value="{{ old('email') }}"
-                            placeholder="you@example.com"
+                            placeholder="{{ __('forms.email_placeholder') }}"
                             autocomplete="email"
                             required
                         >
@@ -92,7 +92,7 @@
                             type="password"
                             id="password"
                             name="password"
-                            placeholder="Enter your password"
+                            placeholder="{{ __('auth.enter_password') }}"
                             autocomplete="current-password"
                             required
                         >

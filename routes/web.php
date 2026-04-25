@@ -87,12 +87,19 @@ Route::group(['prefix' => 'dashboard', 'as' => 'dashboard.'], function () {
 
 Route::post('/logout', [AuthController::class, 'logout'])->middleware('auth')->name('logout');
 
-// Locale Switching Route
-Route::get('/change-locale/{locale}', function ($locale) {
-    if (in_array($locale, config('app.supported_locales'))) {
-        session()->put('locale', $locale);
+Route::get('/lang/{locale}', function ($locale) {
+    if (!in_array($locale, config('app.supported_locales', ['en', 'fr', 'ar']))) {
+        $locale = config('app.locale', 'en');
     }
-    return redirect()->back();
+
+    session(['locale' => $locale]);
+
+    return redirect()->back()->withCookie(cookie()->forever('locale', $locale));
+})->name('lang.switch');
+
+// Backward-compatible alias
+Route::get('/change-locale/{locale}', function ($locale) {
+    return redirect()->route('lang.switch', ['locale' => $locale]);
 })->name('change-locale');
 
 

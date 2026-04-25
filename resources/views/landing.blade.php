@@ -1,9 +1,9 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="{{ app()->getLocale() }}" {{ app()->getLocale() === 'ar' ? 'dir="rtl"' : '' }}>
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>EduLearn – Upgrade Your Skills. Advance Your Future.</title>
+    <title>{{ __('messages.landing_meta_title') }}</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
     <style>
@@ -375,38 +375,7 @@
 </head>
 <body>
 
-{{-- ═══════════════ NAVBAR ═══════════════ --}}
-<nav>
-    <a href="{{ route('landing') }}" class="nav-logo">
-        <svg viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg">
-            <rect width="32" height="32" rx="8" fill="#3b82f6"/>
-            <path d="M7 12l9-5 9 5-9 5-9-5z" fill="#fff" opacity=".9"/>
-            <path d="M7 18l9 5 9-5" stroke="#fff" stroke-width="2" stroke-linecap="round" fill="none" opacity=".7"/>
-        </svg>
-        EduLearn
-    </a>
-
-    <ul class="nav-links">
-        <li><a href="{{ route('landing') }}" class="active">{{ __('messages.home') }}</a></li>
-        <li><a href="{{ route('features') }}">{{ __('messages.features') }}</a></li>
-        <li><a href="{{ route('pricing') }}">{{ __('messages.pricing') }}</a></li>
-        <li><a href="{{ route('about') }}">{{ __('messages.about') }}</a></li>
-        <li><a href="{{ route('blog') }}">{{ __('messages.blog') }}</a></li>
-        <li><a href="{{ route('contact') }}">{{ __('messages.contact') }}</a></li>
-    </ul>
-
-    <div class="nav-actions">
-        @auth
-            <a href="{{ route('dashboard') }}" class="btn-ghost">{{ __('messages.dashboard') }}</a>
-        @else
-            <a href="{{ route('login') }}" class="btn-ghost">{{ __('messages.log_in') }}</a>
-            <a href="{{ route('register') }}" class="btn-primary">
-                {{ __('messages.get_started') }}
-                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
-            </a>
-        @endauth
-    </div>
-</nav>
+@include('partials.public-navbar', ['active' => 'landing'])
 
 {{-- ═══════════════ HERO ═══════════════ --}}
 <section class="hero">
@@ -456,7 +425,7 @@
     <div class="hero-right">
         <img
             src="{{ asset('images/Screenshot 2026-04-23 203012.png') }}"
-            alt="EduLearn landing page screenshot preview"
+            alt="{{ __('messages.landing_preview_alt') }}"
             class="hero-right-image"
             loading="eager"
             decoding="async"

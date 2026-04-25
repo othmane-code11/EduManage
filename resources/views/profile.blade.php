@@ -1,7 +1,7 @@
 @extends('layouts.app')
 
-@section('title', 'My Profile')
-@section('page-title', 'My Profile')
+@section('title', __('sidebar.my_profile'))
+@section('page-title', __('sidebar.my_profile'))
 
 @section('content')
 <style>
@@ -195,8 +195,8 @@
     </div>
 
     <div class="profile-actions">
-        <button class="btn btn-primary">Edit Profile</button>
-        <button class="btn btn-secondary">Change Password</button>
+        <button class="btn btn-primary">{{ __('messages.edit_profile') }}</button>
+        <button class="btn btn-secondary">{{ __('messages.change_password') }}</button>
     </div>
 </div>
 
@@ -204,126 +204,126 @@
 <div class="profile-grid">
     <!-- Personal Information -->
     <div class="profile-section anim anim-d1">
-        <div class="section-title">Personal Information</div>
+        <div class="section-title">{{ __('dashboard.personal_information') }}</div>
 
         <div class="info-row">
-            <span class="info-label">Full Name</span>
+            <span class="info-label">{{ __('dashboard.full_name') }}</span>
             <span class="info-value">{{ auth()->user()->name }}</span>
         </div>
 
         <div class="info-row">
-            <span class="info-label">Email</span>
+            <span class="info-label">{{ __('dashboard.email') }}</span>
             <span class="info-value">{{ auth()->user()->email }}</span>
         </div>
 
         <div class="info-row">
-            <span class="info-label">Role</span>
+            <span class="info-label">{{ __('dashboard.role') }}</span>
             <span class="info-value">{{ ucfirst(auth()->user()->role) }}</span>
         </div>
 
         <div class="info-row">
-            <span class="info-label">Member Since</span>
+            <span class="info-label">{{ __('dashboard.member_since') }}</span>
             <span class="info-value">{{ auth()->user()->created_at->format('M d, Y') }}</span>
         </div>
 
         <div class="info-row">
-            <span class="info-label">Status</span>
-            <span class="pill">Active</span>
+            <span class="info-label">{{ __('dashboard.status') }}</span>
+            <span class="pill">{{ __('sidebar.active') }}</span>
         </div>
     </div>
 
     <!-- Statistics -->
     <div class="profile-section anim anim-d2">
-        <div class="section-title">Statistics</div>
+        <div class="section-title">{{ __('dashboard.statistics') }}</div>
 
         <div class="info-row">
-            <span class="info-label">Total Courses</span>
+            <span class="info-label">{{ __('dashboard.total_courses') }}</span>
             <span class="info-value">12</span>
         </div>
 
         <div class="info-row">
-            <span class="info-label">Completed</span>
+            <span class="info-label">{{ __('dashboard.completed') }}</span>
             <span class="info-value">8</span>
         </div>
 
         <div class="info-row">
-            <span class="info-label">In Progress</span>
+            <span class="info-label">{{ __('dashboard.in_progress') }}</span>
             <span class="info-value">4</span>
         </div>
 
         <div class="info-row">
-            <span class="info-label">Certificates</span>
+            <span class="info-label">{{ __('dashboard.certificates') }}</span>
             <span class="info-value">6</span>
         </div>
 
         <div class="info-row">
-            <span class="info-label">Learning Streak</span>
+            <span class="info-label">{{ __('dashboard.learning_streak') }}</span>
             <span class="info-value">15 days 🔥</span>
         </div>
     </div>
 
     <!-- Account Preferences -->
     <div class="profile-section anim anim-d3">
-        <div class="section-title">Preferences</div>
+        <div class="section-title">{{ __('dashboard.preferences') }}</div>
 
         <div class="info-row">
-            <span class="info-label">Email Notifications</span>
-            <span class="pill secondary">Enabled</span>
+            <span class="info-label">{{ __('dashboard.email_notifications') }}</span>
+            <span class="pill secondary">{{ __('dashboard.enabled') }}</span>
         </div>
 
         <div class="info-row">
-            <span class="info-label">Dark Mode</span>
-            <span class="pill secondary">Enabled</span>
+            <span class="info-label">{{ __('dashboard.dark_mode') }}</span>
+            <span class="pill secondary">{{ __('dashboard.enabled') }}</span>
         </div>
 
         <div class="info-row">
-            <span class="info-label">Two-Factor Auth</span>
-            <span class="pill secondary">Disabled</span>
+            <span class="info-label">{{ __('dashboard.two_factor_auth') }}</span>
+            <span class="pill secondary">{{ __('dashboard.disabled') }}</span>
         </div>
 
         <div class="info-row">
-            <span class="info-label">Marketing Emails</span>
-            <span class="pill secondary">Disabled</span>
+            <span class="info-label">{{ __('dashboard.marketing_emails') }}</span>
+            <span class="pill secondary">{{ __('dashboard.disabled') }}</span>
         </div>
 
         <div style="margin-top: 1.5rem;">
-            <button class="btn btn-secondary" style="width: 100%;">Manage Preferences</button>
+            <button class="btn btn-secondary" style="width: 100%;">{{ __('dashboard.manage_preferences') }}</button>
         </div>
     </div>
 
     <!-- Recent Activity -->
     <div class="profile-section anim anim-d4">
-        <div class="section-title">Recent Activity</div>
+        <div class="section-title">{{ __('dashboard.recent_activity') }}</div>
 
         <div class="activity-item">
             <div class="activity-icon">📚</div>
             <div class="activity-content">
-                <div class="activity-title">Completed a course</div>
-                <div class="activity-time">2 days ago</div>
+                <div class="activity-title">{{ __('dashboard.completed_course') }}</div>
+                <div class="activity-time">2 {{ __('dashboard.days_ago') }}</div>
             </div>
         </div>
 
         <div class="activity-item">
             <div class="activity-icon">🏆</div>
             <div class="activity-content">
-                <div class="activity-title">Earned a certificate</div>
-                <div class="activity-time">1 week ago</div>
+                <div class="activity-title">{{ __('dashboard.earned_certificate') }}</div>
+                <div class="activity-time">1 {{ __('dashboard.week_ago') }}</div>
             </div>
         </div>
 
         <div class="activity-item">
             <div class="activity-icon">💬</div>
             <div class="activity-content">
-                <div class="activity-title">Commented on a discussion</div>
-                <div class="activity-time">2 weeks ago</div>
+                <div class="activity-title">{{ __('dashboard.commented') }}</div>
+                <div class="activity-time">2 {{ __('dashboard.weeks_ago') }}</div>
             </div>
         </div>
 
         <div class="activity-item">
             <div class="activity-icon">✅</div>
             <div class="activity-content">
-                <div class="activity-title">Started a new course</div>
-                <div class="activity-time">3 weeks ago</div>
+                <div class="activity-title">{{ __('dashboard.started_course') }}</div>
+                <div class="activity-time">3 {{ __('dashboard.weeks_ago') }}</div>
             </div>
         </div>
     </div>

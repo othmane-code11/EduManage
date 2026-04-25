@@ -6,8 +6,8 @@
 --}}
 @extends('layouts.app')
 
-@section('title', 'Schedule')
-@section('page-title', 'Schedule')
+@section('title', __('schedule.schedule'))
+@section('page-title', __('schedule.schedule'))
 
 @push('styles')
 <style>
@@ -342,14 +342,14 @@
             <circle cx="12" cy="12" r="10"/>
             <line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/>
         </svg>
-        Something went wrong. Please check the form and try again.
+        {{ __('messages.something_wrong') }}. {{ __('messages.try_again') }}.
     </div>
 @endif
 
 {{-- ── Page Header ────────────────────────────────────────────────────────── --}}
 <div class="page-header anim">
-    <h1>Emploi du Temps</h1>
-    <p>Upload your school schedule as a PDF file — max 2 MB.</p>
+    <h1>{{ __('schedule.schedule_title') }}</h1>
+    <p>{{ __('schedule.upload_hint') }}</p>
 </div>
 
 {{-- ── Upload Form Card ────────────────────────────────────────────────────── --}}
@@ -376,14 +376,14 @@
                     <line x1="15" y1="12" x2="3" y2="12"/>
                     <line x1="17" y1="18" x2="3" y2="18"/>
                 </svg>
-                Schedule Title
+                {{ __('schedule.schedule_title_label') }}
             </label>
             <input
                 type="text"
                 id="title"
                 name="title"
                 class="title-input @error('title') is-invalid @enderror"
-                placeholder="e.g. Winter Semester 2025 — Week 12"
+                placeholder="{{ __('schedule.schedule_title_placeholder') }}"
                 value="{{ old('title') }}"
                 autocomplete="off"
                 required
@@ -414,16 +414,16 @@
                 </svg>
             </div>
 
-            <div class="upload-title">Drop your PDF here</div>
+            <div class="upload-title">{{ __('schedule.drop_pdf') }}</div>
             <div class="upload-subtitle">
-                Drag &amp; drop, or <span>click to browse</span>
+                {{ __('schedule.drag_drop') }} <span>{{ __('schedule.click_browse') }}</span>
             </div>
 
             <span class="format-tag format-pdf" style="margin-bottom:1.25rem;display:inline-flex;">
                 <svg width="11" height="11" fill="currentColor" viewBox="0 0 24 24">
                     <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/>
                 </svg>
-                PDF only · max 2 MB
+                {{ __('schedule.pdf_only_max') }}
             </span>
 
             {{--
@@ -473,9 +473,9 @@
                         <path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"/>
                         <path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"/>
                     </svg>
-                    <span>Change</span>
+                    <span>{{ __('messages.edit') }}</span>
                 </button>
-                <button type="button" class="btn-remove" id="removeFileBtn" title="Remove">
+                <button type="button" class="btn-remove" id="removeFileBtn" title="{{ __('messages.delete') }}">
                     <svg width="14" height="14" fill="none" stroke="currentColor" stroke-width="2.2" viewBox="0 0 24 24">
                         <polyline points="3 6 5 6 21 6"/>
                         <path d="M19 6l-1 14a2 2 0 0 1-2 2H8a2 2 0 0 1-2-2L5 6"/>
@@ -492,7 +492,7 @@
                 <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/>
                 <polyline points="14 2 14 8 20 8"/>
             </svg>
-            Your PDF preview will appear here once you select a file.
+            {{ __('schedule.preview_hint') }}
         </div>
 
         {{-- ── Submit row ───────────────────────────────────────────────────── --}}
@@ -503,10 +503,10 @@
                     <polyline points="17 8 12 3 7 8"/>
                     <line x1="12" y1="3" x2="12" y2="15"/>
                 </svg>
-                Upload Schedule
+                {{ __('schedule.upload_schedule') }}
             </button>
             <span class="submit-note">
-                Stored in <span>storage/app/public/schedules/</span>
+                {{ __('schedule.stored_in') }} <span>storage/app/public/schedules/</span>
             </span>
         </div>
 
@@ -521,9 +521,9 @@
                 <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/>
                 <circle cx="12" cy="12" r="3"/>
             </svg>
-            Preview
+            {{ __('messages.view') }}
         </div>
-        <span class="format-tag format-pdf">PDF Document</span>
+        <span class="format-tag format-pdf">{{ __('schedule.pdf_document') }}</span>
     </div>
     <div class="preview-wrapper">
         <iframe id="pdfFrame" class="pdf-frame" title="PDF preview"></iframe>
@@ -586,7 +586,7 @@
      */
     function attachFile(file) {
         if (file.type !== 'application/pdf') {
-            alert('Only PDF files are accepted.');
+            alert('{{ __('schedule.only_pdf_allowed') }}');
             return;
         }
 
@@ -628,7 +628,7 @@
                  style="animation:spin 0.8s linear infinite">
                 <path d="M21 12a9 9 0 1 1-6.219-8.56"/>
             </svg>
-            Uploading…
+            {{ __('schedule.uploading') }}
         `;
     });
 </script>

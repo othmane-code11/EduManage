@@ -1,9 +1,9 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="{{ app()->getLocale() }}" {{ app()->getLocale() === 'ar' ? 'dir="rtl"' : '' }}>
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Blog – EduLearn</title>
+    <title>{{ __('messages.blog_meta_title') }}</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
     <style>
@@ -233,44 +233,16 @@
 </head>
 <body>
 
-{{-- ═══════════════ NAVBAR ═══════════════ --}}
-<nav>
-    <a href="{{ route('landing') }}" class="nav-logo">
-        <svg viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg">
-            <rect width="32" height="32" rx="8" fill="#3b82f6"/>
-            <path d="M7 12l9-5 9 5-9 5-9-5z" fill="#fff" opacity=".9"/>
-            <path d="M7 18l9 5 9-5" stroke="#fff" stroke-width="2" stroke-linecap="round" fill="none" opacity=".7"/>
-        </svg>
-        EduLearn
-    </a>
-
-    <ul class="nav-links">
-        <li><a href="{{ route('landing') }}">Home</a></li>
-        <li><a href="{{ route('features') }}">Features</a></li>
-        <li><a href="{{ route('pricing') }}">Pricing</a></li>
-        <li><a href="{{ route('about') }}">About</a></li>
-        <li><a href="{{ route('blog') }}" class="active">Blog</a></li>
-        <li><a href="{{ route('contact') }}">Contact</a></li>
-    </ul>
-
-    <div class="nav-actions">
-        @auth
-            <a href="{{ route('dashboard') }}" class="btn-ghost">Dashboard</a>
-        @else
-            <a href="{{ route('login') }}" class="btn-ghost">Log in</a>
-            <a href="{{ route('register') }}" class="btn-primary">Get Started</a>
-        @endauth
-    </div>
-</nav>
+@include('partials.public-navbar', ['active' => 'blog'])
 
 <div class="main-content">
     {{-- ═══════════════ BLOG HEADER ═══════════════ --}}
     <section class="section">
         <div class="section-header">
-            <div class="section-badge">📝 Insights & Updates</div>
-            <h1 class="section-title">EduLearn Blog</h1>
+            <div class="section-badge">📝 {{ __('messages.blog_badge') }}</div>
+            <h1 class="section-title">{{ __('messages.blog_title') }}</h1>
             <p class="section-desc">
-                Stay updated with the latest trends in online education and learning tips from our experts
+                {{ __('messages.blog_description') }}
             </p>
         </div>
     </section>
@@ -282,17 +254,17 @@
             <div class="blog-card">
                 <div class="blog-image">📚</div>
                 <div class="blog-content">
-                    <div class="blog-category">Learning Tips</div>
-                    <div class="blog-title">10 Ways to Maximize Your Online Learning</div>
+                    <div class="blog-category">{{ __('messages.blog_article_1_category') }}</div>
+                    <div class="blog-title">{{ __('messages.blog_article_1_title') }}</div>
                     <div class="blog-excerpt">
-                        Discover proven strategies to get the most out of your online courses and improve your learning outcomes.
+                        {{ __('messages.blog_article_1_excerpt') }}
                     </div>
                     <div class="blog-meta">
                         <div class="blog-author">
                             <div class="blog-avatar">AJ</div>
-                            <span>Alex Johnson</span>
+                            <span>{{ __('messages.blog_article_1_author') }}</span>
                         </div>
-                        <div class="blog-date">Apr 18, 2024</div>
+                        <div class="blog-date">{{ __('messages.blog_article_1_date') }}</div>
                     </div>
                 </div>
             </div>
@@ -301,17 +273,17 @@
             <div class="blog-card">
                 <div class="blog-image">🚀</div>
                 <div class="blog-content">
-                    <div class="blog-category">Career Growth</div>
-                    <div class="blog-title">Tech Skills That Will Transform Your Career in 2024</div>
+                    <div class="blog-category">{{ __('messages.blog_article_2_category') }}</div>
+                    <div class="blog-title">{{ __('messages.blog_article_2_title') }}</div>
                     <div class="blog-excerpt">
-                        Explore the most in-demand technical skills employers are looking for and how to develop them.
+                        {{ __('messages.blog_article_2_excerpt') }}
                     </div>
                     <div class="blog-meta">
                         <div class="blog-author">
                             <div class="blog-avatar">SK</div>
-                            <span>Sarah Kim</span>
+                            <span>{{ __('messages.blog_article_2_author') }}</span>
                         </div>
-                        <div class="blog-date">Apr 15, 2024</div>
+                        <div class="blog-date">{{ __('messages.blog_article_2_date') }}</div>
                     </div>
                 </div>
             </div>
@@ -320,17 +292,17 @@
             <div class="blog-card">
                 <div class="blog-image">🎯</div>
                 <div class="blog-content">
-                    <div class="blog-category">Success Stories</div>
-                    <div class="blog-title">From Bootcamp to Senior Developer: Success Stories</div>
+                    <div class="blog-category">{{ __('messages.blog_article_3_category') }}</div>
+                    <div class="blog-title">{{ __('messages.blog_article_3_title') }}</div>
                     <div class="blog-excerpt">
-                        Read inspiring stories from learners who transformed their careers through online education.
+                        {{ __('messages.blog_article_3_excerpt') }}
                     </div>
                     <div class="blog-meta">
                         <div class="blog-author">
                             <div class="blog-avatar">ML</div>
-                            <span>Mike Lewis</span>
+                            <span>{{ __('messages.blog_article_3_author') }}</span>
                         </div>
-                        <div class="blog-date">Apr 12, 2024</div>
+                        <div class="blog-date">{{ __('messages.blog_article_3_date') }}</div>
                     </div>
                 </div>
             </div>
@@ -339,17 +311,17 @@
             <div class="blog-card">
                 <div class="blog-image">💡</div>
                 <div class="blog-content">
-                    <div class="blog-category">Industry News</div>
-                    <div class="blog-title">The Future of Online Education: Trends to Watch</div>
+                    <div class="blog-category">{{ __('messages.blog_article_4_category') }}</div>
+                    <div class="blog-title">{{ __('messages.blog_article_4_title') }}</div>
                     <div class="blog-excerpt">
-                        Explore the emerging trends shaping the future of online learning and what they mean for students.
+                        {{ __('messages.blog_article_4_excerpt') }}
                     </div>
                     <div class="blog-meta">
                         <div class="blog-author">
                             <div class="blog-avatar">RD</div>
-                            <span>Rachel Davis</span>
+                            <span>{{ __('messages.blog_article_4_author') }}</span>
                         </div>
-                        <div class="blog-date">Apr 10, 2024</div>
+                        <div class="blog-date">{{ __('messages.blog_article_4_date') }}</div>
                     </div>
                 </div>
             </div>
@@ -358,17 +330,17 @@
             <div class="blog-card">
                 <div class="blog-image">🏆</div>
                 <div class="blog-content">
-                    <div class="blog-category">Certification</div>
-                    <div class="blog-title">Why Certifications Matter: Boost Your Resume</div>
+                    <div class="blog-category">{{ __('messages.blog_article_5_category') }}</div>
+                    <div class="blog-title">{{ __('messages.blog_article_5_title') }}</div>
                     <div class="blog-excerpt">
-                        Learn how professional certifications can significantly impact your job prospects and earning potential.
+                        {{ __('messages.blog_article_5_excerpt') }}
                     </div>
                     <div class="blog-meta">
                         <div class="blog-author">
                             <div class="blog-avatar">JT</div>
-                            <span>James Taylor</span>
+                            <span>{{ __('messages.blog_article_5_author') }}</span>
                         </div>
-                        <div class="blog-date">Apr 8, 2024</div>
+                        <div class="blog-date">{{ __('messages.blog_article_5_date') }}</div>
                     </div>
                 </div>
             </div>
@@ -377,17 +349,17 @@
             <div class="blog-card">
                 <div class="blog-image">🎨</div>
                 <div class="blog-content">
-                    <div class="blog-category">Creative Skills</div>
-                    <div class="blog-title">Mastering UI/UX Design: A Complete Guide</div>
+                    <div class="blog-category">{{ __('messages.blog_article_6_category') }}</div>
+                    <div class="blog-title">{{ __('messages.blog_article_6_title') }}</div>
                     <div class="blog-excerpt">
-                        Comprehensive guide to becoming a proficient UI/UX designer and creating engaging digital experiences.
+                        {{ __('messages.blog_article_6_excerpt') }}
                     </div>
                     <div class="blog-meta">
                         <div class="blog-author">
                             <div class="blog-avatar">EP</div>
-                            <span>Emma Parker</span>
+                            <span>{{ __('messages.blog_article_6_author') }}</span>
                         </div>
-                        <div class="blog-date">Apr 5, 2024</div>
+                        <div class="blog-date">{{ __('messages.blog_article_6_date') }}</div>
                     </div>
                 </div>
             </div>
