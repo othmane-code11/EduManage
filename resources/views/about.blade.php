@@ -1,9 +1,9 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="{{ app()->getLocale() }}" {{ app()->getLocale() === 'ar' ? 'dir="rtl"' : '' }}>
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>About – EduLearn</title>
+    <title>{{ __('messages.about_meta_title') }}</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
     <style>
@@ -219,44 +219,16 @@
 </head>
 <body>
 
-{{-- ═══════════════ NAVBAR ═══════════════ --}}
-<nav>
-    <a href="{{ route('landing') }}" class="nav-logo">
-        <svg viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg">
-            <rect width="32" height="32" rx="8" fill="#3b82f6"/>
-            <path d="M7 12l9-5 9 5-9 5-9-5z" fill="#fff" opacity=".9"/>
-            <path d="M7 18l9 5 9-5" stroke="#fff" stroke-width="2" stroke-linecap="round" fill="none" opacity=".7"/>
-        </svg>
-        EduLearn
-    </a>
-
-    <ul class="nav-links">
-        <li><a href="{{ route('landing') }}">Home</a></li>
-        <li><a href="{{ route('features') }}">Features</a></li>
-        <li><a href="{{ route('pricing') }}">Pricing</a></li>
-        <li><a href="{{ route('about') }}" class="active">About</a></li>
-        <li><a href="{{ route('blog') }}">Blog</a></li>
-        <li><a href="{{ route('contact') }}">Contact</a></li>
-    </ul>
-
-    <div class="nav-actions">
-        @auth
-            <a href="{{ route('dashboard') }}" class="btn-ghost">Dashboard</a>
-        @else
-            <a href="{{ route('login') }}" class="btn-ghost">Log in</a>
-            <a href="{{ route('register') }}" class="btn-primary">Get Started</a>
-        @endauth
-    </div>
-</nav>
+@include('partials.public-navbar', ['active' => 'about'])
 
 <div class="main-content">
     {{-- ═══════════════ HERO SECTION ═══════════════ --}}
     <section class="section">
         <div class="section-header">
-            <div class="section-badge">📖 Our Story</div>
-            <h1 class="section-title">About EduLearn</h1>
+            <div class="section-badge">📖 {{ __('messages.about_badge') }}</div>
+            <h1 class="section-title">{{ __('messages.about_title') }}</h1>
             <p class="section-desc">
-                Empowering learners worldwide through accessible, high-quality education
+                {{ __('messages.about_description') }}
             </p>
         </div>
     </section>
@@ -265,16 +237,16 @@
     <section class="section">
         <div class="content-grid">
             <div class="content-text">
-                <h2>Our Mission</h2>
+                <h2>{{ __('messages.about_mission_title') }}</h2>
                 <p>
-                    At EduLearn, we believe that <strong>quality education should be accessible to everyone, anywhere.</strong> Founded in 2020, our mission is to democratize learning and help individuals unlock their potential through world-class online education.
+                    {!! __('messages.about_mission_p1') !!}
                 </p>
                 <p>
-                    We partner with industry experts and educators to create comprehensive, practical courses that translate real-world knowledge into valuable skills. Our platform has already impacted over 50,000 learners across the globe.
+                    {{ __('messages.about_mission_p2') }}
                 </p>
             </div>
             <div>
-                <img src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 400 400'%3E%3Crect width='400' height='400' fill='%230b1735'/%3E%3Ccircle cx='200' cy='200' r='80' fill='%233b82f6' opacity='0.2'/%3E%3Crect x='150' y='120' width='100' height='160' rx='10' fill='%233b82f6' opacity='0.3'/%3E%3C/svg%3E" alt="Mission" style="width: 100%; border-radius: 16px; border: 1px solid rgba(59,130,246,.18);">
+                <img src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 400 400'%3E%3Crect width='400' height='400' fill='%230b1735'/%3E%3Ccircle cx='200' cy='200' r='80' fill='%233b82f6' opacity='0.2'/%3E%3Crect x='150' y='120' width='100' height='160' rx='10' fill='%233b82f6' opacity='0.3'/%3E%3C/svg%3E" alt="{{ __('messages.about_mission_alt') }}" style="width: 100%; border-radius: 16px; border: 1px solid rgba(59,130,246,.18);">
             </div>
         </div>
     </section>
@@ -284,15 +256,15 @@
         <div class="stats-grid">
             <div class="stat-item">
                 <div class="stat-value">50K+</div>
-                <div class="stat-label">Active Learners</div>
+                <div class="stat-label">{{ __('messages.about_stat_1') }}</div>
             </div>
             <div class="stat-item">
                 <div class="stat-value">1,200+</div>
-                <div class="stat-label">Expert Courses</div>
+                <div class="stat-label">{{ __('messages.about_stat_2') }}</div>
             </div>
             <div class="stat-item">
                 <div class="stat-value">92%</div>
-                <div class="stat-label">Completion Rate</div>
+                <div class="stat-label">{{ __('messages.about_stat_3') }}</div>
             </div>
         </div>
     </section>
@@ -300,58 +272,58 @@
     {{-- ═══════════════ VALUES ═══════════════ --}}
     <section class="section">
         <div class="section-header">
-            <h2 class="section-title">Our Core Values</h2>
+            <h2 class="section-title">{{ __('messages.about_values_title') }}</h2>
             <p class="section-desc">
-                These principles guide everything we do at EduLearn
+                {{ __('messages.about_values_desc') }}
             </p>
         </div>
 
         <div class="values-grid">
             <div class="value-card">
                 <div class="value-icon">🎯</div>
-                <div class="value-title">Excellence</div>
+                <div class="value-title">{{ __('messages.about_value_1_title') }}</div>
                 <div class="value-desc">
-                    We commit to providing the highest quality content and learning experience.
+                    {{ __('messages.about_value_1_desc') }}
                 </div>
             </div>
 
             <div class="value-card">
                 <div class="value-icon">🤝</div>
-                <div class="value-title">Inclusion</div>
+                <div class="value-title">{{ __('messages.about_value_2_title') }}</div>
                 <div class="value-desc">
-                    Education should be for everyone. We're committed to accessibility and diversity.
+                    {{ __('messages.about_value_2_desc') }}
                 </div>
             </div>
 
             <div class="value-card">
                 <div class="value-icon">🚀</div>
-                <div class="value-title">Innovation</div>
+                <div class="value-title">{{ __('messages.about_value_3_title') }}</div>
                 <div class="value-desc">
-                    We continuously evolve our platform with cutting-edge features and technologies.
+                    {{ __('messages.about_value_3_desc') }}
                 </div>
             </div>
 
             <div class="value-card">
                 <div class="value-icon">💚</div>
-                <div class="value-title">Community</div>
+                <div class="value-title">{{ __('messages.about_value_4_title') }}</div>
                 <div class="value-desc">
-                    We foster a supportive environment where learners and educators collaborate.
+                    {{ __('messages.about_value_4_desc') }}
                 </div>
             </div>
 
             <div class="value-card">
                 <div class="value-icon">🔍</div>
-                <div class="value-title">Transparency</div>
+                <div class="value-title">{{ __('messages.about_value_5_title') }}</div>
                 <div class="value-desc">
-                    We believe in open communication and honest relationships with our users.
+                    {{ __('messages.about_value_5_desc') }}
                 </div>
             </div>
 
             <div class="value-card">
                 <div class="value-icon">⭐</div>
-                <div class="value-title">Impact</div>
+                <div class="value-title">{{ __('messages.about_value_6_title') }}</div>
                 <div class="value-desc">
-                    We measure success by the positive impact we create in learners' lives.
+                    {{ __('messages.about_value_6_desc') }}
                 </div>
             </div>
         </div>
@@ -359,12 +331,12 @@
 
     {{-- ═══════════════ CALL TO ACTION ═══════════════ --}}
     <section class="section" style="text-align: center; padding: 5rem 2.5rem 7rem;">
-        <h2 class="section-title">Ready to Start Learning?</h2>
+        <h2 class="section-title">{{ __('messages.about_cta_title') }}</h2>
         <p class="section-desc">
-            Join thousands of learners who are already transforming their careers with EduLearn
+            {{ __('messages.about_cta_desc') }}
         </p>
         <a href="{{ route('register') }}" class="btn-primary" style="display: inline-flex; margin-top: 2rem;">
-            Get Started Today
+            {{ __('messages.about_cta_button') }}
             <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
         </a>
     </section>

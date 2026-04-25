@@ -4,7 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>@yield('title', 'EduManage') — EduManage</title>
+    <title>@yield('title', __('dashboard.app_name')) — {{ __('dashboard.app_name') }}</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;500;600;700;800&family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;1,9..40,300&display=swap" rel="stylesheet">
@@ -377,6 +377,32 @@
         body.light-mode .lang-option:hover {
             background: rgba(2,132,199,0.08);
         }
+
+        /* RTL support */
+        [dir="rtl"] .sidebar {
+            left: auto;
+            right: 0;
+            border-right: none;
+            border-left: 1px solid var(--border);
+        }
+        [dir="rtl"] .topbar {
+            left: 0;
+            right: var(--sidebar-w);
+        }
+        [dir="rtl"] .main {
+            margin-left: 0;
+            margin-right: var(--sidebar-w);
+        }
+        [dir="rtl"] .nav-item.active::before {
+            left: auto;
+            right: 0;
+        }
+        @media (max-width: 900px) {
+            [dir="rtl"] .sidebar { transform: translateX(100%); }
+            [dir="rtl"] .sidebar.open { transform: translateX(0); }
+            [dir="rtl"] .main { margin-right: 0; }
+            [dir="rtl"] .topbar { right: 0; }
+        }
     </style>
     @stack('styles')
 </head>
@@ -448,7 +474,7 @@
         </div>
         <form method="POST" action="{{ route('logout') }}">
             @csrf
-            <button type="submit" class="logout-btn" title="Logout">
+                <button type="submit" class="logout-btn" title="{{ __('sidebar.logout') }}">
                 <svg width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"/><polyline points="16 17 21 12 16 7"/><line x1="21" y1="12" x2="9" y2="12"/></svg>
             </button>
         </form>
@@ -461,29 +487,31 @@
         <button class="hamburger" onclick="toggleSidebar()">
             <svg width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="18" x2="21" y2="18"/></svg>
         </button>
-        <span class="topbar-title">@yield('page-title', 'Dashboard')</span>
+        <span class="topbar-title">@yield('page-title', __('sidebar.dashboard'))</span>
     </div>
     <div class="topbar-right">
         <!-- Language Switcher -->
         <div class="topbar-dropdown" style="position: relative;">
-            <button class="topbar-btn" title="Language" onclick="toggleLanguageMenu()" style="font-weight: 600;">
-                @if(app()->getLocale() === 'fr')
+            <button class="topbar-btn" title="{{ __('sidebar.language') }}" onclick="toggleLanguageMenu()" style="font-weight: 600;">
+                @if($currentLocale === 'fr')
                     FR
-                @elseif(app()->getLocale() === 'ar')
+                @elseif($currentLocale === 'ar')
                     AR
                 @else
                     EN
                 @endif
             </button>
             <div id="languageMenu" class="language-menu" style="display: none;">
-                <a href="{{ route('change-locale', ['locale' => 'en']) }}" class="lang-option">English</a>
-                <a href="{{ route('change-locale', ['locale' => 'fr']) }}" class="lang-option">Français</a>
-                <a href="{{ route('change-locale', ['locale' => 'ar']) }}" class="lang-option">العربية</a>
+                @foreach($localeOptions as $option)
+                    <a href="{{ route('lang.switch', ['locale' => $option['code']]) }}" class="lang-option" onclick="persistLocale('{{ $option['code'] }}')">
+                        {{ $option['flag'] }} {{ $option['label'] }}
+                    </a>
+                @endforeach
             </div>
         </div>
 
         <!-- Theme Switcher -->
-        <button class="topbar-btn" id="themeToggle" title="Toggle Theme" onclick="toggleTheme()">
+        <button class="topbar-btn" id="themeToggle" title="{{ __('sidebar.toggle_theme') }}" onclick="toggleTheme()">
             <svg id="sunIcon" width="16" height="16" fill="currentColor" viewBox="0 0 24 24" style="display: none;">
                 <circle cx="12" cy="12" r="5"/>
                 <line x1="12" y1="1" x2="12" y2="3"/>
@@ -500,10 +528,10 @@
             </svg>
         </button>
 
-        <button class="topbar-btn notif-dot" title="Notifications">
+        <button class="topbar-btn notif-dot" title="{{ __('sidebar.notifications') }}">
             <svg width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9"/><path d="M13.73 21a2 2 0 0 1-3.46 0"/></svg>
         </button>
-        <button class="topbar-btn" title="Search">
+        <button class="topbar-btn" title="{{ __('sidebar.search') }}">
             <svg width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
         </button>
     </div>
@@ -577,6 +605,10 @@ function toggleLanguageMenu() {
     } else {
         menu.style.display = 'none';
     }
+}
+
+function persistLocale(locale) {
+    localStorage.setItem('locale', locale);
 }
 
 // Close language menu when clicking outside

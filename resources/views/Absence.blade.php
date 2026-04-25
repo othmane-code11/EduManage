@@ -1,8 +1,8 @@
 {{-- resources/views/absence.blade.php --}}
 @extends('layouts.app')
 
-@section('title', "Fiche d'absence")
-@section('page-title', "Fiche d'absence")
+@section('title', __('schedule.absence_sheet'))
+@section('page-title', __('schedule.absence_sheet'))
 
 @push('styles')
 <style>
@@ -247,9 +247,9 @@
     <div class="absence-header-left">
         <h1>
             <span class="h-dot"></span>
-            Fiche d'absence
+            {{ __('schedule.absence_sheet') }}
         </h1>
-        <p>Suivi des présences — Session du 29 Mars 2026</p>
+        <p>{{ __('schedule.attendance_tracking') }}</p>
     </div>
     <div class="absence-meta">
         <span class="meta-pill">
@@ -262,7 +262,7 @@
         </span>
         <span class="meta-pill">
             <svg width="13" height="13" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>
-            Groupe A
+            {{ __('schedule.group_a') }}
         </span>
     </div>
 </div>
@@ -271,17 +271,17 @@
 
     <div class="table-card-header">
         <div class="table-card-header-title">
-            Liste des stagiaires
+            {{ __('schedule.trainee_list') }}
             <span class="count-badge">{{ $students->count() }}</span>
         </div>
         <div class="table-summary">
             <span class="summary-item">
                 <span class="summary-dot dot-present"></span>
-                Présents : <span id="count-present">0</span>
+                {{ __('schedule.present_label') }} : <span id="count-present">0</span>
             </span>
             <span class="summary-item">
                 <span class="summary-dot dot-absent"></span>
-                Absents : <span id="count-absent">{{ $students->count() }}</span>
+                {{ __('schedule.absent_label') }} : <span id="count-absent">{{ $students->count() }}</span>
             </span>
         </div>
     </div>
@@ -290,9 +290,9 @@
         <thead>
             <tr>
                 <th style="width:40px;">#</th>
-                <th>Nom</th>
-                <th>Prénom</th>
-                <th>Statut</th>
+                <th>{{ __('forms.last_name') }}</th>
+                <th>{{ __('forms.first_name') }}</th>
+                <th>{{ __('schedule.status') }}</th>
             </tr>
         </thead>
         <tbody>
@@ -324,7 +324,7 @@
         class="toggle-btn {{ $student->statut === 'present' ? 'btn-present' : 'btn-absent' }}"
         data-status="{{ $student->statut }}"
     >
-        {{ $student->statut === 'present' ? 'Présent' : 'Absent' }}
+        {{ $student->statut === 'present' ? __('schedule.present') : __('schedule.absent') }}
     </button>
                     </form>
                 </td>
@@ -335,8 +335,8 @@
     </table>
 
     <div class="table-footer">
-        <span>{{ $students->count() }} stagiaires — Session Matin</span>
-        <span>Taux de présence :
+        <span>{{ $students->count() }} {{ __('schedule.trainees') }} — {{ __('schedule.morning_session') }}</span>
+        <span>{{ __('schedule.attendance_rate_label') }} :
             <strong style="color:var(--white);" id="taux">0 %</strong>
         </span>
     </div>
@@ -356,7 +356,7 @@
         // Update button visually
         btn.classList.remove(currentStatus === 'present' ? 'btn-present' : 'btn-absent');
         btn.classList.add(newStatus === 'present' ? 'btn-present' : 'btn-absent');
-        btn.textContent = newStatus === 'present' ? 'Présent' : 'Absent';
+        btn.textContent = newStatus === 'present' ? '{{ __('schedule.present') }}' : '{{ __('schedule.absent') }}';
         btn.dataset.status = newStatus;
 
         // Update live counters

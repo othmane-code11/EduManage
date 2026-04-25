@@ -1,8 +1,8 @@
 {{-- resources/views/dashboard.blade.php --}}
 @extends('layouts.app')
 
-@section('title', 'Dashboard')
-@section('page-title', 'Dashboard')
+@section('title', __('dashboard.dashboard'))
+@section('page-title', __('dashboard.dashboard'))
 
 @push('styles')
   <link rel="stylesheet" href="{{ url('CSS/Dashboardstudent.css') }}">
@@ -313,22 +313,21 @@
 
     <div class="hero-grid">
         <div class="hero-content">
-            <div class="hero-greeting">👋 Welcome back</div>
+            <div class="hero-greeting">👋 {{ __('dashboard.welcome_back') }}</div>
             <h1 class="hero-title">
                 {{ auth()->user()->name}}<span></span>
             </h1>
             <p class="hero-sub">
-                You have <strong>3 upcoming sessions</strong> this week and you're
-                <strong>72% through</strong> your current training. Keep going!
+                {{ __('dashboard.hero_sub') }}
             </p>
             <div class="hero-actions">
                 <a href="#" class="btn-primary">
                     <svg width="16" height="16" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><polygon points="5 3 19 12 5 21 5 3"/></svg>
-                    Continue Learning
+                    {{ __('dashboard.continue_learning') }}
                 </a>
                 <a href="schedule" class="btn-ghost">
                     <svg width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><rect x="3" y="4" width="18" height="18" rx="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>
-                    View Schedule
+                    {{ __('dashboard.view_schedule') }}
                 </a>
             </div>
         </div>
@@ -336,7 +335,7 @@
         <div class="hero-visual">
             <div class="progress-card">
                 <div class="progress-card-header">
-                    <span class="progress-label">Weekly Progress</span>
+                    <span class="progress-label">{{ __('dashboard.weekly_progress') }}</span>
                     <span class="progress-value">72%</span>
                 </div>
                 <div class="progress-track">
@@ -346,7 +345,7 @@
                     <span>Mon</span><span>Wed</span><span>Fri</span><span>Sun</span>
                 </div>
             </div>
-            <div class="hero-milestone">🏆 Next milestone: 85% completion</div>
+            <div class="hero-milestone">🏆 {{ __('dashboard.next_milestone') }}</div>
         </div>
     </div>
 </div>
@@ -355,7 +354,7 @@
 <div class="register-section">
 
     <div class="section-header anim anim-d2">
-        <h2><span class="h-dot"></span> Register New User</h2>
+        <h2><span class="h-dot"></span> {{ __('dashboard.register_new_user') }}</h2>
     </div>
 
     <div class="register-card anim anim-d3">
@@ -365,7 +364,7 @@
                 <div class="register-brand-icon">🎓</div>
                 <div>
                     <div class="register-brand-name">EduManage</div>
-                    <div class="register-brand-tag">Learning Reimagined</div>
+                    <div class="register-brand-tag">{{ __('dashboard.learning_reimagined') }}</div>
                 </div>
             </div>
         </div>
@@ -373,17 +372,17 @@
         <div class="register-steps">
             <div class="reg-step">
                 <div class="reg-step-circle active">1</div>
-                <span class="reg-step-label active">Account</span>
+                <span class="reg-step-label active">{{ __('dashboard.step_account') }}</span>
             </div>
             <div class="reg-step-line"></div>
             <div class="reg-step">
                 <div class="reg-step-circle active">2</div>
-                <span class="reg-step-label active">Details</span>
+                <span class="reg-step-label active">{{ __('dashboard.step_details') }}</span>
             </div>
             <div class="reg-step-line"></div>
             <div class="reg-step">
                 <div class="reg-step-circle">3</div>
-                <span class="reg-step-label">Done</span>
+                <span class="reg-step-label">{{ __('dashboard.step_done') }}</span>
             </div>
         </div>
 
@@ -392,14 +391,14 @@
                 @csrf
 
                 <div class="reg-section-title">
-                    <span class="h-dot"></span> Account Information
+                    <span class="h-dot"></span> {{ __('dashboard.account_information') }}
                 </div>
 
                 <div class="reg-grid-2">
 
                     {{-- First Name --}}
                     <div class="reg-field">
-                        <label for="first_name">First Name</label>
+                        <label for="first_name">{{ __('forms.first_name') }}</label>
                         <div class="reg-input-wrap">
                             <span class="reg-icon">
                                 <svg width="15" height="15" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
@@ -407,14 +406,14 @@
                                     <circle cx="12" cy="7" r="4"/>
                                 </svg>
                             </span>
-                            <input type="text" id="first_name" name="first_name" value="{{ old('first_name') }}" placeholder="John" autocomplete="given-name" required>
+                            <input type="text" id="first_name" name="first_name" value="{{ old('first_name') }}" placeholder="{{ __('forms.first_name_placeholder') }}" autocomplete="given-name" required>
                         </div>
                         @error('first_name')<span class="reg-field-error">{{ $message }}</span>@enderror
                     </div>
 
                     {{-- Last Name --}}
                     <div class="reg-field">
-                        <label for="last_name">Last Name</label>
+                        <label for="last_name">{{ __('forms.last_name') }}</label>
                         <div class="reg-input-wrap">
                             <span class="reg-icon">
                                 <svg width="15" height="15" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
@@ -422,14 +421,14 @@
                                     <circle cx="12" cy="7" r="4"/>
                                 </svg>
                             </span>
-                            <input type="text" id="last_name" name="last_name" value="{{ old('last_name') }}" placeholder="Doe" autocomplete="family-name" required>
+                            <input type="text" id="last_name" name="last_name" value="{{ old('last_name') }}" placeholder="{{ __('forms.last_name_placeholder') }}" autocomplete="family-name" required>
                         </div>
                         @error('last_name')<span class="reg-field-error">{{ $message }}</span>@enderror
                     </div>
 
                     {{-- Role Select --}}
                     <div class="reg-field">
-                        <label for="role">Role</label>
+                        <label for="role">{{ __('forms.role') }}</label>
                         <div class="reg-input-wrap reg-select-wrap">
                             <span class="reg-icon">
                                 <svg width="15" height="15" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
@@ -440,23 +439,23 @@
                                 </svg>
                             </span>
                             <select id="role" name="role" required onchange="updateRoleBadge(this.value)">
-                                <option value="" disabled {{ old('role') ? '' : 'selected' }}>Select a role…</option>
-                                <option value="admin"     {{ old('role') == 'admin'     ? 'selected' : '' }}>Admin</option>
-                                <option value="student"   {{ old('role') == 'student'   ? 'selected' : '' }}>Student</option>
-                                <option value="formateur" {{ old('role') == 'formateur' ? 'selected' : '' }}>Formateur</option>
+                                <option value="" disabled {{ old('role') ? '' : 'selected' }}>{{ __('forms.select_role') }}</option>
+                                <option value="admin"     {{ old('role') == 'admin'     ? 'selected' : '' }}>{{ __('forms.role_admin') }}</option>
+                                <option value="student"   {{ old('role') == 'student'   ? 'selected' : '' }}>{{ __('forms.role_student') }}</option>
+                                <option value="formateur" {{ old('role') == 'formateur' ? 'selected' : '' }}>{{ __('forms.role_formateur') }}</option>
                             </select>
                         </div>
                         <div class="role-badges">
-                            <span class="role-badge badge-admin"     id="badge-admin">🛡 Admin</span>
-                            <span class="role-badge badge-student"   id="badge-student">🎓 Student</span>
-                            <span class="role-badge badge-formateur" id="badge-formateur">📚 Formateur</span>
+                            <span class="role-badge badge-admin"     id="badge-admin">🛡 {{ __('forms.role_admin') }}</span>
+                            <span class="role-badge badge-student"   id="badge-student">🎓 {{ __('forms.role_student') }}</span>
+                            <span class="role-badge badge-formateur" id="badge-formateur">📚 {{ __('forms.role_formateur') }}</span>
                         </div>
                         @error('role')<span class="reg-field-error">{{ $message }}</span>@enderror
                     </div>
 
                     {{-- Email --}}
                     <div class="reg-field">
-                        <label for="email">Email Address</label>
+                        <label for="email">{{ __('forms.email') }}</label>
                         <div class="reg-input-wrap">
                             <span class="reg-icon">
                                 <svg width="15" height="15" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
@@ -464,14 +463,14 @@
                                     <polyline points="22,6 12,13 2,6"/>
                                 </svg>
                             </span>
-                            <input type="email" id="email" name="email" value="{{ old('email') }}" placeholder="you@example.com" autocomplete="email" required>
+                            <input type="email" id="email" name="email" value="{{ old('email') }}" placeholder="{{ __('forms.email_placeholder') }}" autocomplete="email" required>
                         </div>
                         @error('email')<span class="reg-field-error">{{ $message }}</span>@enderror
                     </div>
 
                     {{-- Password --}}
                     <div class="reg-field">
-                        <label for="password">Password</label>
+                        <label for="password">{{ __('forms.password') }}</label>
                         <div class="reg-input-wrap">
                             <span class="reg-icon">
                                 <svg width="15" height="15" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
@@ -479,25 +478,25 @@
                                     <path d="M7 11V7a5 5 0 0 1 10 0v4"/>
                                 </svg>
                             </span>
-                            <input type="password" id="password" name="password" placeholder="Min. 8 characters" autocomplete="new-password" required oninput="checkRegStrength(this.value)">
+                            <input type="password" id="password" name="password" placeholder="{{ __('forms.password_placeholder') }}" autocomplete="new-password" required oninput="checkRegStrength(this.value)">
                         </div>
                         <div class="reg-strength-bar">
                             <div class="reg-strength-fill" id="reg-strength-fill"></div>
                         </div>
-                        <div class="reg-strength-hint" id="reg-strength-hint">Use uppercase, numbers &amp; symbols</div>
+                        <div class="reg-strength-hint" id="reg-strength-hint">{{ __('forms.password_hint') }}</div>
                         @error('password')<span class="reg-field-error">{{ $message }}</span>@enderror
                     </div>
 
                     {{-- Confirm Password --}}
                     <div class="reg-field">
-                        <label for="password_confirmation">Confirm Password</label>
+                        <label for="password_confirmation">{{ __('forms.confirm_password') }}</label>
                         <div class="reg-input-wrap">
                             <span class="reg-icon">
                                 <svg width="15" height="15" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
                                     <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/>
                                 </svg>
                             </span>
-                            <input type="password" id="password_confirmation" name="password_confirmation" placeholder="Repeat your password" autocomplete="new-password" required>
+                            <input type="password" id="password_confirmation" name="password_confirmation" placeholder="{{ __('forms.confirm_password_placeholder') }}" autocomplete="new-password" required>
                         </div>
                     </div>
 
@@ -507,9 +506,7 @@
                 <div class="reg-terms-wrap">
                     <input type="checkbox" name="terms" id="terms" {{ old('terms') ? 'checked' : '' }} required>
                     <span>
-                        I agree to EduManage's <a href="#">Terms of Service</a> and
-                        <a href="#">Privacy Policy</a>. I understand my data will be
-                        used to personalize my learning experience.
+                        {{ __('forms.terms_text') }}
                     </span>
                 </div>
                 @error('terms')
@@ -517,7 +514,7 @@
                 @enderror
 
                 <button type="submit" class="reg-submit-btn">
-                    Create My EduManage Account <span class="reg-btn-arrow">→</span>
+                    {{ __('forms.create_account') }} <span class="reg-btn-arrow">→</span>
                 </button>
 
             </form>
@@ -529,8 +526,8 @@
 <div class="users-section">
 
     <div class="section-header anim anim-d2">
-        <h2><span class="h-dot"></span> All Users</h2>
-        <span class="see-all">{{ $users->count() }} total</span>
+        <h2><span class="h-dot"></span> {{ __('dashboard.all_users') }}</h2>
+        <span class="see-all">{{ $users->count() }} {{ __('dashboard.total') }}</span>
     </div>
 
     <div class="users-table-card anim anim-d3">
@@ -543,19 +540,19 @@
                     <path d="M23 21v-2a4 4 0 0 0-3-3.87"/>
                     <path d="M16 3.13a4 4 0 0 1 0 7.75"/>
                 </svg>
-                Registered Users
+                {{ __('dashboard.registered_users') }}
             </div>
-            <span class="users-count-badge">{{ $users->count() }} users</span>
+            <span class="users-count-badge">{{ $users->count() }} {{ __('dashboard.users') }}</span>
         </div>
 <div class="users-table-wrap">
     <table class="users-table">
         <thead>
             <tr>
                 <th>#ID</th>
-                <th>Name</th>
-                <th>Email</th>
-                <th>Role</th>
-                <th>Actions</th> </tr>
+                <th>{{ __('forms.name') }}</th>
+                <th>{{ __('forms.email') }}</th>
+                <th>{{ __('forms.role') }}</th>
+                <th>{{ __('dashboard.actions') }}</th> </tr>
         </thead>
         <tbody>
             @forelse($users as $user)
@@ -565,7 +562,7 @@
                         substr($user->last_name ?? '', 0, 1)
                     );
                     $fullName = trim(($user->first_name ?? '') . ' ' . ($user->last_name ?? ''))
-                        ?: ($user->name ?? 'Unknown');
+                        ?: ($user->name ?? __('dashboard.unknown'));
                     $role      = strtolower($user->role ?? 'user');
                     $roleClass = in_array($role, ['admin', 'student', 'formateur'])
                         ? 'ut-role-' . $role
@@ -593,14 +590,14 @@
         <path d="M19 6v14c0 1-1 2-2 2H7c-1 0-2-1-2-2V6"/>
         <path d="M8 6V4c0-1 1-2 2-2h4c1 0 2 1 2 2v2"/>
     </svg>
-    <span class="ut-btn-delete-label">Delete</span>
+    <span class="ut-btn-delete-label">{{ __('messages.delete') }}</span>
 </button>
                         </form>
                     </td>
                 </tr>
             @empty
                 <tr>
-                    <td colspan="5" class="ut-empty">No users found yet.</td>
+                    <td colspan="5" class="ut-empty">{{ __('dashboard.no_users_found') }}</td>
                 </tr>
             @endforelse
         </tbody>
@@ -635,7 +632,7 @@ function checkRegStrength(val) {
     if (/[^A-Za-z0-9]/.test(val)) score++;
 
     var widths = ['0%', '30%', '55%', '80%', '100%'];
-    var hints  = ['Too short', 'Weak', 'Fair', 'Good', 'Strong 🎉'];
+    var hints  = ['{{ __('forms.strength_too_short') }}', '{{ __('forms.strength_weak') }}', '{{ __('forms.strength_fair') }}', '{{ __('forms.strength_good') }}', '{{ __('forms.strength_strong') }}'];
     var colors = ['', '#ef4444', '#f59e0b', '#378add', '#38bdf8'];
 
     fill.style.width      = widths[score];

@@ -1,9 +1,9 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="{{ app()->getLocale() }}" {{ app()->getLocale() === 'ar' ? 'dir="rtl"' : '' }}>
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Pricing – EduLearn</title>
+    <title>{{ __('messages.pricing_meta_title') }}</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
     <style>
@@ -248,97 +248,69 @@
 </head>
 <body>
 
-{{-- ═══════════════ NAVBAR ═══════════════ --}}
-<nav>
-    <a href="{{ route('landing') }}" class="nav-logo">
-        <svg viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg">
-            <rect width="32" height="32" rx="8" fill="#3b82f6"/>
-            <path d="M7 12l9-5 9 5-9 5-9-5z" fill="#fff" opacity=".9"/>
-            <path d="M7 18l9 5 9-5" stroke="#fff" stroke-width="2" stroke-linecap="round" fill="none" opacity=".7"/>
-        </svg>
-        EduLearn
-    </a>
-
-    <ul class="nav-links">
-        <li><a href="{{ route('landing') }}">Home</a></li>
-        <li><a href="{{ route('features') }}">Features</a></li>
-        <li><a href="{{ route('pricing') }}" class="active">Pricing</a></li>
-        <li><a href="{{ route('about') }}">About</a></li>
-        <li><a href="{{ route('blog') }}">Blog</a></li>
-        <li><a href="{{ route('contact') }}">Contact</a></li>
-    </ul>
-
-    <div class="nav-actions">
-        @auth
-            <a href="{{ route('dashboard') }}" class="btn-ghost">Dashboard</a>
-        @else
-            <a href="{{ route('login') }}" class="btn-ghost">Log in</a>
-            <a href="{{ route('register') }}" class="btn-primary">Get Started</a>
-        @endauth
-    </div>
-</nav>
+@include('partials.public-navbar', ['active' => 'pricing'])
 
 <div class="main-content">
     {{-- ═══════════════ PRICING SECTION ═══════════════ --}}
     <section class="section">
         <div class="section-header">
-            <div class="section-badge">💰 Flexible Plans</div>
-            <h1 class="section-title">Simple, Transparent Pricing</h1>
+            <div class="section-badge">💰 {{ __('messages.pricing_badge') }}</div>
+            <h1 class="section-title">{{ __('messages.pricing_title') }}</h1>
             <p class="section-desc">
-                Choose the plan that fits your learning goals. Upgrade or downgrade anytime.
+                {{ __('messages.pricing_description') }}
             </p>
         </div>
 
         <div class="pricing-grid">
             {{-- Starter Plan --}}
             <div class="pricing-card">
-                <div class="pricing-name">Starter</div>
-                <p class="pricing-desc">Perfect for exploring new skills</p>
+                <div class="pricing-name">{{ __('messages.pricing_starter_name') }}</div>
+                <p class="pricing-desc">{{ __('messages.pricing_starter_desc') }}</p>
                 <div class="pricing-price">$0</div>
-                <div class="pricing-period">Free forever</div>
-                <a href="{{ route('register') }}" class="btn-secondary pricing-cta">Get Started</a>
+                <div class="pricing-period">{{ __('messages.pricing_starter_period') }}</div>
+                <a href="{{ route('register') }}" class="btn-secondary pricing-cta">{{ __('messages.get_started') }}</a>
                 <ul class="pricing-features">
-                    <li>Access to 50+ courses</li>
-                    <li>Basic progress tracking</li>
-                    <li>Community support</li>
-                    <li class="disabled">Advanced analytics</li>
-                    <li class="disabled">Certificates</li>
-                    <li class="disabled">Priority support</li>
+                    <li>{{ __('messages.pricing_starter_feature_1') }}</li>
+                    <li>{{ __('messages.pricing_starter_feature_2') }}</li>
+                    <li>{{ __('messages.pricing_starter_feature_3') }}</li>
+                    <li class="disabled">{{ __('messages.pricing_starter_feature_4') }}</li>
+                    <li class="disabled">{{ __('messages.pricing_starter_feature_5') }}</li>
+                    <li class="disabled">{{ __('messages.pricing_starter_feature_6') }}</li>
                 </ul>
             </div>
 
             {{-- Pro Plan (Featured) --}}
             <div class="pricing-card featured">
-                <div class="pricing-badge">MOST POPULAR</div>
-                <div class="pricing-name">Pro</div>
-                <p class="pricing-desc">For serious learners</p>
+                <div class="pricing-badge">{{ __('messages.pricing_popular') }}</div>
+                <div class="pricing-name">{{ __('messages.pricing_pro_name') }}</div>
+                <p class="pricing-desc">{{ __('messages.pricing_pro_desc') }}</p>
                 <div class="pricing-price">$9.99</div>
-                <div class="pricing-period">per month</div>
-                <a href="{{ route('register') }}" class="btn-primary pricing-cta">Start Free Trial</a>
+                <div class="pricing-period">{{ __('messages.pricing_per_month') }}</div>
+                <a href="{{ route('register') }}" class="btn-primary pricing-cta">{{ __('messages.pricing_start_trial') }}</a>
                 <ul class="pricing-features">
-                    <li>Access to 500+ courses</li>
-                    <li>Advanced analytics</li>
-                    <li>Personalized learning paths</li>
-                    <li>Certificates of completion</li>
-                    <li>Priority support</li>
-                    <li class="disabled">Custom mentoring</li>
+                    <li>{{ __('messages.pricing_pro_feature_1') }}</li>
+                    <li>{{ __('messages.pricing_pro_feature_2') }}</li>
+                    <li>{{ __('messages.pricing_pro_feature_3') }}</li>
+                    <li>{{ __('messages.pricing_pro_feature_4') }}</li>
+                    <li>{{ __('messages.pricing_pro_feature_5') }}</li>
+                    <li class="disabled">{{ __('messages.pricing_pro_feature_6') }}</li>
                 </ul>
             </div>
 
             {{-- Business Plan --}}
             <div class="pricing-card">
-                <div class="pricing-name">Business</div>
-                <p class="pricing-desc">For teams and organizations</p>
+                <div class="pricing-name">{{ __('messages.pricing_business_name') }}</div>
+                <p class="pricing-desc">{{ __('messages.pricing_business_desc') }}</p>
                 <div class="pricing-price">$29.99</div>
-                <div class="pricing-period">per month</div>
-                <a href="#" class="btn-secondary pricing-cta">Contact Sales</a>
+                <div class="pricing-period">{{ __('messages.pricing_per_month') }}</div>
+                <a href="#" class="btn-secondary pricing-cta">{{ __('messages.pricing_contact_sales') }}</a>
                 <ul class="pricing-features">
-                    <li>Unlimited courses</li>
-                    <li>Advanced analytics</li>
-                    <li>Team management</li>
-                    <li>Certificates & badges</li>
-                    <li>24/7 priority support</li>
-                    <li>Custom mentoring</li>
+                    <li>{{ __('messages.pricing_business_feature_1') }}</li>
+                    <li>{{ __('messages.pricing_business_feature_2') }}</li>
+                    <li>{{ __('messages.pricing_business_feature_3') }}</li>
+                    <li>{{ __('messages.pricing_business_feature_4') }}</li>
+                    <li>{{ __('messages.pricing_business_feature_5') }}</li>
+                    <li>{{ __('messages.pricing_business_feature_6') }}</li>
                 </ul>
             </div>
         </div>

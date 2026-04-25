@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Register — EduManage</title>
+    <title>{{ __('auth.register') }} — EduManage</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;500;600;700;800&family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;1,9..40,300&display=swap" rel="stylesheet">
@@ -26,7 +26,7 @@
                 <div class="brand-icon">🎓</div>
                 <div class="brand-text">
                     <div class="brand-name">EduManage</div>
-                    <div class="brand-tag">Learning Reimagined</div>
+                    <div class="brand-tag">{{ __('dashboard.learning_reimagined') }}</div>
                 </div>
             </div>
         </div>
@@ -45,7 +45,7 @@
             <div class="step-line"></div>
             <div class="step">
                 <div class="step-circle">3</div>
-                <span class="step-label">{{ __('messages.finish') }}</span>
+                <span class="step-label">{{ __('dashboard.step_done') }}</span>
             </div>
         </div>
 
@@ -55,7 +55,7 @@
                 @csrf
 
                 <div class="section-title">
-                    <span class="dot"></span> {{ __('auth.first_name') }}
+                    <span class="dot"></span> {{ __('dashboard.account_information') }}
                 </div>
 
                 <div class="grid-2">
@@ -65,7 +65,7 @@
                         <label for="first_name">{{ __('auth.first_name') }}</label>
                         <div class="input-wrap">
                             <span class="icon"><svg width="15" height="15" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg></span>
-                            <input type="text" id="first_name" name="first_name" value="{{ old('first_name') }}" placeholder="John" autocomplete="given-name" required>
+                            <input type="text" id="first_name" name="first_name" value="{{ old('first_name') }}" placeholder="{{ __('forms.first_name_placeholder') }}" autocomplete="given-name" required>
                         </div>
                         @error('first_name')<span style="color:#f87171;font-size:0.78rem;margin-top:0.3rem;display:block;">{{ $message }}</span>@enderror
                     </div>
@@ -75,7 +75,7 @@
                         <label for="last_name">{{ __('auth.last_name') }}</label>
                         <div class="input-wrap">
                             <span class="icon"><svg width="15" height="15" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg></span>
-                            <input type="text" id="last_name" name="last_name" value="{{ old('last_name') }}" placeholder="Doe" autocomplete="family-name" required>
+                            <input type="text" id="last_name" name="last_name" value="{{ old('last_name') }}" placeholder="{{ __('forms.last_name_placeholder') }}" autocomplete="family-name" required>
                         </div>
                         @error('last_name')<span style="color:#f87171;font-size:0.78rem;margin-top:0.3rem;display:block;">{{ $message }}</span>@enderror
                     </div>
@@ -85,7 +85,7 @@
                         <label for="email">{{ __('auth.email') }}</label>
                         <div class="input-wrap">
                             <span class="icon"><svg width="15" height="15" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg></span>
-                            <input type="email" id="email" name="email" value="{{ old('email') }}" placeholder="you@example.com" autocomplete="email" required>
+                            <input type="email" id="email" name="email" value="{{ old('email') }}" placeholder="{{ __('forms.email_placeholder') }}" autocomplete="email" required>
                         </div>
                         @error('email')<span style="color:#f87171;font-size:0.78rem;margin-top:0.3rem;display:block;">{{ $message }}</span>@enderror
                     </div>
@@ -95,10 +95,10 @@
                         <label for="password">{{ __('auth.password') }}</label>
                         <div class="input-wrap">
                             <span class="icon"><svg width="15" height="15" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><rect x="3" y="11" width="18" height="11" rx="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg></span>
-                            <input type="password" id="password" name="password" placeholder="Min. 8 characters" autocomplete="new-password" required oninput="checkStrength(this.value)">
+                            <input type="password" id="password" name="password" placeholder="{{ __('forms.password_placeholder') }}" autocomplete="new-password" required oninput="checkStrength(this.value)">
                         </div>
                         <div class="strength-bar"><div class="strength-fill" id="strength-fill"></div></div>
-                        <div class="strength-hint" id="strength-hint">Use uppercase, numbers & symbols</div>
+                        <div class="strength-hint" id="strength-hint">{{ __('forms.password_hint') }}</div>
                         @error('password')<span style="color:#f87171;font-size:0.78rem;margin-top:0.3rem;display:block;">{{ $message }}</span>@enderror
                     </div>
 
@@ -107,7 +107,7 @@
                         <label for="password_confirmation">{{ __('auth.password_confirm') }}</label>
                         <div class="input-wrap">
                             <span class="icon"><svg width="15" height="15" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg></span>
-                            <input type="password" id="password_confirmation" name="password_confirmation" placeholder="Repeat your password" autocomplete="new-password" required>
+                            <input type="password" id="password_confirmation" name="password_confirmation" placeholder="{{ __('forms.confirm_password_placeholder') }}" autocomplete="new-password" required>
                         </div>
                     </div>
 
@@ -171,7 +171,7 @@ function checkStrength(val) {
     if (/[^A-Za-z0-9]/.test(val)) score++;
 
     const widths = ['0%','30%','55%','80%','100%'];
-    const hints  = ['Too short','Weak','Fair','Good','Strong 🎉'];
+    const hints  = ['{{ __('forms.strength_too_short') }}','{{ __('forms.strength_weak') }}','{{ __('forms.strength_fair') }}','{{ __('forms.strength_good') }}','{{ __('forms.strength_strong') }}'];
     const colors = ['','#ef4444','#f59e0b','#3b82f6','#22c55e'];
 
     fill.style.width      = widths[score];

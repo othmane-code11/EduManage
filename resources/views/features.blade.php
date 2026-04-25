@@ -1,9 +1,9 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="{{ app()->getLocale() }}" {{ app()->getLocale() === 'ar' ? 'dir="rtl"' : '' }}>
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Features – EduLearn</title>
+    <title>{{ __('messages.features_meta_title') }}</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
     <style>
@@ -171,117 +171,89 @@
 </head>
 <body>
 
-{{-- ═══════════════ NAVBAR ═══════════════ --}}
-<nav>
-    <a href="{{ route('landing') }}" class="nav-logo">
-        <svg viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg">
-            <rect width="32" height="32" rx="8" fill="#3b82f6"/>
-            <path d="M7 12l9-5 9 5-9 5-9-5z" fill="#fff" opacity=".9"/>
-            <path d="M7 18l9 5 9-5" stroke="#fff" stroke-width="2" stroke-linecap="round" fill="none" opacity=".7"/>
-        </svg>
-        EduLearn
-    </a>
-
-    <ul class="nav-links">
-        <li><a href="{{ route('landing') }}">Home</a></li>
-        <li><a href="{{ route('features') }}" class="active">Features</a></li>
-        <li><a href="{{ route('pricing') }}">Pricing</a></li>
-        <li><a href="{{ route('about') }}">About</a></li>
-        <li><a href="{{ route('blog') }}">Blog</a></li>
-        <li><a href="{{ route('contact') }}">Contact</a></li>
-    </ul>
-
-    <div class="nav-actions">
-        @auth
-            <a href="{{ route('dashboard') }}" class="btn-ghost">Dashboard</a>
-        @else
-            <a href="{{ route('login') }}" class="btn-ghost">Log in</a>
-            <a href="{{ route('register') }}" class="btn-primary">Get Started</a>
-        @endauth
-    </div>
-</nav>
+@include('partials.public-navbar', ['active' => 'features'])
 
 <div class="main-content">
     {{-- ═══════════════ FEATURES SECTION ═══════════════ --}}
     <section class="section">
         <div class="section-header">
-            <div class="section-badge">✨ Powerful Features</div>
-            <h1 class="section-title">Everything You Need to Learn</h1>
+            <div class="section-badge">✨ {{ __('messages.features_badge') }}</div>
+            <h1 class="section-title">{{ __('messages.features_title') }}</h1>
             <p class="section-desc">
-                Discover our comprehensive suite of learning tools designed to help you succeed
+                {{ __('messages.features_description') }}
             </p>
         </div>
 
         <div class="features-grid">
             <div class="feature-card">
                 <div class="feature-icon">🎓</div>
-                <div class="feature-title">Expert-Led Courses</div>
+                <div class="feature-title">{{ __('messages.feature_1_title') }}</div>
                 <div class="feature-desc">
-                    Learn from industry professionals with years of experience. Our courses are crafted by experts to ensure you get the best knowledge.
+                    {{ __('messages.feature_1_desc') }}
                 </div>
             </div>
 
             <div class="feature-card">
                 <div class="feature-icon">🚀</div>
-                <div class="feature-title">Real-World Projects</div>
+                <div class="feature-title">{{ __('messages.feature_2_title') }}</div>
                 <div class="feature-desc">
-                    Apply your skills with hands-on projects that mirror real industry scenarios. Build a portfolio that impresses employers.
+                    {{ __('messages.feature_2_desc') }}
                 </div>
             </div>
 
             <div class="feature-card">
                 <div class="feature-icon">📊</div>
-                <div class="feature-title">Progress Tracking</div>
+                <div class="feature-title">{{ __('messages.feature_3_title') }}</div>
                 <div class="feature-desc">
-                    Monitor your learning journey with detailed analytics and personalized insights. Stay motivated with clear milestones.
+                    {{ __('messages.feature_3_desc') }}
                 </div>
             </div>
 
             <div class="feature-card">
                 <div class="feature-icon">👥</div>
-                <div class="feature-title">Community Support</div>
+                <div class="feature-title">{{ __('messages.feature_4_title') }}</div>
                 <div class="feature-desc">
-                    Connect with fellow learners, ask questions, and collaborate on projects. Our active community is always ready to help.
+                    {{ __('messages.feature_4_desc') }}
                 </div>
             </div>
 
             <div class="feature-card">
                 <div class="feature-icon">🎯</div>
-                <div class="feature-title">Personalized Paths</div>
+                <div class="feature-title">{{ __('messages.feature_5_title') }}</div>
                 <div class="feature-desc">
-                    Get customized learning recommendations based on your goals. Learn at your own pace with flexible scheduling.
+                    {{ __('messages.feature_5_desc') }}
                 </div>
             </div>
 
             <div class="feature-card">
                 <div class="feature-icon">🏆</div>
-                <div class="feature-title">Certifications</div>
+                <div class="feature-title">{{ __('messages.feature_6_title') }}</div>
                 <div class="feature-desc">
-                    Earn recognized certifications upon course completion. Showcase your achievements and boost your career prospects.
+                    {{ __('messages.feature_6_desc') }}
                 </div>
             </div>
 
             <div class="feature-card">
                 <div class="feature-icon">📱</div>
-                <div class="feature-title">Mobile Learning</div>
+                <div class="feature-title">{{ __('messages.feature_7_title') }}</div>
                 <div class="feature-desc">
-                    Learn on the go with our mobile app. Access courses, track progress, and complete assignments anywhere, anytime.
+                    {{ __('messages.feature_7_desc') }}
                 </div>
             </div>
 
             <div class="feature-card">
                 <div class="feature-icon">🔔</div>
-                <div class="feature-title">Smart Notifications</div>
+                <div class="feature-title">{{ __('messages.feature_8_title') }}</div>
                 <div class="feature-desc">
-                    Get timely reminders and updates about your courses. Never miss an important deadline or new content.
+                    {{ __('messages.feature_8_desc') }}
                 </div>
             </div>
 
             <div class="feature-card">
                 <div class="feature-icon">🌐</div>
-                <div class="feature-title">Global Access</div>
+                <div class="feature-title">{{ __('messages.feature_9_title') }}</div>
                 <div class="feature-desc">
-                    Learn from anywhere in the world. Our platform supports multiple languages and timezones for global learners.
+                    {{ __('messages.feature_9_desc') }}
                 </div>
             </div>
         </div>

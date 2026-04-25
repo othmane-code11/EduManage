@@ -12,19 +12,15 @@ class SetLocale
      */
     public function handle(Request $request, Closure $next)
     {
-        // Get locale from multiple sources: session, query string, cookie, or default
-        $locale = session('locale')
-            ?? $request->query('locale')
-            ?? $request->cookie('locale')
-            ?? config('app.locale');
+        // Use session locale first and default to English when missing.
+        $locale = session('locale', config('app.locale', 'en'));
 
-        // Validate locale is supported
+        // Ensure selected locale is supported.
         $supportedLocales = config('app.supported_locales', ['en', 'fr', 'ar']);
         if (!in_array($locale, $supportedLocales)) {
-            $locale = config('app.locale');
+            $locale = config('app.locale', 'en');
         }
 
-        // Set the locale
         app()->setLocale($locale);
         session()->put('locale', $locale);
 
