@@ -224,8 +224,14 @@
             width: 36px; height: 36px; border-radius: 50%;
             background: linear-gradient(135deg, var(--blue-600), var(--accent));
             display: flex; align-items: center; justify-content: center;
+            overflow: hidden;
             font-size: 0.8rem; font-weight: 700; flex-shrink: 0;
             border: 2px solid rgba(55,138,221,0.3);
+        }
+        .user-avatar img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
         }
         .user-info { flex: 1; min-width: 0; }
         .user-name { font-size: 0.85rem; font-weight: 600; color: var(--white); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
@@ -421,36 +427,42 @@
 
     <nav class="sidebar-nav">
         <div class="nav-section-label">{{ __('navigation.main') }}</div>
-        <a href="dash" class="nav-item active">
-            <svg width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><rect x="3" y="3" width="7" height="7" rx="1"/><rect x="14" y="3" width="7" height="7" rx="1"/><rect x="3" y="14" width="7" height="7" rx="1"/><rect x="14" y="14" width="7" height="7" rx="1"/></svg>
-            {{ __('navigation.dashboard') }}
-        </a>
+        @if(auth()->user()->role === 'admin')
+            <a href="{{ route('dashboard') }}" class="nav-item {{ request()->routeIs('dashboard') ? 'active' : '' }}">
+                <svg width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><rect x="3" y="3" width="7" height="7" rx="1"/><rect x="14" y="3" width="7" height="7" rx="1"/><rect x="3" y="14" width="7" height="7" rx="1"/><rect x="14" y="14" width="7" height="7" rx="1"/></svg>
+                {{ __('navigation.dashboard') }}
+            </a>
+        @endif
 
-        <!-- "Trainings" → "Emploi" with a briefcase/job icon -->
-        <a href="schedule" class="nav-item">
-            <svg width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
-                <rect x="2" y="7" width="20" height="14" rx="2"/>
-                <path d="M16 7V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v2"/>
-                <line x1="12" y1="12" x2="12" y2="12"/>
-                <path d="M2 13h20"/>
-            </svg>
-            {{ __('navigation.schedule') }}
-            <span class="nav-badge">24</span>
-        </a>
+        @if(in_array(auth()->user()->role, ['admin', 'formateur', 'student'], true))
+            <!-- "Trainings" → "Emploi" with a briefcase/job icon -->
+            <a href="{{ route('schedule') }}" class="nav-item {{ request()->routeIs('schedule', 'schedules.*') ? 'active' : '' }}">
+                <svg width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+                    <rect x="2" y="7" width="20" height="14" rx="2"/>
+                    <path d="M16 7V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v2"/>
+                    <line x1="12" y1="12" x2="12" y2="12"/>
+                    <path d="M2 13h20"/>
+                </svg>
+                {{ __('navigation.schedule') }}
+            </a>
 
-        <!-- "Sessions" → "Absence" with a user-x / absence icon -->
-        <a href="absence" class="nav-item">
-            <svg width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
-                <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/>
-                <circle cx="9" cy="7" r="4"/>
-                <line x1="17" y1="8" x2="23" y2="14"/>
-                <line x1="23" y1="8" x2="17" y2="14"/>
-            </svg>
-            {{ __('navigation.absence') }}
-            @if(isset($students))<span class="nav-badge">{{ $students->count() }}</span>@endif
-        </a>
+        @endif
 
-        <a href="#" class="nav-item">
+        @if(in_array(auth()->user()->role, ['formateur', 'student'], true))
+            <!-- "Sessions" → "Absence" with a user-x / absence icon -->
+            <a href="{{ route('absence') }}" class="nav-item {{ request()->routeIs('absence') ? 'active' : '' }}">
+                <svg width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+                    <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/>
+                    <circle cx="9" cy="7" r="4"/>
+                    <line x1="17" y1="8" x2="23" y2="14"/>
+                    <line x1="23" y1="8" x2="17" y2="14"/>
+                </svg>
+                {{ __('navigation.absence') }}
+                @if(isset($students))<span class="nav-badge">{{ $students->count() }}</span>@endif
+            </a>
+        @endif
+
+        <a href="{{ route('blog.dashboard') }}" class="nav-item {{ request()->routeIs('blog.dashboard') ? 'active' : '' }}">
             <svg width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/></svg>
             {{ __('navigation.blog') }}
         </a>
@@ -467,7 +479,13 @@
     </nav>
 
     <div class="sidebar-user">
-        <div class="user-avatar">{{ strtoupper(substr(auth()->user()->first_name ?? 'U', 0, 1)) }}</div>
+        <div class="user-avatar">
+            @if(auth()->user()->profile_photo_url)
+                <img src="{{ auth()->user()->profile_photo_url }}" alt="{{ auth()->user()->name }} avatar">
+            @else
+                {{ strtoupper(substr(auth()->user()->name ?? 'U', 0, 1)) }}
+            @endif
+        </div>
         <div class="user-info">
             <div class="user-name">{{ auth()->user()->name}}</div>
             <div class="user-role">{{ auth()->user()->role }}</div>

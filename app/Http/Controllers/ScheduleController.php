@@ -17,8 +17,10 @@ class ScheduleController extends Controller
      */
     public function index(): View
     {
-        $students = presence::all();
-        return view('schedule', compact('students'));
+        // For the upload/list page we need the list of uploaded schedules.
+        $schedules = Schedule::latest()->get();
+
+        return view('schedule', compact('schedules'));
     }
 
     /**
@@ -58,15 +60,53 @@ class ScheduleController extends Controller
             'public'       // disk
         );
 
-        // ── 3. Persist only the path in the database ───────────────────────────
+        // ── 3. Persist only the path in the database, record uploader ─────────
         Schedule::create([
-            'title'     => $validated['title'],
-            'file_path' => $path,
+            'title'       => $validated['title'],
+            'file_path'   => $path,
+            'uploaded_by' => auth()->id(),
         ]);
 
         // ── 4. Redirect with success flash ─────────────────────────────────────
         return redirect()
             ->route('schedules.index')
             ->with('success', 'Schedule "' . $validated['title'] . '" uploaded successfully.');
+    }
+
+    /**
+     * Update the schedule title.
+     */
+    public function update(Request $request, Schedule $schedule): RedirectResponse
+    {
+        if (auth()->id() !== $schedule->uploaded_by && auth()->user()->role !== 'admin') {
+            abort(403);
+        }
+
+        $validated = $request->validate([
+            'title' => ['required', 'string', 'max:255'],
+        ]);
+
+        $schedule->update(['title' => $validated['title']]);
+
+        return redirect()->route('schedules.index')->with('success', 'Schedule title updated.');
+    }
+
+    /**
+     * Delete a schedule and its file.
+     */
+    public function destroy(Request $request, Schedule $schedule): RedirectResponse
+    {
+        if (auth()->id() !== $schedule->uploaded_by && auth()->user()->role !== 'admin') {
+            abort(403);
+        }
+
+        // Remove file from storage if exists
+        if ($schedule->file_path && \Storage::disk('public')->exists($schedule->file_path)) {
+            \Storage::disk('public')->delete($schedule->file_path);
+        }
+
+        $schedule->delete();
+
+        return redirect()->route('schedules.index')->with('success', 'Schedule deleted.');
     }
 }

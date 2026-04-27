@@ -268,6 +268,11 @@
 </div>
 
 <div class="table-card anim anim-d1">
+    @php
+        $presentCount = $students->where('statut', 'present')->count();
+        $absentCount = $students->count() - $presentCount;
+        $attendanceRate = $students->count() > 0 ? round(($presentCount / $students->count()) * 100) : 0;
+    @endphp
 
     <div class="table-card-header">
         <div class="table-card-header-title">
@@ -277,11 +282,11 @@
         <div class="table-summary">
             <span class="summary-item">
                 <span class="summary-dot dot-present"></span>
-                {{ __('schedule.present_label') }} : <span id="count-present">0</span>
+                {{ __('schedule.present_label') }} : <span id="count-present">{{ $presentCount }}</span>
             </span>
             <span class="summary-item">
                 <span class="summary-dot dot-absent"></span>
-                {{ __('schedule.absent_label') }} : <span id="count-absent">{{ $students->count() }}</span>
+                {{ __('schedule.absent_label') }} : <span id="count-absent">{{ $absentCount }}</span>
             </span>
         </div>
     </div>
@@ -296,6 +301,9 @@
             </tr>
         </thead>
         <tbody>
+            @php
+                $canManageAbsence = auth()->user()->role === 'formateur';
+            @endphp
 
             @foreach ($students as $index => $student)
             @php
@@ -311,22 +319,27 @@
                 </td>
                 <td class="prenom-text">{{ $student->email }}</td>
                 <td>
-                    <form
-                        class="toggle-form"
-                        action="{{ route('absence.toggle', $student->email) }}"
-                        method="POST"
-                    >
-                        @csrf
-                       
-                         <button
-        type="submit"
-        onclick="handleToggle(event, this)"
-        class="toggle-btn {{ $student->statut === 'present' ? 'btn-present' : 'btn-absent' }}"
-        data-status="{{ $student->statut }}"
-    >
-        {{ $student->statut === 'present' ? __('schedule.present') : __('schedule.absent') }}
-    </button>
-                    </form>
+                    @if($canManageAbsence)
+                        <form
+                            class="toggle-form"
+                            action="{{ route('absence.toggle', $student->email) }}"
+                            method="POST"
+                        >
+                            @csrf
+                            <button
+                                type="submit"
+                                onclick="handleToggle(event, this)"
+                                class="toggle-btn {{ $student->statut === 'present' ? 'btn-present' : 'btn-absent' }}"
+                                data-status="{{ $student->statut }}"
+                            >
+                                {{ $student->statut === 'present' ? __('schedule.present') : __('schedule.absent') }}
+                            </button>
+                        </form>
+                    @else
+                        <span class="toggle-btn {{ $student->statut === 'present' ? 'btn-present' : 'btn-absent' }}" style="cursor: default;">
+                            {{ $student->statut === 'present' ? __('schedule.present') : __('schedule.absent') }}
+                        </span>
+                    @endif
                 </td>
             </tr>
             @endforeach
@@ -337,7 +350,7 @@
     <div class="table-footer">
         <span>{{ $students->count() }} {{ __('schedule.trainees') }} — {{ __('schedule.morning_session') }}</span>
         <span>{{ __('schedule.attendance_rate_label') }} :
-            <strong style="color:var(--white);" id="taux">0 %</strong>
+            <strong style="color:var(--white);" id="taux">{{ $attendanceRate }} %</strong>
         </span>
     </div>
 
@@ -346,6 +359,7 @@
 @endsection
 
 @push('scripts')
+@if(auth()->user()->role === 'formateur')
 <script>
     function handleToggle(event, btn) {
         event.preventDefault(); // stop page reload
@@ -383,4 +397,5 @@
     }
     
 </script>
+@endif
 @endpush

@@ -27,6 +27,10 @@ class RedirectIfAuthenticated
                     return redirect()->route('schedules.index');
                 }
 
+                if ($user && $user->role === 'student' && Route::has('schedule')) {
+                    return redirect()->route('schedule');
+                }
+
                 if (Route::has('dashboard')) {
                     return redirect()->route('dashboard');
                 }

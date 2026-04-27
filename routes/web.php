@@ -4,6 +4,7 @@ use App\Http\Controllers\AccController;
 use Illuminate\Support\Facades\Route;
 
 use App\Http\Controllers\AuthController;
+use App\Http\Controllers\ProfileController;
 use App\Http\Middleware\RoleMiddleware;
 
 
@@ -33,6 +34,12 @@ Route::get('/blog', function () {
     return view('blog');
 })->name('blog');
 
+Route::middleware('auth')->group(function () {
+    Route::get('/dashboard/blog', function () {
+        return view('blog-dashboard');
+    })->name('blog.dashboard');
+});
+
 Route::get('/contact', function () {
     return view('contact');
 })->name('contact');
@@ -42,19 +49,26 @@ Route::get('/contact', function () {
 Route::get('/login', [AuthController::class, 'login'])->middleware('guest')->name('login');
 Route::get('/register', [AuthController::class, 'register'])->middleware('guest')->name('register');
 Route::get('/dash', [AuthController::class, 'dash'])
-    ->middleware('role:admin,student')
+    ->middleware(['auth', 'role:admin'])
     ->name('dashboard');
 
-Route::get('/profile', function () {
-    return view('profile');
-})->middleware('auth')->name('profile');
+Route::middleware('auth')->group(function () {
+    Route::get('/profile', [ProfileController::class, 'profile'])->name('profile');
+    Route::put('/profile', [ProfileController::class, 'updateProfile'])->name('profile.update');
 
-Route::get('/settings', function () {
-    return view('settings');
-})->middleware('auth')->name('settings');
+    Route::get('/settings', [ProfileController::class, 'settings'])->name('settings');
+    Route::put('/settings/password', [ProfileController::class, 'updatePassword'])->name('settings.password.update');
+    Route::post('/settings/logout-other-devices', [ProfileController::class, 'logoutOtherDevices'])->name('settings.logout-other-devices');
+    Route::delete('/settings/account', [ProfileController::class, 'deleteAccount'])->name('settings.account.delete');
+});
 
-Route::get('/absence', [AccController::class, 'absc'])->name('absence');
-Route::get('/schedule', [AccController::class, 'schedule'])->name('schedule');
+Route::middleware(['auth', 'role:formateur,student'])->group(function () {
+    Route::get('/absence', [AccController::class, 'absc'])->name('absence');
+});
+
+Route::middleware(['auth', 'role:admin,formateur,student'])->group(function () {
+    Route::get('/schedule', [AccController::class, 'schedule'])->name('schedule');
+});
 
 
 
@@ -63,9 +77,13 @@ Route::post('/auth/login', [AuthController::class, 'loginPost'])->name('login.po
 
 
 
-Route::delete('/delete/{id}', [AccController::class, 'delete'])->name('delete');
+Route::delete('/delete/{id}', [AccController::class, 'delete'])
+    ->middleware(['auth', 'role:admin'])
+    ->name('delete');
 
-Route::post('/absence/{email}', [AccController::class, 'toggle'])->name('absence.toggle');
+Route::post('/absence/{email}', [AccController::class, 'toggle'])
+    ->middleware(['auth', 'role:formateur'])
+    ->name('absence.toggle');
 
 
 
@@ -111,7 +129,7 @@ Route::get('/change-locale/{locale}', function ($locale) {
 | Both are wrapped in auth middleware so only logged-in users can access them.
 */
 
-Route::middleware(['auth', 'role:formateur'])->group(function () {
+Route::middleware(['auth', 'role:admin,formateur'])->group(function () {
 
     // Show the upload form
     Route::get('/schedules', [ScheduleController::class, 'index'])
@@ -120,6 +138,14 @@ Route::middleware(['auth', 'role:formateur'])->group(function () {
     // Handle PDF upload
     Route::post('/schedules/upload', [ScheduleController::class, 'upload'])
          ->name('schedules.upload');
+
+    // Edit schedule title
+    Route::put('/schedules/{schedule}', [ScheduleController::class, 'update'])
+         ->name('schedules.update');
+
+    // Delete schedule
+    Route::delete('/schedules/{schedule}', [ScheduleController::class, 'destroy'])
+         ->name('schedules.destroy');
 
 });
 // just for testing

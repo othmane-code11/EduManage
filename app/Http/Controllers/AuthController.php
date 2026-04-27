@@ -47,11 +47,15 @@ class AuthController extends Controller
         if ($user && Hash::check($req->password, $user->password)) {
             Auth::login($user);
 
+            if ($user->role === 'admin') {
+                return redirect()->route('dashboard');
+            }
+
             if ($user->role === 'formateur') {
                 return redirect()->route('schedules.index');
             }
 
-            return redirect()->route('dashboard');
+            return redirect()->route('schedule');
         }
 
         
@@ -95,10 +99,15 @@ public function registerPost(Request $req)
         ]);
     }
 
-   
-   
+    if ($user->role === 'admin') {
+        return redirect()->route('dashboard')->with('success', 'User created successfully!');
+    }
 
-    return redirect()->route('dashboard')->with('success', 'User created successfully!');
+    if ($user->role === 'formateur') {
+        return redirect()->route('schedules.index')->with('success', 'User created successfully!');
+    }
+
+    return redirect()->route('schedule')->with('success', 'User created successfully!');
 }
 
 

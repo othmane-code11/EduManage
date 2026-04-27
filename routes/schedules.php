@@ -21,4 +21,14 @@ Route::middleware(['auth'])->group(function () {
     Route::post('/schedules/upload', [ScheduleController::class, 'upload'])
          ->name('schedules.upload');
 
+    // Edit title (only uploader or admin can perform these; controller enforces it)
+    Route::put('/schedules/{schedule}', [ScheduleController::class, 'update'])
+         ->name('schedules.update')
+         ->middleware(['role:admin,formateur']);
+
+    // Delete schedule
+    Route::delete('/schedules/{schedule}', [ScheduleController::class, 'destroy'])
+         ->name('schedules.destroy')
+         ->middleware(['role:admin,formateur']);
+
 });
