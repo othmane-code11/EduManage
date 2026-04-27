@@ -4,6 +4,11 @@
 @section('page-title', __('sidebar.settings'))
 
 @section('content')
+@php
+    $settingsNameParts = preg_split('/\s+/', trim(auth()->user()->name ?? ''), 2);
+    $settingsFirstName = old('first_name', $settingsNameParts[0] ?? '');
+    $settingsLastName = old('last_name', $settingsNameParts[1] ?? '');
+@endphp
 <style>
     .settings-container {
         max-width: 900px;
@@ -264,6 +269,32 @@
         margin-bottom: 1.5rem;
     }
 
+    .alert {
+        border-radius: 10px;
+        padding: 0.75rem 1rem;
+        margin-bottom: 1rem;
+        font-size: 0.9rem;
+    }
+
+    .alert-success {
+        background: rgba(34,197,94,0.12);
+        color: #4ade80;
+        border: 1px solid rgba(34,197,94,0.22);
+    }
+
+    .alert-danger {
+        background: rgba(248,113,113,0.12);
+        color: #fca5a5;
+        border: 1px solid rgba(248,113,113,0.22);
+    }
+
+    .field-error {
+        color: #fca5a5;
+        font-size: 0.82rem;
+        margin-top: 0.35rem;
+        display: block;
+    }
+
     @media (max-width: 900px) {
         .settings-grid {
             grid-template-columns: 1fr;
@@ -281,6 +312,14 @@
 </style>
 
 <div class="settings-container">
+    @if(session('success'))
+        <div class="alert alert-success anim">{{ session('success') }}</div>
+    @endif
+
+    @if($errors->any())
+        <div class="alert alert-danger anim">Please review the highlighted fields.</div>
+    @endif
+
     <!-- Settings Header -->
     <div class="settings-header anim">
         <h1>{{ __('sidebar.settings') }}</h1>
@@ -291,11 +330,11 @@
     <div class="settings-grid">
         <!-- Sidebar Navigation -->
         <div class="settings-sidebar anim anim-d1">
-            <button class="settings-nav-item active" onclick="switchTab('general')">⚙️ {{ __('forms.general') }}</button>
-            <button class="settings-nav-item" onclick="switchTab('account')">👤 {{ __('sidebar.account') }}</button>
-            <button class="settings-nav-item" onclick="switchTab('notifications')">🔔 {{ __('sidebar.notifications') }}</button>
-            <button class="settings-nav-item" onclick="switchTab('privacy')">🔒 {{ __('forms.privacy') }}</button>
-            <button class="settings-nav-item" onclick="switchTab('security')">🛡️ {{ __('forms.security') }}</button>
+            <button type="button" class="settings-nav-item active" onclick="switchTab('general', this)">⚙️ {{ __('forms.general') }}</button>
+            <button type="button" class="settings-nav-item" onclick="switchTab('account', this)">👤 {{ __('sidebar.account') }}</button>
+            <button type="button" class="settings-nav-item" onclick="switchTab('notifications', this)">🔔 {{ __('sidebar.notifications') }}</button>
+            <button type="button" class="settings-nav-item" onclick="switchTab('privacy', this)">🔒 {{ __('forms.privacy') }}</button>
+            <button type="button" class="settings-nav-item" onclick="switchTab('security', this)">🛡️ {{ __('forms.security') }}</button>
         </div>
 
         <!-- Content Area -->
@@ -359,25 +398,33 @@
                 <div class="settings-section">
                     <div class="settings-section-title">{{ __('dashboard.personal_information') }}</div>
                     <div class="settings-section-desc">{{ __('forms.update_personal_details') }}</div>
+                    <form method="POST" action="{{ route('profile.update') }}">
+                        @csrf
+                        @method('PUT')
+                        <input type="hidden" name="source" value="settings">
 
-                    <div class="form-row">
-                        <div class="form-group">
-                            <label class="form-label">{{ __('forms.first_name') }}</label>
-                            <input type="text" class="form-input" value="{{ auth()->user()->first_name ?? '' }}" placeholder="First name">
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label class="form-label" for="settings_first_name">{{ __('forms.first_name') }}</label>
+                                <input id="settings_first_name" name="first_name" type="text" class="form-input" value="{{ $settingsFirstName }}" placeholder="First name" required>
+                                @error('first_name')<span class="field-error">{{ $message }}</span>@enderror
+                            </div>
+                            <div class="form-group">
+                                <label class="form-label" for="settings_last_name">{{ __('forms.last_name') }}</label>
+                                <input id="settings_last_name" name="last_name" type="text" class="form-input" value="{{ $settingsLastName }}" placeholder="Last name" required>
+                                @error('last_name')<span class="field-error">{{ $message }}</span>@enderror
+                            </div>
                         </div>
+
                         <div class="form-group">
-                            <label class="form-label">{{ __('forms.last_name') }}</label>
-                            <input type="text" class="form-input" value="{{ explode(' ', auth()->user()->name)[1] ?? '' }}" placeholder="Last name">
+                            <label class="form-label" for="settings_email">{{ __('forms.email') }}</label>
+                            <input id="settings_email" name="email" type="email" class="form-input" value="{{ old('email', auth()->user()->email) }}" placeholder="your@email.com" required>
+                            @error('email')<span class="field-error">{{ $message }}</span>@enderror
                         </div>
-                    </div>
 
-                    <div class="form-group">
-                            <label class="form-label">{{ __('forms.email') }}</label>
-                        <input type="email" class="form-input" value="{{ auth()->user()->email }}" placeholder="your@email.com">
-                    </div>
-
-                    <div class="divider"></div>
-                    <button class="btn btn-primary">{{ __('messages.update_profile') }}</button>
+                        <div class="divider"></div>
+                        <button type="submit" class="btn btn-primary">{{ __('messages.update_profile') }}</button>
+                    </form>
                 </div>
 
                 <div class="settings-section">
@@ -545,23 +592,30 @@
                 <div class="settings-section">
                     <div class="settings-section-title">{{ __('forms.password_security') }}</div>
 
-                    <div class="form-group">
-                        <label class="form-label">{{ __('forms.current_password') }}</label>
-                        <input type="password" class="form-input" placeholder="Enter current password">
-                    </div>
+                    <form method="POST" action="{{ route('settings.password.update') }}">
+                        @csrf
+                        @method('PUT')
 
-                    <div class="form-group">
-                        <label class="form-label">{{ __('forms.new_password') }}</label>
-                        <input type="password" class="form-input" placeholder="Enter new password">
-                    </div>
+                        <div class="form-group">
+                            <label class="form-label" for="current_password">{{ __('forms.current_password') }}</label>
+                            <input id="current_password" name="current_password" type="password" class="form-input" placeholder="Enter current password" required>
+                            @error('current_password')<span class="field-error">{{ $message }}</span>@enderror
+                        </div>
 
-                    <div class="form-group">
-                        <label class="form-label">{{ __('forms.confirm_password') }}</label>
-                        <input type="password" class="form-input" placeholder="Confirm new password">
-                    </div>
+                        <div class="form-group">
+                            <label class="form-label" for="new_password">{{ __('forms.new_password') }}</label>
+                            <input id="new_password" name="password" type="password" class="form-input" placeholder="Enter new password" required>
+                            @error('password')<span class="field-error">{{ $message }}</span>@enderror
+                        </div>
 
-                    <div class="divider"></div>
-                    <button class="btn btn-primary">{{ __('messages.change_password') }}</button>
+                        <div class="form-group">
+                            <label class="form-label" for="password_confirmation">{{ __('forms.confirm_password') }}</label>
+                            <input id="password_confirmation" name="password_confirmation" type="password" class="form-input" placeholder="Confirm new password" required>
+                        </div>
+
+                        <div class="divider"></div>
+                        <button type="submit" class="btn btn-primary">{{ __('messages.change_password') }}</button>
+                    </form>
                 </div>
 
                 <div class="settings-section">
@@ -588,14 +642,33 @@
 
                     <div class="form-group">
                         <p style="color: #9ca3af; margin-bottom: 1rem;">{{ __('forms.logged_in_devices') }}</p>
-                        <button class="btn btn-secondary">{{ __('forms.logout_other_devices') }}</button>
+
+                        <form method="POST" action="{{ route('settings.logout-other-devices') }}">
+                            @csrf
+                            <div class="form-group">
+                                <label class="form-label" for="devices_password">{{ __('forms.current_password') }}</label>
+                                <input id="devices_password" name="devices_password" type="password" class="form-input" placeholder="Enter current password" required>
+                                @error('devices_password')<span class="field-error">{{ $message }}</span>@enderror
+                            </div>
+                            <button type="submit" class="btn btn-secondary">{{ __('forms.logout_other_devices') }}</button>
+                        </form>
                     </div>
                 </div>
 
                 <div class="danger-zone">
                     <div class="danger-zone-title">{{ __('forms.danger_zone') }}</div>
                     <div class="danger-zone-desc">{{ __('forms.danger_zone_desc') }}</div>
-                    <button class="btn btn-danger">{{ __('forms.delete_my_account') }}</button>
+
+                    <form method="POST" action="{{ route('settings.account.delete') }}" onsubmit="return confirm('Are you sure you want to delete your account? This action cannot be undone.');">
+                        @csrf
+                        @method('DELETE')
+                        <div class="form-group">
+                            <label class="form-label" for="delete_account_password">{{ __('forms.current_password') }}</label>
+                            <input id="delete_account_password" name="delete_account_password" type="password" class="form-input" placeholder="Enter current password" required>
+                            @error('delete_account_password')<span class="field-error">{{ $message }}</span>@enderror
+                        </div>
+                        <button type="submit" class="btn btn-danger">{{ __('forms.delete_my_account') }}</button>
+                    </form>
                 </div>
             </div>
         </div>
@@ -603,7 +676,7 @@
 </div>
 
 <script>
-function switchTab(tabId) {
+function switchTab(tabId, clickedElement) {
     // Hide all content
     const allContent = document.querySelectorAll('.settings-content');
     allContent.forEach(content => content.classList.remove('active'));
@@ -616,8 +689,37 @@ function switchTab(tabId) {
     document.getElementById(tabId).classList.add('active');
 
     // Add active class to clicked nav item
-    event.target.classList.add('active');
+    if (clickedElement) {
+        clickedElement.classList.add('active');
+    }
+
+    // Persist selected tab in URL query
+    const url = new URL(window.location.href);
+    url.searchParams.set('tab', tabId);
+    window.history.replaceState({}, '', url);
 }
+
+document.addEventListener('DOMContentLoaded', function () {
+    const params = new URLSearchParams(window.location.search);
+    const urlTab = params.get('tab');
+    const hasPasswordErrors = {{ ($errors->has('current_password') || $errors->has('password') || $errors->has('devices_password') || $errors->has('delete_account_password')) ? 'true' : 'false' }};
+    const hasProfileErrors = {{ ($errors->has('first_name') || $errors->has('last_name') || $errors->has('email')) ? 'true' : 'false' }};
+
+    let tabToOpen = urlTab || 'general';
+    if (hasPasswordErrors) {
+        tabToOpen = 'security';
+    } else if (hasProfileErrors) {
+        tabToOpen = 'account';
+    }
+
+    const navButton = Array.from(document.querySelectorAll('.settings-nav-item')).find(function (button) {
+        return button.getAttribute('onclick') && button.getAttribute('onclick').indexOf("'" + tabToOpen + "'") !== -1;
+    });
+
+    if (document.getElementById(tabToOpen)) {
+        switchTab(tabToOpen, navButton || null);
+    }
+});
 </script>
 
 @endsection

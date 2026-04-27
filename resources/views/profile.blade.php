@@ -4,6 +4,12 @@
 @section('page-title', __('sidebar.my_profile'))
 
 @section('content')
+@php
+    $nameParts = preg_split('/\s+/', trim(auth()->user()->name ?? ''), 2);
+    $firstName = old('first_name', $nameParts[0] ?? '');
+    $lastName = old('last_name', $nameParts[1] ?? '');
+    $initial = strtoupper(substr($firstName ?: 'U', 0, 1));
+@endphp
 <style>
     .profile-header {
         background: linear-gradient(135deg, rgba(55,138,221,0.15), rgba(56,189,248,0.1));
@@ -20,9 +26,16 @@
         border-radius: 50%;
         background: linear-gradient(135deg, #2478c8, #38bdf8);
         display: flex; align-items: center; justify-content: center;
+        overflow: hidden;
         font-size: 3rem; font-weight: 700;
         border: 4px solid rgba(55,138,221,0.3);
         flex-shrink: 0;
+    }
+
+    .profile-avatar img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
     }
 
     .profile-info h1 {
@@ -39,6 +52,25 @@
 
     .profile-actions {
         display: flex; gap: 1rem;
+    }
+
+    .alert {
+        border-radius: 10px;
+        padding: 0.75rem 1rem;
+        margin-bottom: 1rem;
+        font-size: 0.9rem;
+    }
+
+    .alert-success {
+        background: rgba(34,197,94,0.12);
+        color: #4ade80;
+        border: 1px solid rgba(34,197,94,0.22);
+    }
+
+    .alert-danger {
+        background: rgba(248,113,113,0.12);
+        color: #fca5a5;
+        border: 1px solid rgba(248,113,113,0.22);
     }
 
     .btn {
@@ -132,6 +164,67 @@
         border: 1px solid rgba(55,138,221,0.2);
     }
 
+    .edit-profile-card {
+        background: rgba(255,255,255,0.03);
+        border: 1px solid rgba(55,138,221,0.14);
+        border-radius: 18px;
+        padding: 2rem;
+        margin-bottom: 2rem;
+        display: none;
+    }
+
+    .edit-profile-card.open {
+        display: block;
+    }
+
+    .form-grid {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 1rem;
+    }
+
+    .form-group {
+        margin-bottom: 1rem;
+    }
+
+    .form-group label {
+        display: block;
+        margin-bottom: 0.45rem;
+        color: #ffffff;
+        font-weight: 600;
+        font-size: 0.9rem;
+    }
+
+    .form-input {
+        width: 100%;
+        padding: 0.75rem 1rem;
+        background: rgba(1,34,68,0.8);
+        border: 1px solid rgba(55,138,221,0.2);
+        border-radius: 10px;
+        color: #ffffff;
+        font-family: inherit;
+        font-size: 0.9rem;
+    }
+
+    .form-input:focus {
+        outline: none;
+        border-color: #38bdf8;
+        box-shadow: 0 0 0 3px rgba(56,189,248,0.1);
+    }
+
+    .field-error {
+        color: #fca5a5;
+        font-size: 0.82rem;
+        margin-top: 0.35rem;
+        display: block;
+    }
+
+    .input-help {
+        color: #9ca3af;
+        font-size: 0.8rem;
+        margin-top: 0.4rem;
+    }
+
     .activity-item {
         display: flex;
         gap: 1rem;
@@ -179,12 +272,29 @@
         .profile-grid {
             grid-template-columns: 1fr;
         }
+        .form-grid {
+            grid-template-columns: 1fr;
+        }
     }
 </style>
 
+@if(session('success'))
+    <div class="alert alert-success anim">{{ session('success') }}</div>
+@endif
+
+@if($errors->any())
+    <div class="alert alert-danger anim">Please review the highlighted fields.</div>
+@endif
+
 <!-- Profile Header -->
 <div class="profile-header anim">
-    <div class="profile-avatar">{{ strtoupper(substr(auth()->user()->first_name ?? 'U', 0, 1)) }}</div>
+    <div class="profile-avatar">
+        @if(auth()->user()->profile_photo_url)
+            <img src="{{ auth()->user()->profile_photo_url }}" alt="{{ auth()->user()->name }} profile photo">
+        @else
+            {{ $initial }}
+        @endif
+    </div>
 
     <div class="profile-info">
         <h1>{{ auth()->user()->name }}</h1>
@@ -195,9 +305,50 @@
     </div>
 
     <div class="profile-actions">
-        <button class="btn btn-primary">{{ __('messages.edit_profile') }}</button>
-        <button class="btn btn-secondary">{{ __('messages.change_password') }}</button>
+        <button type="button" class="btn btn-primary" onclick="toggleProfileEdit()">{{ __('messages.edit_profile') }}</button>
+        <a href="{{ route('settings', ['tab' => 'security']) }}" class="btn btn-secondary" style="text-decoration: none; display: inline-flex; align-items: center;">{{ __('messages.change_password') }}</a>
     </div>
+</div>
+
+<div id="editProfileCard" class="edit-profile-card anim anim-d1 {{ $errors->has('first_name') || $errors->has('last_name') || $errors->has('email') || $errors->has('profile_photo') ? 'open' : '' }}">
+    <div class="section-title">{{ __('messages.edit_profile') }}</div>
+    <form method="POST" action="{{ route('profile.update') }}" enctype="multipart/form-data">
+        @csrf
+        @method('PUT')
+        <input type="hidden" name="source" value="profile">
+
+        <div class="form-group">
+            <label for="profile_photo">Profile Photo</label>
+            <input id="profile_photo" name="profile_photo" type="file" class="form-input" accept=".jpg,.jpeg,.png,.webp,image/jpeg,image/png,image/webp">
+            <div class="input-help">Allowed formats: JPG, PNG, WEBP. Max size: 2MB.</div>
+            @error('profile_photo')<span class="field-error">{{ $message }}</span>@enderror
+        </div>
+
+        <div class="form-grid">
+            <div class="form-group">
+                <label for="first_name">{{ __('forms.first_name') }}</label>
+                <input id="first_name" name="first_name" type="text" class="form-input" value="{{ $firstName }}" required>
+                @error('first_name')<span class="field-error">{{ $message }}</span>@enderror
+            </div>
+
+            <div class="form-group">
+                <label for="last_name">{{ __('forms.last_name') }}</label>
+                <input id="last_name" name="last_name" type="text" class="form-input" value="{{ $lastName }}" required>
+                @error('last_name')<span class="field-error">{{ $message }}</span>@enderror
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label for="email">{{ __('forms.email') }}</label>
+            <input id="email" name="email" type="email" class="form-input" value="{{ old('email', auth()->user()->email) }}" required>
+            @error('email')<span class="field-error">{{ $message }}</span>@enderror
+        </div>
+
+        <div class="profile-actions" style="margin-top: 1rem;">
+            <button type="submit" class="btn btn-primary">{{ __('messages.update_profile') }}</button>
+            <button type="button" class="btn btn-secondary" onclick="toggleProfileEdit(false)">{{ __('messages.cancel') }}</button>
+        </div>
+    </form>
 </div>
 
 <!-- Profile Content Grid -->
@@ -328,5 +479,16 @@
         </div>
     </div>
 </div>
+
+<script>
+function toggleProfileEdit(forceOpen) {
+    const card = document.getElementById('editProfileCard');
+    if (typeof forceOpen === 'boolean') {
+        card.classList.toggle('open', forceOpen);
+        return;
+    }
+    card.classList.toggle('open');
+}
+</script>
 
 @endsection
