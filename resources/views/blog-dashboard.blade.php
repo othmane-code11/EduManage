@@ -308,21 +308,21 @@
 
     {{-- Metrics --}}
     <section class="blog-metrics anim">
-        <div class="metric-card">
-            <div class="metric-label">Posts</div>
-            <div class="metric-value">12</div>
+            <div class="metric-card">
+            <div class="metric-label">Articles</div>
+            <div class="metric-value">{{ $metrics['posts'] }}</div>
         </div>
         <div class="metric-card">
-            <div class="metric-label">Drafts</div>
-            <div class="metric-value">3</div>
+            <div class="metric-label">Brouillons</div>
+            <div class="metric-value">{{ $metrics['drafts'] }}</div>
         </div>
         <div class="metric-card">
-            <div class="metric-label">Total views</div>
-            <div class="metric-value">8.3k</div>
+            <div class="metric-label">Articles publiés</div>
+            <div class="metric-value">{{ $metrics['published'] }}</div>
         </div>
         <div class="metric-card">
-            <div class="metric-label">Contributors</div>
-            <div class="metric-value">5</div>
+            <div class="metric-label">Commentaires</div>
+            <div class="metric-value">{{ $metrics['comments'] }}</div>
         </div>
     </section>
 
@@ -333,6 +333,7 @@
             class="blog-toolbar__search"
             type="search"
             name="q"
+            value="{{ old('q', $query ?? '') }}"
             placeholder="{{ $t('blog.search_placeholder', 'Search articles...') }}"
             aria-label="{{ $t('blog.search_label', 'Search blog posts') }}"
             autocomplete="off"
@@ -341,70 +342,45 @@
             class="blog-toolbar__filter"
             aria-label="{{ $t('blog.filter_label', 'Filter by topic') }}"
         >
-            <option value="">{{ $t('blog.filter_all', 'All Topics') }}</option>
-            <option value="education">{{ $t('blog.filter_education', 'Education') }}</option>
-            <option value="product">{{ $t('blog.filter_product', 'Product Updates') }}</option>
-            <option value="campus">{{ $t('blog.filter_campus', 'Student Life') }}</option>
+            <option value=""{{ empty($selectedCategory) ? ' selected' : '' }}>{{ $t('blog.filter_all', 'All Topics') }}</option>
+            <option value="education"{{ ($selectedCategory ?? '') === 'education' ? ' selected' : '' }}>{{ $t('blog.filter_education', 'Education') }}</option>
+            <option value="product"{{ ($selectedCategory ?? '') === 'product' ? ' selected' : '' }}>{{ $t('blog.filter_product', 'Product Updates') }}</option>
+            <option value="campus"{{ ($selectedCategory ?? '') === 'campus' ? ' selected' : '' }}>{{ $t('blog.filter_campus', 'Student Life') }}</option>
         </select>
         @if($canCreate)
-            <button class="btn-create-post" id="createPostBtn">Create Post</button>
+            <a href="{{ route('dashboard.blog.create') }}" class="btn-create-post">Créer un article</a>
         @endif
     </section>
 
     {{-- Post grid --}}
     <main class="blog-grid" aria-label="{{ $t('blog.grid_label', 'Blog posts') }}">
-
-        <a href="#" class="card blog-post anim anim-d2" data-topic="education" aria-labelledby="post-title-1">
-            <div class="blog-post__cover" role="img" aria-hidden="true"></div>
-            <div class="blog-post__body">
-                <span class="blog-post__tag">Education</span>
-                <h2 id="post-title-1" class="blog-post__title">
-                    How to Build Better Study Routines in 30 Days
-                </h2>
-                <p class="blog-post__excerpt">
-                    Practical routines you can apply this week to improve consistency and reduce exam stress.
-                </p>
-                <footer class="blog-post__meta">
-                    <span>By EduManage Team</span>
-                    <time datetime="2026-04-25">Apr 25, 2026</time>
-                </footer>
+        @forelse($posts as $post)
+            <a href="{{ route('dashboard.blog.show', $post) }}" class="card blog-post anim" data-topic="{{ $post->category }}" aria-labelledby="post-title-{{ $post->id }}">
+                <div class="blog-post__cover" role="img" aria-hidden="true" style="background-image: url('{{ $post->cover_image_path ? asset('storage/' . $post->cover_image_path) : '' }}');"></div>
+                <div class="blog-post__body">
+                    <span class="blog-post__tag">{{ ucfirst($post->category ?: 'Publication') }}</span>
+                    <h2 id="post-title-{{ $post->id }}" class="blog-post__title">
+                        {{ $post->title }}
+                    </h2>
+                    <p class="blog-post__excerpt">
+                        {{ $post->excerpt }}
+                    </p>
+                    <footer class="blog-post__meta">
+                        <span>{{ $post->author->name }} · {{ $post->comments->count() }} commentaire{{ $post->comments->count() > 1 ? 's' : '' }}</span>
+                        <time datetime="{{ $post->published_at ? $post->published_at->toDateString() : $post->created_at->toDateString() }}">
+                            {{ $post->published_at ? $post->published_at->format('M d, Y') : $post->created_at->format('M d, Y') }}
+                        </time>
+                    </footer>
+                </div>
+            </a>
+        @empty
+            <div class="card blog-post anim" style="grid-column: span 3; padding: 2rem; text-align: center;">
+                <p>Aucun article disponible pour le moment.</p>
+                @if($canCreate)
+                    <a href="{{ route('dashboard.blog.create') }}" class="btn-create-post">Publier le premier article</a>
+                @endif
             </div>
-        </a>
-
-        <a href="#" class="card blog-post anim anim-d3" data-topic="product" aria-labelledby="post-title-2">
-            <div class="blog-post__cover" role="img" aria-hidden="true"></div>
-            <div class="blog-post__body">
-                <span class="blog-post__tag">Product</span>
-                <h2 id="post-title-2" class="blog-post__title">
-                    New Attendance Insights Released
-                </h2>
-                <p class="blog-post__excerpt">
-                    Discover what changed in the latest analytics panel and how instructors can act faster.
-                </p>
-                <footer class="blog-post__meta">
-                    <span>By Admin Desk</span>
-                    <time datetime="2026-04-22">Apr 22, 2026</time>
-                </footer>
-            </div>
-        </a>
-
-        <a href="#" class="card blog-post anim anim-d4" data-topic="campus" aria-labelledby="post-title-3">
-            <div class="blog-post__cover" role="img" aria-hidden="true"></div>
-            <div class="blog-post__body">
-                <span class="blog-post__tag">Campus</span>
-                <h2 id="post-title-3" class="blog-post__title">
-                    Student Stories: Time Management That Works
-                </h2>
-                <p class="blog-post__excerpt">
-                    Three student playbooks that improved assignment completion rates without burnout.
-                </p>
-                <footer class="blog-post__meta">
-                    <span>By Student Council</span>
-                    <time datetime="2026-04-18">Apr 18, 2026</time>
-                </footer>
-            </div>
-        </a>
-
+        @endforelse
     </main>
 
 </div>

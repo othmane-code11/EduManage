@@ -4,6 +4,7 @@ use App\Http\Controllers\AccController;
 use Illuminate\Support\Facades\Route;
 
 use App\Http\Controllers\AuthController;
+use App\Http\Controllers\BlogController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Middleware\RoleMiddleware;
 
@@ -35,9 +36,34 @@ Route::get('/blog', function () {
 })->name('blog');
 
 Route::middleware('auth')->group(function () {
-    Route::get('/dashboard/blog', function () {
-        return view('blog-dashboard');
-    })->name('blog.dashboard');
+    Route::get('/dashboard/blog', [BlogController::class, 'index'])
+        ->name('dashboard.blog.index');
+
+    Route::get('/dashboard/blog/create', [BlogController::class, 'create'])
+        ->name('dashboard.blog.create')
+        ->middleware('role:admin,formateur');
+
+    Route::post('/dashboard/blog', [BlogController::class, 'store'])
+        ->name('dashboard.blog.store')
+        ->middleware('role:admin,formateur');
+
+    Route::get('/dashboard/blog/{post}', [BlogController::class, 'show'])
+        ->name('dashboard.blog.show');
+
+    Route::get('/dashboard/blog/{post}/edit', [BlogController::class, 'edit'])
+        ->name('dashboard.blog.edit')
+        ->middleware('role:admin,formateur');
+
+    Route::put('/dashboard/blog/{post}', [BlogController::class, 'update'])
+        ->name('dashboard.blog.update')
+        ->middleware('role:admin,formateur');
+
+    Route::delete('/dashboard/blog/{post}', [BlogController::class, 'destroy'])
+        ->name('dashboard.blog.destroy')
+        ->middleware('role:admin,formateur');
+
+    Route::post('/dashboard/blog/{post}/comments', [BlogController::class, 'storeComment'])
+        ->name('dashboard.blog.comments.store');
 });
 
 Route::get('/contact', function () {

@@ -462,7 +462,7 @@
             </a>
         @endif
 
-        <a href="{{ route('blog.dashboard') }}" class="nav-item {{ request()->routeIs('blog.dashboard') ? 'active' : '' }}">
+        <a href="{{ route('dashboard.blog.index') }}" class="nav-item {{ request()->routeIs('dashboard.blog.*') ? 'active' : '' }}">
             <svg width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/></svg>
             {{ __('navigation.blog') }}
         </a>
