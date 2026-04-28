@@ -157,6 +157,11 @@
         <li><a href="{{ route('about') }}" class="{{ ($active ?? '') === 'about' ? 'active' : '' }}">{{ __('messages.about') }}</a></li>
         <li><a href="{{ route('blog') }}" class="{{ ($active ?? '') === 'blog' ? 'active' : '' }}">{{ __('messages.blog') }}</a></li>
         <li><a href="{{ route('contact') }}" class="{{ ($active ?? '') === 'contact' ? 'active' : '' }}">{{ __('messages.contact') }}</a></li>
+        @auth
+            @if(in_array(auth()->user()->role, ['admin','formateur','student']))
+                <li><a href="{{ route('absence') }}" class="{{ ($active ?? '') === 'absence' ? 'active' : '' }}">{{ __('schedule.absence_sheet') }}</a></li>
+            @endif
+        @endauth
     </ul>
 
     <div class="nav-actions">

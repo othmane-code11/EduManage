@@ -448,7 +448,7 @@
 
         @endif
 
-        @if(in_array(auth()->user()->role, ['formateur', 'student'], true))
+        @if(in_array(auth()->user()->role, ['admin', 'formateur', 'student'], true))
             <!-- "Sessions" → "Absence" with a user-x / absence icon -->
             <a href="{{ route('absence') }}" class="nav-item {{ request()->routeIs('absence') ? 'active' : '' }}">
                 <svg width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">

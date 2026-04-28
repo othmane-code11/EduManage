@@ -88,7 +88,7 @@ Route::middleware('auth')->group(function () {
     Route::delete('/settings/account', [ProfileController::class, 'deleteAccount'])->name('settings.account.delete');
 });
 
-Route::middleware(['auth', 'role:formateur,student'])->group(function () {
+Route::middleware(['auth', 'role:admin,formateur,student'])->group(function () {
     Route::get('/absence', [AccController::class, 'absc'])->name('absence');
 });
 
@@ -108,7 +108,7 @@ Route::delete('/delete/{id}', [AccController::class, 'delete'])
     ->name('delete');
 
 Route::post('/absence/{email}', [AccController::class, 'toggle'])
-    ->middleware(['auth', 'role:formateur'])
+    ->middleware(['auth', 'role:admin,formateur'])
     ->name('absence.toggle');
 
 

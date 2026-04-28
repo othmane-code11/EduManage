@@ -302,7 +302,7 @@
         </thead>
         <tbody>
             @php
-                $canManageAbsence = auth()->user()->role === 'formateur';
+                $canManageAbsence = in_array(auth()->user()->role, ['formateur', 'admin']);
             @endphp
 
             @foreach ($students as $index => $student)
@@ -359,13 +359,13 @@
 @endsection
 
 @push('scripts')
-@if(auth()->user()->role === 'formateur')
+@if(in_array(auth()->user()->role, ['formateur', 'admin']))
 <script>
     function handleToggle(event, btn) {
         event.preventDefault(); // stop page reload
 
         const currentStatus = btn.dataset.status;
-        const newStatus = currentStatus === 'present' ? 'absent' : 'present';
+        const newStatus = currentStatus === 'present' ? 'absence' : 'present';
 
         // Update button visually
         btn.classList.remove(currentStatus === 'present' ? 'btn-present' : 'btn-absent');

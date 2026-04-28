@@ -11,15 +11,16 @@ use Illuminate\Support\Facades\Auth;
 class AccController extends Controller
 { 
       public function absc(){
-    $user = Auth::user();
+          $user = Auth::user();
 
-    if ($user->role === 'formateur') {
-      $students = presence::all();
-    } elseif ($user->role === 'student') {
-      $students = presence::where('email', $user->email)->get();
-    } else {
-      abort(403, 'Unauthorized action.');
-    }
+          // Admins and formateurs can see and manage all presences; students only see their own
+          if (in_array($user->role, ['formateur', 'admin'])) {
+              $students = presence::all();
+          } elseif ($user->role === 'student') {
+              $students = presence::where('email', $user->email)->get();
+          } else {
+              abort(403, 'Unauthorized action.');
+          }
 
      return view('absence',compact('students'));
       }
@@ -33,20 +34,22 @@ class AccController extends Controller
 }
 
 
-public function toggle($email)
-{
-  if (!Auth::check() || Auth::user()->role !== 'formateur') {
-    abort(403, 'Unauthorized action.');
-  }
+    public function toggle($email)
+    {
+        if (!Auth::check() || !in_array(Auth::user()->role, ['formateur', 'admin'])) {
+            abort(403, 'Unauthorized action.');
+        }
 
-    $presence = Presence::where('email', $email)->firstOrFail();
+        // use the imported `presence` model (lowercase class name in this app)
+        $presence = presence::where('email', $email)->firstOrFail();
 
-    $presence->statut = $presence->statut === 'present' ? 'absence' : 'present';
+        // toggle between 'present' and the enum value 'absence'
+        $presence->statut = $presence->statut === 'present' ? 'absence' : 'present';
 
-    $presence->save();
-  return  redirect('absence');
-   
-} 
+        $presence->save();
+
+        return redirect()->route('absence');
+    }
 public function schedule(){
   $schedules = Schedule::latest()->get();
   $myPresence = null;

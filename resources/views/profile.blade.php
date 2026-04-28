@@ -9,7 +9,9 @@
     $firstName = old('first_name', $nameParts[0] ?? '');
     $lastName = old('last_name', $nameParts[1] ?? '');
     $initial = strtoupper(substr($firstName ?: 'U', 0, 1));
+    $user = auth()->user();
 @endphp
+
 <style>
     .profile-header {
         background: linear-gradient(135deg, rgba(55,138,221,0.15), rgba(56,189,248,0.1));
@@ -17,17 +19,21 @@
         border-radius: 18px;
         padding: 2.5rem;
         margin-bottom: 2rem;
-        display: grid; grid-template-columns: auto 1fr auto;
-        gap: 2rem; align-items: center;
+        display: grid; 
+        grid-template-columns: auto 1fr auto;
+        gap: 2rem; 
+        align-items: center;
     }
 
     .profile-avatar {
-        width: 120px; height: 120px;
+        width: 120px; 
+        height: 120px;
         border-radius: 50%;
         background: linear-gradient(135deg, #2478c8, #38bdf8);
-        display: flex; align-items: center; justify-content: center;
+        display: flex; 
+        align-items: center; 
+        justify-content: center;
         overflow: hidden;
-        font-size: 3rem; font-weight: 700;
         border: 4px solid rgba(55,138,221,0.3);
         flex-shrink: 0;
     }
@@ -38,9 +44,22 @@
         object-fit: cover;
     }
 
+    .avatar-placeholder {
+        width: 100%;
+        height: 100%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        background: linear-gradient(135deg, #2478c8, #38bdf8);
+        color: white;
+        font-size: 48px;
+        font-weight: bold;
+    }
+
     .profile-info h1 {
         font-family: 'Syne', sans-serif;
-        font-size: 1.8rem; font-weight: 700;
+        font-size: 1.8rem; 
+        font-weight: 700;
         margin-bottom: 0.5rem;
     }
 
@@ -51,7 +70,9 @@
     }
 
     .profile-actions {
-        display: flex; gap: 1rem;
+        display: flex; 
+        gap: 1rem;
+        flex-wrap: wrap;
     }
 
     .alert {
@@ -81,6 +102,10 @@
         cursor: pointer;
         transition: all 0.2s;
         font-family: inherit;
+        text-decoration: none;
+        display: inline-flex;
+        align-items: center;
+        gap: 0.5rem;
     }
 
     .btn-primary {
@@ -106,7 +131,8 @@
     }
 
     .profile-grid {
-        display: grid; grid-template-columns: 1fr 1fr;
+        display: grid; 
+        grid-template-columns: 1fr 1fr;
         gap: 2rem;
     }
 
@@ -119,13 +145,15 @@
 
     .section-title {
         font-family: 'Syne', sans-serif;
-        font-size: 1.1rem; font-weight: 700;
+        font-size: 1.1rem; 
+        font-weight: 700;
         margin-bottom: 1.5rem;
         color: #ffffff;
     }
 
     .info-row {
-        display: flex; justify-content: space-between;
+        display: flex; 
+        justify-content: space-between;
         padding: 1rem 0;
         border-bottom: 1px solid rgba(55,138,221,0.1);
     }
@@ -204,6 +232,7 @@
         color: #ffffff;
         font-family: inherit;
         font-size: 0.9rem;
+        transition: all 0.2s;
     }
 
     .form-input:focus {
@@ -264,6 +293,48 @@
         font-size: 0.8rem;
     }
 
+    .current-photo-preview {
+        display: flex;
+        align-items: center;
+        gap: 1rem;
+        margin-top: 0.5rem;
+        padding: 0.75rem;
+        background: rgba(255,255,255,0.05);
+        border-radius: 10px;
+    }
+
+    .current-photo-preview img {
+        width: 48px;
+        height: 48px;
+        border-radius: 50%;
+        object-fit: cover;
+    }
+
+    .current-photo-preview span {
+        color: var(--muted);
+        font-size: 0.85rem;
+    }
+
+    @keyframes slideInUp {
+        from {
+            opacity: 0;
+            transform: translateY(20px);
+        }
+        to {
+            opacity: 1;
+            transform: translateY(0);
+        }
+    }
+
+    .anim {
+        animation: slideInUp 0.4s ease-out forwards;
+    }
+
+    .anim-d1 { animation-delay: 0.1s; opacity: 0; animation-fill-mode: forwards; }
+    .anim-d2 { animation-delay: 0.2s; opacity: 0; animation-fill-mode: forwards; }
+    .anim-d3 { animation-delay: 0.3s; opacity: 0; animation-fill-mode: forwards; }
+    .anim-d4 { animation-delay: 0.4s; opacity: 0; animation-fill-mode: forwards; }
+
     @media (max-width: 900px) {
         .profile-header {
             grid-template-columns: 1fr;
@@ -274,6 +345,9 @@
         }
         .form-grid {
             grid-template-columns: 1fr;
+        }
+        .profile-actions {
+            justify-content: center;
         }
     }
 </style>
@@ -289,11 +363,9 @@
 <!-- Profile Header -->
 <div class="profile-header anim">
     <div class="profile-avatar">
-        @if(auth()->user()->profile_photo_url)
-            <img src="{{ auth()->user()->profile_photo_url }}" alt="{{ auth()->user()->name }} profile photo">
-        @else
-            {{ $initial }}
-        @endif
+        @php $user = auth()->user(); @endphp
+
+        <img src="{{ $user->profile_photo_url_with_fallback }}" alt="{{ $user->name }} profile photo">
     </div>
 
     <div class="profile-info">
@@ -305,35 +377,48 @@
     </div>
 
     <div class="profile-actions">
-        <button type="button" class="btn btn-primary" onclick="toggleProfileEdit()">{{ __('messages.edit_profile') }}</button>
-        <a href="{{ route('settings', ['tab' => 'security']) }}" class="btn btn-secondary" style="text-decoration: none; display: inline-flex; align-items: center;">{{ __('messages.change_password') }}</a>
+        <button type="button" class="btn btn-primary" onclick="toggleProfileEdit()">✏️ {{ __('messages.edit_profile') }}</button>
+        <a href="{{ route('settings', ['tab' => 'security']) }}" class="btn btn-secondary" style="text-decoration: none; display: inline-flex; align-items: center;">🔒 {{ __('messages.change_password') }}</a>
     </div>
 </div>
 
-<div id="editProfileCard" class="edit-profile-card anim anim-d1 {{ $errors->has('first_name') || $errors->has('last_name') || $errors->has('email') || $errors->has('profile_photo') ? 'open' : '' }}">
-    <div class="section-title">{{ __('messages.edit_profile') }}</div>
+<div id="editProfileCard" class="edit-profile-card anim anim-d1 {{ $errors->has('first_name') || $errors->has('last_name') || $errors->has('email') || $errors->has('profile_photo') || $errors->any() ? 'open' : '' }}">
+    <div class="section-title">✏️ {{ __('messages.edit_profile') }}</div>
     <form method="POST" action="{{ route('profile.update') }}" enctype="multipart/form-data">
         @csrf
         @method('PUT')
         <input type="hidden" name="source" value="profile">
 
         <div class="form-group">
-            <label for="profile_photo">Profile Photo</label>
-            <input id="profile_photo" name="profile_photo" type="file" class="form-input" accept=".jpg,.jpeg,.png,.webp,image/jpeg,image/png,image/webp">
+            <label for="profile_photo">🖼️ Profile Photo</label>
+            <input id="profile_photo" name="profile_photo" type="file" class="form-input" accept=".jpg,.jpeg,.png,.webp,image/jpeg,image/png,image/webp" onchange="previewPhoto(this)">
             <div class="input-help">Allowed formats: JPG, PNG, WEBP. Max size: 2MB.</div>
             @error('profile_photo')<span class="field-error">{{ $message }}</span>@enderror
+            
+            @if(!empty(auth()->user()->profile_photo_path))
+            @if($user->profile_photo_url)
+                <div class="current-photo-preview" id="currentPhotoPreview">
+                    <img src="{{ asset('storage/' . auth()->user()->profile_photo_path) }}" alt="Current profile photo">
+                    <img src="{{ $user->profile_photo_url }}" alt="Current profile photo">
+                    <span>Current photo</span>
+                </div>
+            @endif
+            <div id="newPhotoPreview" style="display: none; margin-top: 0.5rem;"></div>
+            @endif
         </div>
 
         <div class="form-grid">
             <div class="form-group">
                 <label for="first_name">{{ __('forms.first_name') }}</label>
                 <input id="first_name" name="first_name" type="text" class="form-input" value="{{ $firstName }}" required>
+                <input id="first_name" name="first_name" type="text" class="form-input" value="{{ old('first_name', explode(' ', $user->name)[0] ?? '') }}" required>
                 @error('first_name')<span class="field-error">{{ $message }}</span>@enderror
             </div>
 
             <div class="form-group">
                 <label for="last_name">{{ __('forms.last_name') }}</label>
                 <input id="last_name" name="last_name" type="text" class="form-input" value="{{ $lastName }}" required>
+                <input id="last_name" name="last_name" type="text" class="form-input" value="{{ old('last_name', explode(' ', $user->name, 2)[1] ?? '') }}" required>
                 @error('last_name')<span class="field-error">{{ $message }}</span>@enderror
             </div>
         </div>
@@ -345,8 +430,8 @@
         </div>
 
         <div class="profile-actions" style="margin-top: 1rem;">
-            <button type="submit" class="btn btn-primary">{{ __('messages.update_profile') }}</button>
-            <button type="button" class="btn btn-secondary" onclick="toggleProfileEdit(false)">{{ __('messages.cancel') }}</button>
+            <button type="submit" class="btn btn-primary">💾 {{ __('messages.update_profile') }}</button>
+            <button type="button" class="btn btn-secondary" onclick="toggleProfileEdit(false)">❌ {{ __('messages.cancel') }}</button>
         </div>
     </form>
 </div>
@@ -355,7 +440,7 @@
 <div class="profile-grid">
     <!-- Personal Information -->
     <div class="profile-section anim anim-d1">
-        <div class="section-title">{{ __('dashboard.personal_information') }}</div>
+        <div class="section-title">📋 {{ __('dashboard.personal_information') }}</div>
 
         <div class="info-row">
             <span class="info-label">{{ __('dashboard.full_name') }}</span>
@@ -379,13 +464,13 @@
 
         <div class="info-row">
             <span class="info-label">{{ __('dashboard.status') }}</span>
-            <span class="pill">{{ __('sidebar.active') }}</span>
+            <span class="pill">✅ {{ __('sidebar.active') }}</span>
         </div>
     </div>
 
     <!-- Statistics -->
     <div class="profile-section anim anim-d2">
-        <div class="section-title">{{ __('dashboard.statistics') }}</div>
+        <div class="section-title">📊 {{ __('dashboard.statistics') }}</div>
 
         <div class="info-row">
             <span class="info-label">{{ __('dashboard.total_courses') }}</span>
@@ -415,36 +500,36 @@
 
     <!-- Account Preferences -->
     <div class="profile-section anim anim-d3">
-        <div class="section-title">{{ __('dashboard.preferences') }}</div>
+        <div class="section-title">⚙️ {{ __('dashboard.preferences') }}</div>
 
         <div class="info-row">
             <span class="info-label">{{ __('dashboard.email_notifications') }}</span>
-            <span class="pill secondary">{{ __('dashboard.enabled') }}</span>
+            <span class="pill secondary">✅ {{ __('dashboard.enabled') }}</span>
         </div>
 
         <div class="info-row">
             <span class="info-label">{{ __('dashboard.dark_mode') }}</span>
-            <span class="pill secondary">{{ __('dashboard.enabled') }}</span>
+            <span class="pill secondary">🌙 {{ __('dashboard.enabled') }}</span>
         </div>
 
         <div class="info-row">
             <span class="info-label">{{ __('dashboard.two_factor_auth') }}</span>
-            <span class="pill secondary">{{ __('dashboard.disabled') }}</span>
+            <span class="pill secondary">❌ {{ __('dashboard.disabled') }}</span>
         </div>
 
         <div class="info-row">
             <span class="info-label">{{ __('dashboard.marketing_emails') }}</span>
-            <span class="pill secondary">{{ __('dashboard.disabled') }}</span>
+            <span class="pill secondary">❌ {{ __('dashboard.disabled') }}</span>
         </div>
 
         <div style="margin-top: 1.5rem;">
-            <button class="btn btn-secondary" style="width: 100%;">{{ __('dashboard.manage_preferences') }}</button>
+            <button class="btn btn-secondary" style="width: 100%;">⚙️ {{ __('dashboard.manage_preferences') }}</button>
         </div>
     </div>
 
     <!-- Recent Activity -->
     <div class="profile-section anim anim-d4">
-        <div class="section-title">{{ __('dashboard.recent_activity') }}</div>
+        <div class="section-title">🔄 {{ __('dashboard.recent_activity') }}</div>
 
         <div class="activity-item">
             <div class="activity-icon">📚</div>
@@ -484,11 +569,50 @@
 function toggleProfileEdit(forceOpen) {
     const card = document.getElementById('editProfileCard');
     if (typeof forceOpen === 'boolean') {
-        card.classList.toggle('open', forceOpen);
+        if (forceOpen) {
+            card.classList.add('open');
+        } else {
+            card.classList.remove('open');
+        }
         return;
     }
     card.classList.toggle('open');
 }
+
+function previewPhoto(input) {
+    const previewDiv = document.getElementById('newPhotoPreview');
+    const currentPreview = document.getElementById('currentPhotoPreview');
+    
+    if (input.files && input.files[0]) {
+        const reader = new FileReader();
+        
+        reader.onload = function(e) {
+            previewDiv.innerHTML = `
+                <div class="current-photo-preview">
+                    <img src="${e.target.result}" alt="New photo preview">
+                    <span>New photo preview</span>
+                </div>
+            `;
+            previewDiv.style.display = 'block';
+            if (currentPreview) currentPreview.style.opacity = '0.5';
+        }
+        
+        reader.readAsDataURL(input.files[0]);
+    } else {
+        previewDiv.style.display = 'none';
+        if (currentPreview) currentPreview.style.opacity = '1';
+    }
+}
+
+// Keep the edit card open if there are validation errors
+@if($errors->any())
+    document.addEventListener('DOMContentLoaded', function() {
+        const editCard = document.getElementById('editProfileCard');
+        if (editCard && !editCard.classList.contains('open')) {
+            editCard.classList.add('open');
+        }
+    });
+    @endif
 </script>
 
 @endsection
