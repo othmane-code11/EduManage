@@ -9,7 +9,7 @@ return new class extends Migration
     public function up(): void
     {
         Schema::table('schedules', function (Blueprint $table) {
-            $table->unsignedBigInteger('uploaded_by')->nullable()->after('file_path')->index();
+            $table->unsignedBigInteger('uploaded_by')->nullable()->index();
         });
     }
 
