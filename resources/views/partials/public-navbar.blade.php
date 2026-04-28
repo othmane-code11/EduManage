@@ -13,6 +13,12 @@
         font-weight: 600;
         cursor: pointer;
         padding: .45rem .7rem;
+        transition: background .2s, border-color .2s;
+    }
+
+    .lang-trigger:hover {
+        background: rgba(59,130,246,.12);
+        border-color: rgba(59,130,246,.45);
     }
 
     .lang-menu {
@@ -55,6 +61,82 @@
     [dir="rtl"] .lang-menu {
         right: auto;
         left: 0;
+    }
+
+    /* ── Login button ── */
+    .btn-login {
+        position: relative;
+        display: inline-flex;
+        align-items: center;
+        gap: .45rem;
+        padding: .45rem 1.05rem .45rem .75rem;
+        border-radius: 9px;
+        font-family: inherit;
+        font-size: .84rem;
+        font-weight: 700;
+        letter-spacing: .01em;
+        color: #93c5fd;
+        background: rgba(59,130,246,.08);
+        border: 1px solid rgba(59,130,246,.28);
+        text-decoration: none;
+        cursor: pointer;
+        transition: background .2s, border-color .2s, color .2s, box-shadow .2s, transform .15s;
+        white-space: nowrap;
+        overflow: hidden;
+    }
+
+    /* Shimmer sweep on hover */
+    .btn-login::before {
+        content: '';
+        position: absolute;
+        inset: 0;
+        background: linear-gradient(
+            105deg,
+            transparent 35%,
+            rgba(147,197,253,.13) 50%,
+            transparent 65%
+        );
+        transform: translateX(-100%);
+        transition: transform .45s ease;
+        pointer-events: none;
+    }
+
+    .btn-login:hover::before {
+        transform: translateX(100%);
+    }
+
+    .btn-login:hover {
+        background: rgba(59,130,246,.16);
+        border-color: rgba(59,130,246,.5);
+        color: #bfdbfe;
+        box-shadow: 0 0 0 3px rgba(59,130,246,.1), 0 4px 14px rgba(59,130,246,.15);
+        transform: translateY(-1px);
+    }
+
+    .btn-login:active {
+        transform: translateY(0);
+        box-shadow: none;
+    }
+
+    /* Icon circle */
+    .btn-login-icon {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        width: 22px;
+        height: 22px;
+        border-radius: 6px;
+        background: rgba(59,130,246,.18);
+        flex-shrink: 0;
+        transition: background .2s;
+    }
+
+    .btn-login:hover .btn-login-icon {
+        background: rgba(59,130,246,.3);
+    }
+
+    .btn-login-icon svg {
+        display: block;
     }
 </style>
 
@@ -100,7 +182,16 @@
         @auth
             <a href="{{ route('dashboard') }}" class="btn-ghost">{{ __('messages.dashboard') }}</a>
         @else
-            <a href="{{ route('login') }}" class="btn-ghost">{{ __('messages.log_in') }}</a>
+            <a href="{{ route('login') }}" class="btn-login">
+                <span class="btn-login-icon">
+                    <svg width="12" height="12" fill="none" stroke="currentColor" stroke-width="2.2" viewBox="0 0 24 24">
+                        <path d="M15 3h4a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2h-4"/>
+                        <polyline points="10 17 15 12 10 7"/>
+                        <line x1="15" y1="12" x2="3" y2="12"/>
+                    </svg>
+                </span>
+                {{ __('messages.log_in') }}
+            </a>
             <a href="{{ route('register') }}" class="btn-primary">{{ __('messages.get_started') }}</a>
         @endauth
     </div>
@@ -117,9 +208,7 @@
     document.addEventListener('click', function (event) {
         const switcher = document.getElementById('publicLangSwitcher');
         const menu = document.getElementById('publicLangMenu');
-        if (!switcher || !menu) {
-            return;
-        }
+        if (!switcher || !menu) return;
         if (!switcher.contains(event.target)) {
             menu.classList.remove('open');
         }

@@ -142,193 +142,101 @@
         }
         .btn-secondary:hover { background: rgba(255,255,255,.1); }
 
+        /* ─── HERO TRUST ─── */
         .hero-trust {
-            display: flex; align-items: center; gap: .75rem;
+            display: flex;
+            align-items: center;
+            gap: .75rem;
             margin-top: 2rem;
         }
 
-        .hero-right {
-            width: 100%;
-            
+        /* Avatar stack — each item is a clipped circle showing the real photo */
+        .avatar-stack {
             display: flex;
-            justify-content: flex-end;
+            align-items: center;
         }
 
-        .hero-right-image {
-            display: block;
-            width: 100%;
-            max-width: 680px;
-            height: auto;
-            border-radius: 20px;
-            box-shadow: 0 24px 64px rgba(0,0,0,.45);
-            border: 1px solid var(--border);
-        }
-
-        .avatar-stack { display: flex; }
-        .avatar-stack img, .avatar-stack .av {
-            width: 36px; height: 36px; border-radius: 50%;
+        .avatar-stack-item {
+            position: relative;
+            width: 36px;
+            height: 36px;
+            border-radius: 50%;
             border: 2px solid var(--bg-deep);
-            margin-left: -10px; object-fit: cover;
+            overflow: hidden;
+            margin-left: -10px;
+            flex-shrink: 0;
+            background: var(--bg-card2); /* fallback while image loads */
+            transition: transform .2s, z-index 0s;
         }
-        .avatar-stack .av:first-child { margin-left: 0; }
-        .av {
-            background: linear-gradient(135deg,#3b82f6,#06b6d4);
-            display: inline-flex; align-items: center; justify-content: center;
-            font-size: .65rem; font-weight: 700;
+
+        .avatar-stack-item:first-child {
+            margin-left: 0;
+        }
+
+        .avatar-stack-item:hover {
+            transform: translateY(-3px) scale(1.08);
+            z-index: 10;
+        }
+
+        .avatar-stack-item img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            object-position: center top; /* faces are usually in the upper half */
+            display: block;
         }
 
         .trust-text { font-size: .82rem; color: var(--text-muted); }
         .trust-text .stars { color: var(--yellow); letter-spacing: .05em; }
 
-        /* ─── DASHBOARD CARD ─── */
-        .dashboard-card {
-            background: var(--bg-card);
-            border: 1px solid var(--border);
+        /* ─── HERO RIGHT — screenshot ─── */
+        .hero-right {
+            position: relative;
+            width: 100%;
+            display: flex;
+            justify-content: flex-end;
+        }
+
+        /*
+         * Subtle glow halo behind the image so it feels embedded
+         * in the page rather than pasted on top of it.
+         */
+        .hero-right::before {
+            content: '';
+            position: absolute;
+            inset: -40px;
+            background: radial-gradient(
+                ellipse 80% 60% at 60% 50%,
+                rgba(59,130,246,.18) 0%,
+                transparent 70%
+            );
+            pointer-events: none;
+            z-index: 0;
+        }
+
+        .hero-right-image {
+            position: relative;
+            z-index: 1;
+            display: block;
+            width: 100%;
+            max-width: 680px;
+            height: auto;
             border-radius: 20px;
-            padding: 1.5rem;
-            box-shadow: 0 24px 64px rgba(0,0,0,.45), 0 0 0 1px rgba(59,130,246,.08);
-            animation: floatCard 5s ease-in-out infinite;
+            box-shadow:
+                0 0 0 1px rgba(59,130,246,.18),
+                0 24px 64px rgba(0,0,0,.55),
+                0 8px 24px rgba(59,130,246,.12);
+            /* Gentle perpetual float — paused on hover so users can inspect */
+            animation: floatHero 6s ease-in-out infinite;
         }
 
-        @keyframes floatCard {
-            0%,100% { transform: translateY(0); }
-            50%      { transform: translateY(-8px); }
+        .hero-right-image:hover {
+            animation-play-state: paused;
         }
 
-        .card-header {
-            display: flex; align-items: center; justify-content: space-between;
-            margin-bottom: 1.2rem;
-        }
-
-        .card-header-left h3 { font-size: 1rem; font-weight: 600; }
-        .card-header-left p  { font-size: .78rem; color: var(--text-muted); margin-top: .15rem; }
-
-        .card-header-right { display: flex; align-items: center; gap: .6rem; }
-
-        .notif-btn {
-            position: relative; background: none; border: none; cursor: pointer;
-            color: var(--text-muted);
-        }
-        .notif-btn .badge {
-            position: absolute; top: -4px; right: -4px;
-            background: var(--accent); color: #fff;
-            font-size: .6rem; font-weight: 700;
-            width: 14px; height: 14px; border-radius: 50%;
-            display: flex; align-items: center; justify-content: center;
-        }
-
-        .avatar-btn {
-            display: flex; align-items: center; gap: .4rem;
-            background: rgba(255,255,255,.06); border: 1px solid var(--border);
-            border-radius: 50px; padding: .25rem .55rem .25rem .25rem;
-            cursor: pointer;
-        }
-        .avatar-btn img, .avatar-btn .av-sm {
-            width: 28px; height: 28px; border-radius: 50%; object-fit: cover;
-        }
-        .av-sm {
-            background: linear-gradient(135deg,#3b82f6,#a855f7);
-            display: inline-flex; align-items: center; justify-content: center;
-            font-size: .6rem; font-weight: 700; color: #fff;
-        }
-
-        .card-body { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; margin-bottom: 1.2rem; }
-
-        /* Progress ring panel */
-        .progress-panel {
-            background: var(--bg-card2); border-radius: 14px; padding: 1rem;
-        }
-        .progress-panel-head {
-            display: flex; justify-content: space-between; align-items: center;
-            margin-bottom: .85rem;
-        }
-        .progress-panel-head span { font-size: .8rem; font-weight: 600; }
-        .week-select {
-            font-size: .72rem; color: var(--text-muted);
-            background: rgba(255,255,255,.06); border: 1px solid var(--border);
-            border-radius: 6px; padding: .2rem .5rem; cursor: pointer; color: var(--text-muted);
-        }
-
-        .progress-inner { display: flex; gap: 1rem; align-items: center; }
-
-        .ring-wrap { position: relative; width: 86px; height: 86px; flex-shrink: 0; }
-        .ring-wrap svg { transform: rotate(-90deg); }
-        .ring-label {
-            position: absolute; inset: 0;
-            display: flex; flex-direction: column; align-items: center; justify-content: center;
-        }
-        .ring-label .pct  { font-family: 'Syne', sans-serif; font-size: 1.15rem; font-weight: 800; }
-        .ring-label .sub  { font-size: .6rem; color: var(--text-muted); }
-
-        .progress-stats { display: flex; flex-direction: column; gap: .55rem; }
-        .pstat { display: flex; align-items: center; gap: .45rem; font-size: .78rem; }
-        .pstat-icon { font-size: .9rem; }
-        .pstat-val   { font-weight: 700; }
-        .pstat-label { color: var(--text-muted); font-size: .7rem; }
-
-        /* Overall stats panel */
-        .stats-panel {
-            background: var(--bg-card2); border-radius: 14px; padding: 1rem;
-        }
-        .stats-panel h4 { font-size: .8rem; font-weight: 600; margin-bottom: .85rem; }
-
-        .stat-row {
-            display: flex; align-items: center; gap: .7rem;
-            padding: .45rem .6rem; border-radius: 10px;
-            margin-bottom: .4rem; background: rgba(255,255,255,.03);
-        }
-        .stat-icon {
-            width: 32px; height: 32px; border-radius: 8px;
-            display: flex; align-items: center; justify-content: center;
-            font-size: .85rem; flex-shrink: 0;
-        }
-        .stat-icon.blue   { background: rgba(59,130,246,.18); }
-        .stat-icon.purple { background: rgba(168,85,247,.18); }
-        .stat-icon.green  { background: rgba(34,197,94,.18); }
-        .stat-val   { font-family: 'Syne', sans-serif; font-size: 1rem; font-weight: 700; }
-        .stat-desc  { font-size: .68rem; color: var(--text-muted); }
-
-        /* Continue learning */
-        .continue-header {
-            display: flex; justify-content: space-between; align-items: center;
-            margin-bottom: .85rem;
-        }
-        .continue-header span { font-size: .82rem; font-weight: 600; }
-        .view-all { font-size: .75rem; color: var(--accent2); text-decoration: none; }
-
-        .course-scroll { display: flex; gap: .75rem; overflow-x: auto; padding-bottom: .25rem; }
-        .course-scroll::-webkit-scrollbar { display: none; }
-
-        .course-item {
-            background: var(--bg-card2); border-radius: 12px;
-            padding: .85rem; min-width: 140px; flex-shrink: 0;
-        }
-        .course-badge {
-            font-size: .6rem; font-weight: 700; letter-spacing: .04em;
-            padding: .2rem .5rem; border-radius: 4px; margin-bottom: .55rem;
-            display: inline-block;
-        }
-        .badge-progress { background: rgba(59,130,246,.25); color: var(--accent2); }
-        .badge-new      { background: rgba(168,85,247,.25); color: #c084fc; }
-
-        .course-icon { font-size: 1.3rem; float: right; margin-top: -1.6rem; }
-
-        .course-name {
-            font-family: 'Syne', sans-serif; font-size: .85rem;
-            font-weight: 700; margin-bottom: .1rem;
-        }
-        .course-sub  { font-size: .65rem; color: var(--text-muted); }
-
-        .course-progress-label {
-            font-size: .68rem; color: var(--text-muted); margin: .5rem 0 .25rem;
-        }
-        .progress-bar {
-            height: 4px; background: rgba(255,255,255,.1); border-radius: 99px; overflow: hidden;
-        }
-        .progress-fill {
-            height: 100%; border-radius: 99px;
-            background: linear-gradient(90deg, var(--accent), var(--accent2));
-            transition: width .6s ease;
+        @keyframes floatHero {
+            0%, 100% { transform: translateY(0px); }
+            50%       { transform: translateY(-10px); }
         }
 
         /* ─── STATS STRIP ─── */
@@ -364,8 +272,19 @@
 
         /* ─── RESPONSIVE ─── */
         @media (max-width: 900px) {
-            .hero { grid-template-columns: 1fr; padding: 3rem 1.5rem; }
-            .dashboard-card { animation: none; }
+            .hero {
+                grid-template-columns: 1fr;
+                padding: 3rem 1.5rem;
+            }
+            /* Stack: image goes above the text on mobile */
+            .hero-right {
+                order: -1;
+                justify-content: center;
+            }
+            .hero-right-image {
+                max-width: 100%;
+                animation: none;
+            }
             .stats-strip-inner { grid-template-columns: 1fr; }
             .strip-item { border-right: none; border-bottom: 1px solid var(--border); }
             nav { padding: 0 1.2rem; }
@@ -409,10 +328,38 @@
 
         <div class="hero-trust">
             <div class="avatar-stack">
-                <div class="av">AJ</div>
-                <div class="av" style="background:linear-gradient(135deg,#a855f7,#ec4899)">SK</div>
-                <div class="av" style="background:linear-gradient(135deg,#22c55e,#06b6d4)">ML</div>
-                <div class="av" style="background:linear-gradient(135deg,#f97316,#eab308)">RD</div>
+                <div class="avatar-stack-item">
+                    <img
+                        src="{{ asset('images/homme-souriant-bras-croises_1187-2903.avif') }}"
+                        alt="Learner"
+                        loading="eager"
+                        decoding="async"
+                    >
+                </div>
+                <div class="avatar-stack-item">
+                    <img
+                        src="{{ asset('images/portrait-jeune-homme-souriant-se-frottant-mains_171337-10297.avif') }}"
+                        alt="Learner"
+                        loading="eager"
+                        decoding="async"
+                    >
+                </div>
+                <div class="avatar-stack-item">
+                    <img
+                        src="{{ asset('images/jeune-belle-femme-pull-chaud-rose-aspect-naturel-souriant-portrait-isole-cheveux-longs_285396-896.avif') }}"
+                        alt="Learner"
+                        loading="eager"
+                        decoding="async"
+                    >
+                </div>
+                <div class="avatar-stack-item">
+                    <img
+                        src="{{ asset('images/jeune-etudiante-armenienne-determinee-aux-cheveux-boucles-ecoutez-attentivement-assignation-regardez-confiant-pret-faire-tache-croisez-mains-poitrine-souriant-confiant-debout-fond-blanc_176420-56066.avif') }}"
+                        alt="Learner"
+                        loading="eager"
+                        decoding="async"
+                    >
+                </div>
             </div>
             <div class="trust-text">
                 <div class="stars">★★★★★</div>
@@ -421,15 +368,14 @@
         </div>
     </div>
 
-    {{-- Right column – Screenshot preview image --}}
+    {{-- Right column — app screenshot --}}
     <div class="hero-right">
         <img
-            src="{{ asset('images/Screenshot 2026-04-23 203012.png') }}"
+            src="{{ asset('images/unnamed (1).png') }}"
             alt="{{ __('messages.landing_preview_alt') }}"
             class="hero-right-image"
             loading="eager"
             decoding="async"
-            onerror="this.onerror=null;this.src='{{ asset('images/Screenshot 2026-04-23 203012.png') }}';"
         >
     </div>
 
@@ -471,7 +417,6 @@
 
 @push('scripts')
 <script>
-    // Animate progress bars on page load
     document.addEventListener('DOMContentLoaded', () => {
         document.querySelectorAll('.progress-fill').forEach(el => {
             const target = el.style.width;
